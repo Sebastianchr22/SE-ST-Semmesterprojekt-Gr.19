@@ -4,20 +4,23 @@
  * and open the template in the editor.
  */
 
-
 /**
  *
  * @author Sebas
  */
 import worldofzuul.Game;
-public class SpilWorldOfZuul {
+
+public class SpilWorldOfZuul
+{
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-       Game game = new Game();
-       game.play();
+    public static void main(String[] args)
+    {
+        System.out.println("test");
+        Game game = new Game();
+        game.play();
     }
-    
+
 }
