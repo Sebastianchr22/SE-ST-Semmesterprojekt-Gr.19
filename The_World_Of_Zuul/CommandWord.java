@@ -6,15 +6,21 @@ package worldofzuul;
  */
 public enum CommandWord
 {
+    // Sets a list of keywords:
     GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?");
     
+    //Creates a string for the keywords:
     private String commandString;
     
+    
+    //Puts a string containing commands into an instance of commandstring.
     CommandWord(String commandString)
     {
         this.commandString = commandString;
     }
     
+    
+    //Returns a string value of the commandstring:
     public String toString()
     {
         return commandString;
