@@ -15,7 +15,7 @@ public class Game
         parser = new Parser();
     }
 
-    private void createRooms()
+    private void createRooms() // Room constructor
     {
         Room outside, theatre, pub, lab, office;
       
