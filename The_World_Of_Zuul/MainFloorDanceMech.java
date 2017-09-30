@@ -86,7 +86,7 @@ public class MainFloorDanceMech {
             num1 = 1;
             num2 = 1;
         }
-        int random = (int) (1 + Math.random() * divider);
+        int random = (int) (1 + Math.random() * divider++); //sets a random number between 1 and the common divider. A 20/80 chance, would equal a random between 1 and 4, we add one because it is exclusive the upperlimit.
         if (random == divider) {
             //True:
             return true;
@@ -127,7 +127,7 @@ public class MainFloorDanceMech {
         } else {
             //Unknown dancemove
         }
-        return 125;
+        return 125; //Return doesnt matter here.
     }
     
     
@@ -143,25 +143,25 @@ public class MainFloorDanceMech {
         if (experience >= danceMoveExpRequired) {
             //You have enough experience to perform this move:
             System.out.println("Your move was successful.");
-            Experience++;
-            double tipsFromMove = tipsGained(personalImprovements);
-            System.out.println("You received $" + tipsFromMove + " in tips for that move.");
-            moneySaved += tipsFromMove;
+            Experience++; //Gains experience
+            double tipsFromMove = tipsGained(personalImprovements); //Calls the tipsGained method, and passes personalImprovements.
+            System.out.println("You received $" + tipsFromMove + " in tips for that move."); //prints the amount of tips gained
+            moneySaved += tipsFromMove; //adds the tips to player wallet.
         } else {
             //You do not have enough experience to perform this move:
             if (ChanceCalc(25, 100)) {
                 //It was successful:
-                System.out.println("Although you are not experienced with that move, you were successful.");
-                Experience++;
-                double tipsFromMove = tipsGained(personalImprovements);
-                System.out.println("You received $" + tipsFromMove + " in tips for that move.");
-                moneySaved += tipsFromMove;
+                System.out.println("Although you are not experienced with that move, you were successful."); //Prints succes message although the player was not experienced enough to pull it off
+                Experience++; //Adds experience
+                double tipsFromMove = tipsGained(personalImprovements); //Calls the tipsGained method, and passes personalImprovements.
+                System.out.println("You received $" + tipsFromMove + " in tips for that move."); //prints the amount of tips gained
+                moneySaved += tipsFromMove;//adds the tips to player wallet.
 
             } else {
                 //You failed:
-                System.out.println("Your lack of experience clearly shows and the crowd are not happy.");
+                System.out.println("Your lack of experience clearly shows and the crowd are not happy."); //Prints failure message
             }
         }
-        return false;
+        return false; //Return value does not matter here.
     }
 }
