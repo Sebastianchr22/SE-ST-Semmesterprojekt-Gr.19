@@ -8,6 +8,7 @@
  *
  * @author Sebas
  */
+import java.util.Scanner;
 import worldofzuul.Game;
 
 public class SpilWorldOfZuul
@@ -18,7 +19,7 @@ public class SpilWorldOfZuul
      */
     public static void main(String[] args)
     {
-        System.out.println("test");
+        Scanner input = new Scanner(System.in);
         Game game = new Game();
         game.play();
     }
