@@ -20,6 +20,7 @@ public class SpilWorldOfZuul
     public static void main(String[] args)
     {
         Scanner input = new Scanner(System.in);
+        Random risk = new Random();
         Game game = new Game();
         game.play();
     }
