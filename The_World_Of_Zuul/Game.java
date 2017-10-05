@@ -1,21 +1,25 @@
-package worldofzuul;
+
 
 /**
  * @author  Michael Kolling and David J. Barnes
  * @version 2006.03.30
  */
+
 public class Game 
 {
+    MainFloorDanceMech DanceMechanics = new MainFloorDanceMech();
+    PlayerStats playerStats = new PlayerStats();
+    Chance chanceCalc = new Chance();
     private Parser parser;
     private Room currentRoom;
-        
     public Game() 
     {
         createRooms();
+        
         parser = new Parser();
     }
 
-    private void createRooms() // Room constructor
+    private void createRooms()
     {
         Room outside, theatre, pub, lab, office;
       
@@ -112,6 +116,7 @@ public class Game
         else {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
+            
         }
     }
 
