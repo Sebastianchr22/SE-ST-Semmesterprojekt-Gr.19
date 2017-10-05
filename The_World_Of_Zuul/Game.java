@@ -17,28 +17,40 @@ public class Game
 
     private void createRooms() // Room constructor
     {
-        Room outside, theatre, pub, lab, office;
+        Room home, back, locker, floor, p_room, office, front, motel, tower;
       
-        outside = new Room("outside the main entrance of the university");
-        theatre = new Room("in a lecture theatre");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        p_room = new Room("in the private room, where everything can happen");
+        office = new Room("in the managers office");
+        front = new Room("in front of the strip club");
+        motel = new Room("in a motel");
+        tower = new Room("in the home of your new lover");
+        home = new Room("home, where your daughter is");
+        back = new Room("in the backroom.");
+        locker = new Room("in the locker room. Here you can gather points and money by stealing from other strippers");
+        floor = new Room("on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
         
-        outside.setExit("east", theatre);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        home.setExit("back", back);
+ 
+        back.setExit("floor", floor);
+        back.setExit("locker", locker);
+        back.setExit("Home", home);
+       
+        locker.setExit("back", back);
+ 
+        floor.setExit("back", back);        
+        
+        p_room.setExit("Floor", floor);
 
-        theatre.setExit("west", outside);
+        office.setExit("Back", back);
 
-        pub.setExit("east", outside);
+        front.setExit("Floor", floor);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
+        motel.setExit("Home", home);
+        
+        tower.setExit("Home", home);
 
-        office.setExit("west", lab);
 
-        currentRoom = outside;
+        currentRoom = home;
     }
 
     public void play() 
