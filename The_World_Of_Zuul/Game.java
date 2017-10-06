@@ -16,7 +16,7 @@ public class Game
     }
 
 
-    public void createRooms() // Room constructor
+    private void createRooms() // Room constructor
     {
         Room home, back, locker, floor, privateRoom, office, front, motel, tower;
       
