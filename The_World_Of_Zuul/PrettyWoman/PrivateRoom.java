@@ -12,5 +12,8 @@ package PrettyWoman;
  */
 public class PrivateRoom
 {
-    
+    public void test()
+    {
+        System.out.println("Test GitHub");
+    }
 }
