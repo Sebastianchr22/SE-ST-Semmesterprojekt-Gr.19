@@ -1,3 +1,7 @@
+package PrettyWoman;
+
+
+
 /**
  * @author  Michael Kolling and David J. Barnes
  * @version 2006.03.30
@@ -22,7 +26,7 @@ public class Game
         front = new Room("in front of the strip club");
         motel = new Room("in a motel");
         tower = new Room("in the home of your new lover");
-        home = new Room("home, where your daughter is");
+        home = new Room("home, where your daughter is.");
         back = new Room("in the backroom.");
         locker = new Room("in the locker room. Here you can gather points and money by stealing from other strippers");
         floor = new Room("on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
