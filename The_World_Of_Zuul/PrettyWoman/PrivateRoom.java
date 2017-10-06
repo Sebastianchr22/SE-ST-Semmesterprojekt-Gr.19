@@ -12,8 +12,9 @@ package PrettyWoman;
  */
 public class PrivateRoom
 {
-    public void test()
+    public void privateRoom()
     {
-        System.out.println("Test GitHub");
+        Regular regular = new Regular();
+        regular.getInvite();
     }
 }
