@@ -138,15 +138,8 @@ public class Game
         else {
             currentRoom = nextRoom;
             playerPoints.removeMoves();
-            System.out.println(currentRoom.getLongDescription());
-<<<<<<< HEAD:The_World_Of_Zuul/PrettyWoman/Game.java
-            
+            System.out.println(currentRoom.getLongDescription());            
         }
-=======
-        }  
-        
-                  
->>>>>>> master:The_World_Of_Zuul/Game.java
     }
   
     private boolean quit(Command command) 
