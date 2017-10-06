@@ -1,7 +1,5 @@
 package PrettyWoman;
 
-
-
 /**
  * @author  Michael Kolling and David J. Barnes
  * @version 2006.03.30
@@ -14,8 +12,11 @@ public class Game
     Chance chanceCalc = new Chance();
     private Parser parser;
     private Room currentRoom;
+    public Moves playerPoints = new Moves();
+        
     public Game() 
     {
+        
         createRooms();
         
         parser = new Parser();
@@ -23,36 +24,52 @@ public class Game
 
     private void createRooms()
     {
-        Room outside, theatre, pub, lab, office;
+
+        Room home, back, locker, floor, privateRoom, office, front, motel, tower;
       
-        outside = new Room("outside the main entrance of the university");
-        theatre = new Room("in a lecture theatre");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        privateRoom = new Room("in the private room, where everything can happen");        
+        office = new Room("in the managers office");
+        front = new Room("in front of the strip club");
+        motel = new Room("in a motel");
+        tower = new Room("in the home of your new lover");
+        home = new Room("home, where your daughter is");
+        back = new Room("in the backroom.");
+        locker = new Room("in the locker room. Here you can gather points and money by stealing from other strippers");
+        floor = new Room("on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
         
-        outside.setExit("east", theatre);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        home.setExit("back", back);
+ 
+        back.setExit("floor", floor);
+        back.setExit("locker", locker);
 
-        theatre.setExit("west", outside);
+        back.setExit("home", home);
+       
+        locker.setExit("back", back);
+ 
+        floor.setExit("back", back);
+        floor.setExit("front", front);
+        floor.setExit("private room", privateRoom);
+        
+        privateRoom.setExit("floor", floor);
 
-        pub.setExit("east", outside);
+        office.setExit("back", back);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
+        front.setExit("floor", floor);
 
-        office.setExit("west", lab);
+        motel.setExit("home", home);
+        
+        tower.setExit("home", home);
 
-        currentRoom = outside;
-    }
-
+        currentRoom = home;
+    }   
+  
     public void play() 
     {            
         printWelcome();
 
         boolean finished = false;
         while (! finished) {
+            System.out.println("Point: " + playerPoints.getMoves());
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
@@ -62,8 +79,7 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to the Pretty Woman Strip Club!");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
@@ -79,12 +95,12 @@ public class Game
             System.out.println("I don't know what you mean...");
             return false;
         }
-
         if (commandWord == CommandWord.HELP) {
             printHelp();
         }
         else if (commandWord == CommandWord.GO) {
-            goRoom(command);
+            goRoom(command);  
+            
         }
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
@@ -111,17 +127,28 @@ public class Game
         String direction = command.getSecondWord();
 
         Room nextRoom = currentRoom.getExit(direction);
+        
+        if ("home".equals(direction)) {
+            playerPoints.resetMoves();
+        }
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
         else {
             currentRoom = nextRoom;
+            playerPoints.removeMoves();
             System.out.println(currentRoom.getLongDescription());
+<<<<<<< HEAD:The_World_Of_Zuul/PrettyWoman/Game.java
             
         }
+=======
+        }  
+        
+                  
+>>>>>>> master:The_World_Of_Zuul/Game.java
     }
-
+  
     private boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {
