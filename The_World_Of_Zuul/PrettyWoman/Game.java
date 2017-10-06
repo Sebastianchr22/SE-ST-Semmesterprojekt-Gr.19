@@ -1,9 +1,15 @@
+package PrettyWoman;
+
 /**
  * @author  Michael Kolling and David J. Barnes
  * @version 2006.03.30
  */
+
 public class Game 
 {
+    MainFloorDanceMech DanceMechanics = new MainFloorDanceMech();
+    PlayerStats playerStats = new PlayerStats();
+    Chance chanceCalc = new Chance();
     private Parser parser;
     private Room currentRoom;
     public Moves playerPoints = new Moves();
@@ -12,11 +18,11 @@ public class Game
     {
         
         createRooms();
+        
         parser = new Parser();
     }
 
-
-    private void createRooms() // Room constructor
+    private void createRooms()
     {
 
         Room home, back, locker, floor, privateRoom, office, front, motel, tower;
@@ -133,9 +139,14 @@ public class Game
             currentRoom = nextRoom;
             playerPoints.removeMoves();
             System.out.println(currentRoom.getLongDescription());
+<<<<<<< HEAD:The_World_Of_Zuul/PrettyWoman/Game.java
+            
+        }
+=======
         }  
         
                   
+>>>>>>> master:The_World_Of_Zuul/Game.java
     }
   
     private boolean quit(Command command) 
