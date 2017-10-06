@@ -1,5 +1,3 @@
-package worldofzuul;
-
 /**
  * @author  Michael Kolling and David J. Barnes
  * @version 2006.03.30
@@ -17,9 +15,9 @@ public class Game
 
     private void createRooms() // Room constructor
     {
-        Room home, back, locker, floor, p_room, office, front, motel, tower;
+        Room home, back, locker, floor, privateRoom, office, front, motel, tower, jail;
       
-        p_room = new Room("in the private room, where everything can happen");
+        privateRoom = new Room("in the private room, where everything can happen");
         office = new Room("in the managers office");
         front = new Room("in front of the strip club");
         motel = new Room("in a motel");
@@ -28,26 +26,29 @@ public class Game
         back = new Room("in the backroom.");
         locker = new Room("in the locker room. Here you can gather points and money by stealing from other strippers");
         floor = new Room("on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
+        jail = new Room("you're in jail, deal with it.");
         
         home.setExit("back", back);
  
         back.setExit("floor", floor);
         back.setExit("locker", locker);
-        back.setExit("Home", home);
+        back.setExit("home", home);
        
         locker.setExit("back", back);
  
         floor.setExit("back", back);        
         
-        p_room.setExit("Floor", floor);
+        privateRoom.setExit("floor", floor);
 
-        office.setExit("Back", back);
+        office.setExit("back", back);
 
-        front.setExit("Floor", floor);
+        front.setExit("floor", floor);
 
-        motel.setExit("Home", home);
+        motel.setExit("home", home);
         
-        tower.setExit("Home", home);
+        tower.setExit("home", home);
+        
+        jail.setExit("home", home);
 
 
         currentRoom = home;
