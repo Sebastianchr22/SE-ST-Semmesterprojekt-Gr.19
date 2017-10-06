@@ -1,5 +1,3 @@
-package worldofzuul;
-
 /**
  * @author  Michael Kolling and David J. Barnes
  * @version 2006.03.30
@@ -8,18 +6,22 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    public Moves playerPoints = new Moves();
         
     public Game() 
     {
+        
         createRooms();
         parser = new Parser();
     }
 
+
     private void createRooms() // Room constructor
     {
-        Room home, back, locker, floor, p_room, office, front, motel, tower;
+
+        Room home, back, locker, floor, privateRoom, office, front, motel, tower;
       
-        p_room = new Room("in the private room, where everything can happen");
+        privateRoom = new Room("in the private room, where everything can happen");        
         office = new Room("in the managers office");
         front = new Room("in front of the strip club");
         motel = new Room("in a motel");
@@ -33,32 +35,35 @@ public class Game
  
         back.setExit("floor", floor);
         back.setExit("locker", locker);
-        back.setExit("Home", home);
+
+        back.setExit("home", home);
        
         locker.setExit("back", back);
  
-        floor.setExit("back", back);        
+        floor.setExit("back", back);
+        floor.setExit("front", front);
+        floor.setExit("private room", privateRoom);
         
-        p_room.setExit("Floor", floor);
+        privateRoom.setExit("floor", floor);
 
-        office.setExit("Back", back);
+        office.setExit("back", back);
 
-        front.setExit("Floor", floor);
+        front.setExit("floor", floor);
 
-        motel.setExit("Home", home);
+        motel.setExit("home", home);
         
-        tower.setExit("Home", home);
-
+        tower.setExit("home", home);
 
         currentRoom = home;
-    }
-
+    }   
+  
     public void play() 
     {            
         printWelcome();
 
         boolean finished = false;
         while (! finished) {
+            System.out.println("Point: " + playerPoints.getMoves());
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
@@ -68,8 +73,7 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to the Pretty Woman Strip Club!");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
@@ -85,12 +89,12 @@ public class Game
             System.out.println("I don't know what you mean...");
             return false;
         }
-
         if (commandWord == CommandWord.HELP) {
             printHelp();
         }
         else if (commandWord == CommandWord.GO) {
-            goRoom(command);
+            goRoom(command);  
+            
         }
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
@@ -117,16 +121,23 @@ public class Game
         String direction = command.getSecondWord();
 
         Room nextRoom = currentRoom.getExit(direction);
+        
+        if ("home".equals(direction)) {
+            playerPoints.resetMoves();
+        }
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
         else {
             currentRoom = nextRoom;
+            playerPoints.removeMoves();
             System.out.println(currentRoom.getLongDescription());
-        }
+        }  
+        
+                  
     }
-
+  
     private boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {
