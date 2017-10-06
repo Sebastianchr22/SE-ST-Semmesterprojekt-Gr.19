@@ -7,7 +7,7 @@
 
 public class Game 
 {
-    MainFloorDanceMech DanceMechanics = new MainFloorDanceMech();
+    DanceMech DanceMechanics = new DanceMech();
     PlayerStats playerStats = new PlayerStats();
     Chance chanceCalc = new Chance();
     private Parser parser;
