@@ -1,4 +1,4 @@
-package worldofzuul;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,12 +26,14 @@ public class MainFloorDanceMech {
      */
     public void printInterface(){     
         System.out.println("Money: " + Math.round((playerStats.getMoneySaved())*100.0)/100.0 + "      " + "Exp: " + playerStats.getExperience());//Prints the saved money rounded off to two digits.
-
+        String Map = playerStats.printMap("Room", "ManagerPossition");
+        System.out.println(Map);
     }
     
     
     public static void main(String[] args) {
         MainFloorDanceMech gameplay = new MainFloorDanceMech();
+        
         int om = 1;
         do {
             gameplay.printInterface();
@@ -125,40 +127,5 @@ public class MainFloorDanceMech {
                 System.out.println("Your lack of experience clearly shows and the crowd are not happy.");
             }
         }
-    }
-}
-class Chance{
-    /**
-     * Takes to numbers and finds a common divider, to figure out the chance of something happening.
-     * this is done by first checking which number is larger.
-     * then we find a common divider between the two, in int form.
-     * we make sure that we are not dividing by 0.
-     * @param num1
-     * @param num2
-     * @return true or false
-     */
-    public boolean ChanceCalc(int num1, int num2) {
-        int divider = 1;
-
-        if (num1 < num2) {
-            //Number 1 is smaller than number 2:
-            divider = num2 / num1;
-        }
-        if (num2 < num1) {
-            //Number 2 is smaller than number 1:
-            divider = num1 / num2;
-        } else if (num1 == num2) {
-            //Avoiding dividing by 0:
-            num1 = 1;
-            num2 = 1;
-        }
-        int random = (int) (1 + Math.random() * divider);
-        if (random == divider) {
-            //True:
-            return true;
-        } else {
-            return false;
-        }
-
     }
 }

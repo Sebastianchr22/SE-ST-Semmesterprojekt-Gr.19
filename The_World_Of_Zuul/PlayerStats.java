@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package worldofzuul;
+
 
 /**
  *
@@ -31,5 +31,28 @@ class PlayerStats {
     }
     public int addPersonalImprovements(int value){
         return this.personalImprovements+=value;
+    }
+    
+    public String printMap(String CurrentRoom, String ManagerPossition){
+        String Map = 
+        "          -----     -----                   / \\   "+"\n"+
+        "          |   |     |   |                 /    \\  "+"\n"+
+        "          -----     -----               /       \\ "+"\n"+
+        "              |         |               --------- "+"\n"+
+        "------      -----     -----             |        | "+"\n"+
+        "|    | ____ |   | ___ |   |             |        | "+"\n"+
+        "------      -----     -----             |        | "+"\n"+
+        "            /           |               |        | "+"\n"+
+        "        -----           |               |        | "+"\n"+
+        "        |   |          -----            |        | "+"\n"+
+        "        -----          |   |  - - - - - |        | "+"\n"+
+        "                       -----            |        | "+"\n"+
+        "                                        |        | "+"\n"+
+        "                                        |        | "+"\n"+
+        "                                        ---------- "+"\n"+
+        "                                                   "+"\n"+
+        "                                                   ";
+        
+        return Map;
     }
 }
