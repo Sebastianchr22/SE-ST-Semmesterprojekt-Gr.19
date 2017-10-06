@@ -18,9 +18,10 @@ public class Game
 
     private void createRooms() // Room constructor
     {
+
         Room home, back, locker, floor, privateRoom, office, front, motel, tower;
       
-        privateRoom = new Room("in the private room, where everything can happen");
+        privateRoom = new Room("in the private room, where everything can happen");        
         office = new Room("in the managers office");
         front = new Room("in front of the strip club");
         motel = new Room("in a motel");
@@ -34,6 +35,7 @@ public class Game
  
         back.setExit("floor", floor);
         back.setExit("locker", locker);
+
         back.setExit("home", home);
        
         locker.setExit("back", back);
@@ -51,7 +53,6 @@ public class Game
         motel.setExit("home", home);
         
         tower.setExit("home", home);
-
 
         currentRoom = home;
     }   
