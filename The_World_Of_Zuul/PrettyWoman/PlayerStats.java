@@ -11,10 +11,12 @@ package PrettyWoman;
  *
  * @author Sebas
  */
+import java.util.*;
 class PlayerStats {
     private int Experience = 12;
     private int Enhancements = 5;
     private double moneySaved = 0;
+    private int currentHunger = 30;
     PlayerStats(){}
     public double getMoneySaved(){
         return this.moneySaved;
@@ -33,6 +35,15 @@ class PlayerStats {
     }
     public int addEnhancements(int value){
         return this.Enhancements+=value;
+    }
+    public void printUI(){
+        System.out.println("");System.out.println("                      "+"           Hunger:");
+        System.out.print("                      "+"----------------------------"+"     Money: " + moneySaved+" "     +"\n"+"                      "+"|");
+        for(int i = 0; i <= currentHunger/4; i++){
+            System.out.print("/");
+        }for(int j = 24-currentHunger/4;j >= 0; j--) 
+            System.out.print(" ");
+        System.out.print("|"+"     Enhancements: "+Enhancements+"\n"+"                      "+"----------------------------"+"     Experience: "+Experience+"\n");
     }
     
     public void printMap(String CurrentRoom){
