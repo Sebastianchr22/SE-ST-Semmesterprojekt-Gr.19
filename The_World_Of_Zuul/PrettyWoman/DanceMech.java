@@ -21,15 +21,13 @@ public class DanceMech {
     public int move2ExpRequired = 25;
     PlayerStats playerStats = new PlayerStats();
     Chance chanceClac = new Chance();
-
     /**
      * Prints the money and experience gained by the player:
      * @return nothing.
      */
     public void printInterface(){     
         System.out.println("Money: " + Math.round((playerStats.getMoneySaved())*100.0)/100.0 + "      " + "Exp: " + playerStats.getExperience());//Prints the saved money rounded off to two digits.
-        playerStats.printMap("FLOOR", "OFFICE");
-        
+        playerStats.printMap("FLOOR");
     }
     
     

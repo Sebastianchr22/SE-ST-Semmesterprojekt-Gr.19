@@ -35,7 +35,7 @@ class PlayerStats {
         return this.Enhancements+=value;
     }
     
-    public void printMap(String CurrentRoom, String ManagerPossition){
+    public void printMap(String CurrentRoom){
         String PlayerPosition = "";
         String[] Map = new String[18];
         Map[0] = "         OFFICE    OUTSIDE                 / \\    ";
@@ -57,50 +57,26 @@ class PlayerStats {
         Map[16] ="                                        ---------- ";
         Map[17] ="                                        PENTHOUSE  ";
         
-        //Writes players position, marked with "X":
-        if(CurrentRoom.equals("LOCKER")){
-            Map[11] = "        | X |          -----            |        | ";
+        switch(CurrentRoom){
+            case "LOCKER":
+                Map[11] = "        | X |          -----            |        | ";
+                break;
+            case "OUTSIDE":
+                Map[1] = "          |   |     | X |                /  o  \\  ";
+                break;
+            case "P. ROOM":
+                Map[12] = "        -----          | X |  - - - - > |        | ";
+                break;
+            case "HOME":
+                Map[6] = "| X  | ____ |   | ___ |   |             |  | |   | ";
+                break;
+            case "B. ROOM":
+                Map[6] = "|    | ____ | X | ___ |   |             |  | |   | ";
+                break;
+            case "FLOOR":
+                Map[6] = "|    | ____ |   | ___ | X |             |  | |   | ";
+                break;
         }
-        if(CurrentRoom.equals("OUTSIDE")){
-            Map[1] = "          |   |     | X |                /  o  \\  ";
-        }
-        if(CurrentRoom.equals("P. ROOM")){
-            Map[12] = "        -----          | X |  - - - - > |        | ";
-        }
-        if(CurrentRoom.equals("HOME")){
-            Map[6] = "| X  | ____ |   | ___ |   |             |  | |   | ";
-        }
-        if(CurrentRoom.equals("B. ROOM")){
-            Map[6] = "|    | ____ | X | ___ |   |             |  | |   | ";
-        }
-        if(CurrentRoom.equals("FLOOR")){
-            Map[6] = "|    | ____ |   | ___ | X |             |  | |   | ";
-        }
-        
-        
-        /*
-        //Marks Manager position, marked with "M":
-        if(ManagerPossition.equals("LOCKER")){
-            Map[11] = "        | M |          -----            |        | ";
-        }
-        if(ManagerPossition.equals("OUTSIDE")){
-            Map[1] = "          |   |     | M |                /  o  \\  ";
-        }
-        if(ManagerPossition.equals("OFFICE")){
-            Map[2] = "          | M |     |   |                /  o  \\  ";
-        }
-        if(ManagerPossition.equals("P. ROOM")){
-            Map[12] = "        -----          | M |  - - - - > |        | ";
-        }
-        if(ManagerPossition.equals("B. ROOM")){
-            Map[6] = "|    | ____ | M | ___ |   |             |  | |   | ";
-        }
-        if(ManagerPossition.equals("FLOOR")){
-            Map[6] = "|    | ____ |   | ___ | M |             |  | |   | ";
-        }*/
-        
-        
-        
         for(int i = 0; i <= 17; i++){
             System.out.println(Map[i]);
         }
