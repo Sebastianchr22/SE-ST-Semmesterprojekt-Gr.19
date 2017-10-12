@@ -6,12 +6,13 @@ package PrettyWoman;
  */
 public class Game {
 
-    MainFloorDanceMech DanceMechanics = new MainFloorDanceMech();
+    DanceMech DanceMechanics = new DanceMech();
     PlayerStats playerStats = new PlayerStats();
     Chance chanceCalc = new Chance();
     private Parser parser;
     private Room currentRoom;
-    public Moves playerPoints = new Moves();
+  
+    public Moves moves = new Moves();
 
     public Game() {
 
@@ -21,6 +22,12 @@ public class Game {
     }
 
     private void createRooms() {
+
+        Room home, back, locker, floor, privateRoom, office, outside, motel, tower;
+
+        privateRoom = new Room("in the private room, where everything can happen");
+        office = new Room("in the managers office");
+        outside = new Room("outside of the strip club"+"\n"+"There is a bit of line of people waiting to get in.."+"\n"+"The bouncer is out here, he always smiles at me..");
 
         Room home, back, locker, floor, privateRoom, office, front, motel, tower;
 
@@ -44,14 +51,16 @@ public class Game {
         locker.setExit("back", back);
 
         floor.setExit("back", back);
-        floor.setExit("front", front);
+
+        floor.setExit("outside", outside);
+
         floor.setExit("private room", privateRoom);
 
         privateRoom.setExit("floor", floor);
 
         office.setExit("back", back);
 
-        front.setExit("floor", floor);
+        outside.setExit("floor", floor);
 
         motel.setExit("home", home);
 
@@ -60,12 +69,18 @@ public class Game {
         currentRoom = home;
     }
 
+    public String getRoom(){
+        return String.valueOf(currentRoom.hashCode()); 
+    }
+
     public void play() {
         printWelcome();
-
         boolean finished = false;
         while (!finished) {
-            System.out.println("Point: " + playerPoints.getMoves());
+            playerStats.printUI();
+            
+            System.out.println("Moves left: " + moves.getMoves());
+
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
@@ -93,8 +108,13 @@ public class Game {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
+        }else if(commandWord == CommandWord.MAP){
+            System.out.println(getRoom());
+            playerStats.printMap(getRoom());
+        }else if (commandWord == CommandWord.FLIRT && getRoom().equals("outside")){
+            System.out.println("FLIRTIN WOROSH");
+        }else if (commandWord == CommandWord.QUIT) {
 
-        } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
         return wantToQuit;
@@ -102,8 +122,6 @@ public class Game {
 
     private void printHelp() {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
-        System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
     }
@@ -117,16 +135,14 @@ public class Game {
         String direction = command.getSecondWord();
 
         Room nextRoom = currentRoom.getExit(direction);
-
+        
         if ("home".equals(direction)) {
-            playerPoints.resetMoves();
-        }
-
-        if (nextRoom == null) {
+            moves.resetMoves();
+        }if (nextRoom == null) {
             System.out.println("There is no door!");
         } else {
             currentRoom = nextRoom;
-            playerPoints.removeMoves();
+            moves.removeMoves();
             System.out.println(currentRoom.getLongDescription());
 
         }

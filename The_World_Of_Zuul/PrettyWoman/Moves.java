@@ -23,7 +23,6 @@ class Moves {
 
     public void resetMoves() {
         moves = 10;
-        moves++;
     }
 
 }

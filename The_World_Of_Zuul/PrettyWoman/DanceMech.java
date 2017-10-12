@@ -13,26 +13,27 @@ package PrettyWoman;
  */
 
 import java.util.*;
+import java.math.*;
 
 
-public class MainFloorDanceMech {
+public class DanceMech {
     public int move1ExpRequired = 11;
     public int move2ExpRequired = 25;
     PlayerStats playerStats = new PlayerStats();
     Chance chanceClac = new Chance();
-
     /**
      * Prints the money and experience gained by the player:
      * @return nothing.
      */
     public void printInterface(){     
         System.out.println("Money: " + Math.round((playerStats.getMoneySaved())*100.0)/100.0 + "      " + "Exp: " + playerStats.getExperience());//Prints the saved money rounded off to two digits.
-
+        playerStats.printMap("FLOOR");
     }
     
     
     public static void main(String[] args) {
-        MainFloorDanceMech gameplay = new MainFloorDanceMech();
+        DanceMech gameplay = new DanceMech();
+        
         int om = 1;
         do {
             gameplay.printInterface();
@@ -108,7 +109,7 @@ public class MainFloorDanceMech {
             //You have enough experience to perform this move:
             System.out.println("Your move was successful.");
             playerStats.addExperience(1);
-            double tipsFromMove = tipsGained(playerStats.getPersonalImprovements());
+            double tipsFromMove = tipsGained(playerStats.getEnhancements());
             System.out.println("You received $" + tipsFromMove + " in tips for that move.");
             playerStats.addMoneySaved(tipsFromMove);
         } else {
@@ -117,7 +118,7 @@ public class MainFloorDanceMech {
                 //It was successful:
                 System.out.println("Although you are not experienced with that move, you were successful.");
                 playerStats.addExperience(1);
-                double tipsFromMove = tipsGained(playerStats.getPersonalImprovements());
+                double tipsFromMove = tipsGained(playerStats.getEnhancements());
                 System.out.println("You received $" + tipsFromMove + " in tips for that move.");
                 playerStats.addMoneySaved(tipsFromMove);
 
@@ -127,40 +128,4 @@ public class MainFloorDanceMech {
             }
         }
     }
-}
-class Chance{
-    /**
-     * Takes to numbers and finds a common divider, to figure out the chance of something happening.
-     * this is done by first checking which number is larger.
-     * then we find a common divider between the two, in int form.
-     * we make sure that we are not dividing by 0.
-     * @param num1
-     * @param num2
-     * @return true or false
-     */
-    public boolean ChanceCalc(int num1, int num2) {
-        int divider = 1;
-
-        if (num1 < num2) {
-            //Number 1 is smaller than number 2:
-            divider = num2 / num1;
-        }
-        if (num2 < num1) {
-            //Number 2 is smaller than number 1:
-            divider = num1 / num2;
-        } else if (num1 == num2) {
-            //Avoiding dividing by 0:
-            num1 = 1;
-            num2 = 1;
-        }
-        int random = (int) (1 + Math.random() * divider);
-        if (random == divider) {
-            //True:
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
 }
