@@ -22,7 +22,7 @@ public class SpilWorldOfZuul
         System.out.println(sebastian.getPreferences());
         Game game = new Game();
         //game.play();
-        game.getName();
+        System.out.println(game.getName());
     }
 
 }

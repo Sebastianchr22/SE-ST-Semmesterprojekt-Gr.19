@@ -152,8 +152,8 @@ public class Game
             return true;
         }
     }
-    public void getName()
+    public String getName()
     {
-        System.out.println(currentRoom.getNameBackend());
+        return currentRoom.getNameBackend();
     }
 }
