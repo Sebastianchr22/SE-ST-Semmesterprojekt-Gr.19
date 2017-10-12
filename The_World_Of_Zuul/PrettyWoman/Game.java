@@ -27,15 +27,15 @@ public class Game
 
         Room home, back, locker, floor, privateRoom, office, front, motel, tower;
       
-        privateRoom = new Room("in the private room, where everything can happen");        
-        office = new Room("in the managers office");
-        front = new Room("in front of the strip club");
-        motel = new Room("in a motel");
-        tower = new Room("in the home of your new lover");
-        home = new Room("home, where your daughter is");
-        back = new Room("in the backroom.");
-        locker = new Room("in the locker room. Here you can gather points and money by stealing from other strippers");
-        floor = new Room("on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
+        privateRoom = new Room("Private room", "in the private room, where everything can happen");        
+        office = new Room("Office", "in the managers office");
+        front = new Room("Front", "in front of the strip club");
+        motel = new Room("Motel", "in a motel");
+        tower = new Room("Tower", "in the home of your new lover");
+        home = new Room("Home", "home, where your daughter is");
+        back = new Room("Backroom", "in the backroom.");
+        locker = new Room("Locker room", "in the locker room. Here you can gather points and money by stealing from other strippers");
+        floor = new Room("Dance floor", "on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
         
         home.setExit("back", back);
  
@@ -61,7 +61,7 @@ public class Game
         tower.setExit("home", home);
 
         currentRoom = home;
-    }   
+    }  
   
     public void play() 
     {            
@@ -151,5 +151,9 @@ public class Game
         else {
             return true;
         }
+    }
+    public void getName()
+    {
+        System.out.println(currentRoom.getNameBackend());
     }
 }

@@ -21,7 +21,8 @@ public class SpilWorldOfZuul
         Regular sebastian = new Regular(0, "Sebastian", 22, "Swaggy", "boobs", 10, "ass", 10);
         System.out.println(sebastian.getPreferences());
         Game game = new Game();
-        game.play();
+        //game.play();
+        game.getName();
     }
 
 }
