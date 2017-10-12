@@ -11,6 +11,7 @@ public class Game {
     Chance chanceCalc = new Chance();
     private Parser parser;
     private Room currentRoom;
+  
     public Moves moves = new Moves();
 
     public Game() {
@@ -27,6 +28,12 @@ public class Game {
         privateRoom = new Room("in the private room, where everything can happen");
         office = new Room("in the managers office");
         outside = new Room("outside of the strip club"+"\n"+"There is a bit of line of people waiting to get in.."+"\n"+"The bouncer is out here, he always smiles at me..");
+
+        Room home, back, locker, floor, privateRoom, office, front, motel, tower;
+
+        privateRoom = new Room("in the private room, where everything can happen");
+        office = new Room("in the managers office");
+        front = new Room("in front of the strip club");
         motel = new Room("in a motel");
         tower = new Room("in the home of your new lover");
         home = new Room("home, where your daughter is");
@@ -44,7 +51,9 @@ public class Game {
         locker.setExit("back", back);
 
         floor.setExit("back", back);
+
         floor.setExit("outside", outside);
+
         floor.setExit("private room", privateRoom);
 
         privateRoom.setExit("floor", floor);
@@ -59,6 +68,7 @@ public class Game {
 
         currentRoom = home;
     }
+
     public String getRoom(){
         return String.valueOf(currentRoom.hashCode()); 
     }
@@ -70,6 +80,7 @@ public class Game {
             playerStats.printUI();
             
             System.out.println("Moves left: " + moves.getMoves());
+
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
@@ -97,13 +108,13 @@ public class Game {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
-
         }else if(commandWord == CommandWord.MAP){
             System.out.println(getRoom());
             playerStats.printMap(getRoom());
         }else if (commandWord == CommandWord.FLIRT && getRoom().equals("outside")){
             System.out.println("FLIRTIN WOROSH");
         }else if (commandWord == CommandWord.QUIT) {
+
             wantToQuit = quit(command);
         }
         return wantToQuit;
@@ -124,7 +135,6 @@ public class Game {
         String direction = command.getSecondWord();
 
         Room nextRoom = currentRoom.getExit(direction);
-
         
         if ("home".equals(direction)) {
             moves.resetMoves();

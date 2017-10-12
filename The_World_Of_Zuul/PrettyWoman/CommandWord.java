@@ -9,6 +9,7 @@ package PrettyWoman;
 public enum CommandWord
 {
     // Sets a list of keywords:
+
     GO("go"), QUIT("quit"), HELP("help"), FLIRT("flirt"), MAP("map"), UNKNOWN("?");
     
     //Creates a string for the keywords:
