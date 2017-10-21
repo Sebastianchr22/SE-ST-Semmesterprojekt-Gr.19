@@ -1,19 +1,22 @@
 package PrettyWoman;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
 /**
  *
  * @author Sebas
  */
 import java.util.*;
 class PlayerStats {
-    private int Experience = 12;
-    private int Enhancements = 5;
+    private int Experience = 0;
+    private int Enhancements = 0;
     private double moneySaved = 0;
-    private int currentHunger = 30;
+    private int currentHunger = 100;
     PlayerStats(){}
     public double getMoneySaved(){
         return this.moneySaved;
@@ -27,11 +30,20 @@ class PlayerStats {
     public int addExperience(int value){
         return this.Experience+=value;
     }
+    public int removeExperience(int value){
+        return this.Experience-=value;
+    }
     public double addMoneySaved(double value){
         return this.moneySaved+=value;
     }
+    public double removeMoneySaved(double value){
+        return this.moneySaved-=value;
+    }
     public int addEnhancements(int value){
         return this.Enhancements+=value;
+    }
+    public int removeEnhancements(int value){
+        return this.Enhancements-=value;
     }
     public void printUI(){
         System.out.println("");System.out.println("                      "+"           Hunger:");
