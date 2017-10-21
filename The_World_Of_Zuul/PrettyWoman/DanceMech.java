@@ -1,41 +1,32 @@
 package PrettyWoman;
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author Sebas
- */
-
 import java.util.*;
 import java.math.*;
 
 
 public class DanceMech {
-    public int move1ExpRequired = 11;
+    public int move1ExpRequired = 0;
     public int move2ExpRequired = 25;
     PlayerStats playerStats = new PlayerStats();
-    Chance chanceClac = new Chance();
+    Chance chance = new Chance();
+    
+    Regular Sebastian = new Regular(1,"Sebastian",22,"Swaggy","Gold",2,"Silver",3);
+    
     /**
      * Prints the money and experience gained by the player:
      * @return nothing.
      */
     public void printInterface(){     
         System.out.println("Money: " + Math.round((playerStats.getMoneySaved())*100.0)/100.0 + "      " + "Exp: " + playerStats.getExperience());//Prints the saved money rounded off to two digits.
-        playerStats.printMap("FLOOR");
+        //playerStats.printMap("FLOOR");
     }
     
     
     public static void main(String[] args) {
+        boolean RegularInRoom;
         DanceMech gameplay = new DanceMech();
-        
         int om = 1;
         do {
+            
             gameplay.printInterface();
             //Basic test values set:
             String mainFloorChoice;
@@ -48,6 +39,7 @@ public class DanceMech {
             System.out.println("The crowd looks to have some money to spend on a good show.");
             System.out.println("1.  Dance");
             System.out.println("2. Perform move");
+            System.out.println("3. Private room dance");
 
             //Spacing:
             System.out.println("");
@@ -84,13 +76,19 @@ public class DanceMech {
      * @return 
      */
     public void danceMoveYield(String danceMoveChoosen) {
+        PrivateRoom pRoom = new PrivateRoom();
         if (danceMoveChoosen.equals("1")) {
             danceMovePrint(playerStats.getExperience(), move1ExpRequired);//Calls the method below to print success or failure.
         }
         if (danceMoveChoosen.equals("2")) {
             //Insert from move 1:
             danceMovePrint(playerStats.getExperience(), move2ExpRequired);// --||--
-        } else {
+        }if(danceMoveChoosen.equals("3")){
+            pRoom.privateRoomInvite(Sebastian);
+        }if(danceMoveChoosen.equals("map")){
+            playerStats.printMap("Floor");
+        }
+        else {
             //Unknown dancemove
         }
     }
@@ -114,7 +112,7 @@ public class DanceMech {
             playerStats.addMoneySaved(tipsFromMove);
         } else {
             //You do not have enough experience to perform this move:
-            if (chanceClac.ChanceCalc(25, 100)) {
+            if (chance.ChanceCalc(25, 100)) {
                 //It was successful:
                 System.out.println("Although you are not experienced with that move, you were successful.");
                 playerStats.addExperience(1);
