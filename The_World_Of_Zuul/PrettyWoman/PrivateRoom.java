@@ -1,8 +1,4 @@
 package PrettyWoman;
-/**
- *
- * @author Obel
- */
 public class PrivateRoom
 {
     Chance chance = new Chance();
