@@ -15,15 +15,17 @@ public class Item {
     private String name;
     private String description;
     private String category;
+    private int size;
     
     Item(){
-        Item goldring = new Item(0, "Gold Ring", "A nice gold ring", "Gold");
     }
-    Item(int ID, String name, String desc, String cat) {
+    
+    Item(int ID, String name, String desc, String cat, int size) {
         this.ID = ID;
         this.name = name;
         this.description = desc;
         this.category = cat;
+        this.size = size;
     }
 
     public String getValues() {
@@ -34,34 +36,17 @@ public class Item {
     public int getID() {
         return this.ID;
     }
-
-    public String getCat() {
+    public String getName() {
+        return this.name;
+    }
+    public String getDesc() {
         return this.description;
     }
-
-    
-    public void createInventory(){
-        Inventory inv = new Inventory();
+    public String getCat() {
+        return this.category;
     }
-    
-    public void createStartInv(){
-        Inventory inv = new Inventory();
-        Item goldring = new Item(0, "Gold Ring", "A nice gold ring", "Gold");
-        inv.addToIventory(goldring);
-        inv.showInventory();
+    public int getSize() {
+        return this.size;
     }
-}
-
-//skal dette bruges?
-//Få første objekt ind i mit inventory fra starten af spillet
-class createItems{
-    
-    createItems(){
-        Item goldring = new Item(0, "Gold Ring", "A nice gold ring", "Gold");
-    }
-    
-    public void createItems() {
-        Item goldring = new Item(0, "Gold Ring", "A nice gold ring", "Gold");
-    }
-    
+   
 }
