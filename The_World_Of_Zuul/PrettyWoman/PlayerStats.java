@@ -1,5 +1,6 @@
 package PrettyWoman;
 class PlayerStats {
+    Inventory inv = new Inventory();
     private int Experience = 0;
     private int Enhancements = 0;
     private double moneySaved = 0;
@@ -43,7 +44,6 @@ class PlayerStats {
     }
     
     public void printMap(String CurrentRoom){
-        String PlayerPosition = "";
         String[] Map = new String[18];
         Map[0] = "         OFFICE    OUTSIDE                 / \\    ";
         Map[1] = "          -----     -----                 /   \\   ";
