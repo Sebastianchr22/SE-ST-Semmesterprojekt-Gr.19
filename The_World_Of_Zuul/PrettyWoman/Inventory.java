@@ -1,20 +1,16 @@
 package PrettyWoman;
 
 import java.util.ArrayList;
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author Sleaf
- */
 class Inventory extends Item{
     ArrayList<Item> Inventory = new ArrayList<>();
+
+    public int totalSize;
+    public int totalWeight;
+    public int itemsCarried = 0;
+    public int goldItems = 0;
+    public int silverItems = 0;
+    public int Jewelry = 0;
+    
     public void addToIventory(Item item){
         Inventory.add(item);
     }
@@ -22,14 +18,26 @@ class Inventory extends Item{
         Inventory.remove(item);
     }
     public void showInventory(){
-        int count = 0;
         for(Item item : Inventory){
-            count++;
             System.out.println(item.getValues());
         }
-        /*if(count == 0){
-            System.out.println("Your inventory is empty.");
-        }*/
     }
-    
+    public void countItems(){
+        for(Item item : Inventory){
+            switch(item.getCat()){
+                case "Gold":
+                    goldItems++;
+                    break;
+                case "Silver":
+                    silverItems++;
+                    break;
+            }
+            totalSize+=item.getSize();
+            itemsCarried++;
+            totalWeight=totalSize*5;
+        }
+    }
+    public void weightToString(){
+        System.out.println("Capacity: " + totalWeight + "/1000g");
+    }
 }
