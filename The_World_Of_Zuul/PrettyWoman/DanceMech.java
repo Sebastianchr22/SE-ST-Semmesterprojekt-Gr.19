@@ -78,14 +78,20 @@ public class DanceMech {
             //Unknown dancemove
         }
     }
+    public int exptips(int experience, int required){
+        if(required>experience){
+            return 0;
+        }else{
+            return (experience-required)*3;
+        }
+    }
     
-
     public void danceMovePrint(int experience, int danceMoveExpRequired){
         if (experience >= danceMoveExpRequired) {
             //You have enough experience to perform this move:
             System.out.println("Your move was successful.");
             playerStats.addExperience(1);
-            double tipsFromMove = tipsGained(experience-danceMoveExpRequired*3);
+            double tipsFromMove = tipsGained(exptips(experience,danceMoveExpRequired));
             System.out.println("You received $" + tipsFromMove + " in tips for that move.");
             playerStats.addMoneySaved(tipsFromMove);
         } else {
@@ -94,7 +100,7 @@ public class DanceMech {
                 //It was successful:
                 System.out.println("Although you are not experienced with that move, you were successful.");
                 playerStats.addExperience(1);
-                double tipsFromMove = tipsGained(experience-danceMoveExpRequired*3);
+                double tipsFromMove = tipsGained(exptips(experience,danceMoveExpRequired));
                 System.out.println("You received $" + tipsFromMove + " in tips for that move.");
                 playerStats.addMoneySaved(tipsFromMove);
 
