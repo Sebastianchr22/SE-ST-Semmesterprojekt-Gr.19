@@ -80,3 +80,12 @@ class PlayerStats {
             case "B. ROOM":
                 Map[6] = "|    | ____ | X | ___ |   |             |  | |   | ";
                 break;
+            case "FLOOR":
+                Map[6] = "|    | ____ |   | ___ | X |             |  | |   | ";
+                break;
+        }
+        for(int i = 0; i <= 17; i++){
+            System.out.println(Map[i]);
+        }
+    }
+}
