@@ -1,17 +1,16 @@
 package PrettyWoman;
-import java.math.*;
 public class PrivateRoom extends DanceMech
-{
-    PlayerStats playerStats = new PlayerStats();
-    
-    public void pRoomTips(){
-        double amount = Math.round((tipsGained(playerStats.getEnhancements())*3.3+500)*100.0)/100.0;
+{    
+    public void pRoomTips(int bonus){
+        double amount = Math.round((tipsGained(playerStats.getEnhancements()*6.5+350+bonus))*100.0)/100.0;
         System.out.println("You gained $" + amount + " from dancing.");
+        System.out.println("You have $"+playerStats.getMoneySaved());
         playerStats.addMoneySaved(amount);
     }
     public void privateRoomInvite(Regular regular){
-        if(regular.getAge() < 18){
-            //Razzia might happen:
+        //If the regular is a minor, a raid might happen
+        if(regular.getAge() <= 21){
+            //Chance of police raid 50%:
             if(chance.ChanceCalc(50, 100)){
                 //Returned true:
                 System.out.println("A police raid just happened and you just got busted dancing for minor.");
@@ -22,11 +21,11 @@ public class PrivateRoom extends DanceMech
             }else{
                 //Returned false:
                 System.out.println("A police raid just happened, thankfully the police did not notice that you were dancing for a minor.");
-                pRoomTips();
+                pRoomTips(250);
             }
         }else{
             //No razzia:
-            pRoomTips();
+            pRoomTips(0);
         }
     }
 }
