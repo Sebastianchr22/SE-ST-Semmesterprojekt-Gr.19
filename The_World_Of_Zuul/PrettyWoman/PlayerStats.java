@@ -71,13 +71,13 @@ class PlayerStats {
             case "OUTSIDE":
                 Map[1] = "          |   |     | X |                /  o  \\  ";
                 break;
-            case "P. ROOM":
+            case "PRIVATEROOM":
                 Map[12] = "        -----          | X |  - - - - > |        | ";
                 break;
             case "HOME":
                 Map[6] = "| X  | ____ |   | ___ |   |             |  | |   | ";
                 break;
-            case "B. ROOM":
+            case "BACK":
                 Map[6] = "|    | ____ | X | ___ |   |             |  | |   | ";
                 break;
             case "FLOOR":
