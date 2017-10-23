@@ -1,5 +1,4 @@
 package PrettyWoman;
-import java.util.*;
 class PlayerStats {
     private int Experience = 0;
     private int Enhancements = 0;
@@ -35,7 +34,7 @@ class PlayerStats {
     }
     public void printUI(){
         System.out.println("");System.out.println("                      "+"           Hunger:");
-        System.out.print("                      "+"----------------------------"+"     Money: " + moneySaved+" "     +"\n"+"                      "+"|");
+        System.out.print("                      "+"----------------------------"+"     $ " + moneySaved+" "     +"\n"+"                      "+"|");
         for(int i = 0; i <= currentHunger/4; i++){
             System.out.print("/");
         }for(int j = 24-currentHunger/4;j >= 0; j--) 
@@ -81,12 +80,3 @@ class PlayerStats {
             case "B. ROOM":
                 Map[6] = "|    | ____ | X | ___ |   |             |  | |   | ";
                 break;
-            case "FLOOR":
-                Map[6] = "|    | ____ |   | ___ | X |             |  | |   | ";
-                break;
-        }
-        for(int i = 0; i <= 17; i++){
-            System.out.println(Map[i]);
-        }
-    }
-}
