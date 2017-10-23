@@ -65,23 +65,29 @@ class PlayerStats {
         Map[17] ="                                        PENTHOUSE  ";
         
         switch(CurrentRoom){
-            case "LOCKER":
+            case "LOCKER ROOM":
                 Map[11] = "        | X |          -----            |        | ";
                 break;
-            case "OUTSIDE":
+            case "FRONT":
                 Map[1] = "          |   |     | X |                /  o  \\  ";
                 break;
-            case "PRIVATEROOM":
+            case "PRIVATE ROOM":
                 Map[12] = "        -----          | X |  - - - - > |        | ";
                 break;
             case "HOME":
                 Map[6] = "| X  | ____ |   | ___ |   |             |  | |   | ";
                 break;
-            case "BACK":
+            case "BACKROOM":
                 Map[6] = "|    | ____ | X | ___ |   |             |  | |   | ";
                 break;
-            case "FLOOR":
+            case "DANCE FLOOR":
                 Map[6] = "|    | ____ |   | ___ | X |             |  | |   | ";
+                break;
+            case "OFFICE":
+                Map[2] = "          | X |     |   |                /  o  \\  ";
+                break;
+            case "TOWER":
+                Map[6] = "|    | ____ |   | ___ |   |             |  |X|   | ";
                 break;
         }
         for(int i = 0; i <= 17; i++){
