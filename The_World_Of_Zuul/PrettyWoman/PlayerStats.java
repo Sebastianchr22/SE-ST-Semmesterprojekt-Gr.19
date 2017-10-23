@@ -1,19 +1,9 @@
 package PrettyWoman;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author Sebas
- */
-import java.util.*;
 class PlayerStats {
-    private int Experience = 12;
-    private int Enhancements = 5;
+    private int Experience = 0;
+    private int Enhancements = 0;
     private double moneySaved = 0;
-    private int currentHunger = 30;
+    private int currentHunger = 100;
     PlayerStats(){}
     public double getMoneySaved(){
         return this.moneySaved;
@@ -24,18 +14,27 @@ class PlayerStats {
     public int getExperience(){
         return this.Experience;
     }
-    public int addExperience(int value){
-        return this.Experience+=value;
+    public void addExperience(int value){
+        this.Experience+=value;
     }
-    public double addMoneySaved(double value){
-        return this.moneySaved+=value;
+    public void removeExperience(int value){
+        this.Experience-=value;
     }
-    public int addEnhancements(int value){
-        return this.Enhancements+=value;
+    public void addMoneySaved(double value){
+        this.moneySaved+=value;
+    }
+    public void removeMoneySaved(double value){
+        this.moneySaved-=value;
+    }
+    public void addEnhancements(int value){
+        this.Enhancements+=value;
+    }
+    public void removeEnhancements(int value){
+        this.Enhancements-=value;
     }
     public void printUI(){
         System.out.println("");System.out.println("                      "+"           Hunger:");
-        System.out.print("                      "+"----------------------------"+"     Money: " + moneySaved+" "     +"\n"+"                      "+"|");
+        System.out.print("                      "+"----------------------------"+"     $ " + moneySaved+" "     +"\n"+"                      "+"|");
         for(int i = 0; i <= currentHunger/4; i++){
             System.out.print("/");
         }for(int j = 24-currentHunger/4;j >= 0; j--) 
