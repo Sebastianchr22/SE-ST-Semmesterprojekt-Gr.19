@@ -2,13 +2,26 @@ package PrettyWoman;
 import java.util.*;
 
 public class DanceMech {
+    
+    //Example of items, as a set of starting items
+    public Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring", "Wedding",3);
+    public Item goldring = new Item(1, "Gold Ring", "A nice gold ring", "Gold",3);
+    public Item goldearring = new Item(2, "Gold Earring", "A nice gold earring", "Gold",3);
+    public Item goldnecklace = new Item(3, "Gold Ring", "A nice gold necklace", "Gold",3);
+    public Item goldwristwatch = new Item(4, "Gold Wristwatch", "A nice gold wristwatch", "Gold",3);
+    public Item goldbracelet = new Item(5, "Gold Bracelet", "A nice gold bracelet", "Gold",3);
+    public int amountOfItems = 4;
+    Inventory itemlist = new Inventory();
+    
+    
     public int move1ExpRequired = 0;
     public int move2ExpRequired = 25;
     PlayerStats playerStats = new PlayerStats();
     Chance chance = new Chance();
     
-    Regular Sebastian = new Regular(1,"Sebastian",12,"Swaggy","Gold",2,"Silver",3);
-    
+    Preference Gold = new Preference("Gold",2);
+    Preference Silver = new Preference("Silver",0);
+    Regular Sebastian = new Regular(1,"Sebastian",12,"Swaggy",Gold,Silver);
     /**
      * Prints the money and experience gained by the player:
      * @return nothing.
@@ -16,12 +29,29 @@ public class DanceMech {
     public void printInterface(){     
         System.out.println("$" + Math.round((playerStats.getMoneySaved())*100.0)/100.0 + "      " + "Exp: " + playerStats.getExperience());//Prints the saved money rounded off to two digits.
     }
+    public void addToInv(){
+        //Adds all starting items to the inventory:
+        itemlist.addToIventory(goldring);
+        itemlist.addToIventory(goldearring);
+        itemlist.addToIventory(goldnecklace);
+        itemlist.addToIventory(goldwristwatch);
+        itemlist.addToIventory(goldbracelet);
+        itemlist.showInventory();
+    }
+    public void Match(){
+        //Boolean method to check if a regular and a player is a match:
+        RegularPlayerMatch match = new RegularPlayerMatch(itemlist,Sebastian);
+    }
     
     
     public static void main(String[] args) {
+        
+        
         boolean RegularInRoom;
         
         DanceMech gameplay = new DanceMech();
+        gameplay.addToInv();
+        gameplay.Match();
         int om = 1;
         do {
             
@@ -32,7 +62,6 @@ public class DanceMech {
             Scanner mainFloorInput = new Scanner(System.in);//Scanner created
 
             //Main interface printout:
-            
             System.out.println("You are at the dance floor:");
             System.out.println("The crowd looks to have some money to spend on a good show.");
             System.out.println("1.  Dance");

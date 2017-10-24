@@ -26,6 +26,13 @@ class Inventory extends Item{
             System.out.println(item.getValues());
         }
     }
+    public int listLenght(){
+        int count = 0;
+        for(Item item : Inventory){
+            count++;
+        }
+        return count;
+    }
     public void countItems(){
         for(Item item : Inventory){
             switch(item.getCat()){

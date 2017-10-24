@@ -1,6 +1,5 @@
 package PrettyWoman;
 
-
 /**
  * @author Michael Kolling and David J. Barnes
  * @version 2006.03.30
@@ -22,31 +21,34 @@ public class Game {
         parser = new Parser();
     }
 
+    
+    //Items:
+    public Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring", "Wedding",3);
+    public Item goldring = new Item(1, "Gold Ring", "A nice gold ring", "Gold",3);
+    public Item goldearring = new Item(2, "Gold Earring", "A nice gold earring", "Gold",3);
+    public Item goldnecklace = new Item(3, "Gold Ring", "A nice gold necklace", "Gold",3);
+    public Item goldwristwatch = new Item(4, "Gold Wristwatch", "A nice gold wristwatch", "Gold",3);
+    public Item goldbracelet = new Item(5, "Gold Bracelet", "A nice gold bracelet", "Gold",3);
+    
     private void createRooms() {
 
         Room home, back, locker, floor, privateRoom, office, outside, motel, tower;
+      
+        privateRoom = new Room("Private room", "in the private room, where everything can happen");        
+        office = new Room("Office", "in the managers office");
+        outside = new Room("Front", "in front of the strip club");
+        motel = new Room("Motel", "in a motel");
+        tower = new Room("Tower", "in the home of your new lover");
+        home = new Room("Home", "home, where your daughter is");
+        back = new Room("Backroom", "in the backroom.");
+        locker = new Room("Locker room", "in the locker room. Here you can gather points and money by stealing from other strippers");
+        floor = new Room("Dance floor", "on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
 
-        privateRoom = new Room("in the private room, where everything can happen");
-        office = new Room("in the managers office");
-        outside = new Room("outside of the strip club"+"\n"+"There is a bit of line of people waiting to get in.."+"\n"+"The bouncer is out here, he always smiles at me..");
-
-        Room home, back, locker, floor, privateRoom, office, front, motel, tower;
-
-        privateRoom = new Room("in the private room, where everything can happen");
-        office = new Room("in the managers office");
-        front = new Room("in front of the strip club");
-        motel = new Room("in a motel");
-        tower = new Room("in the home of your new lover");
-        home = new Room("home, where your daughter is.");
-        back = new Room("in the backroom.");
-        locker = new Room("in the locker room. Here you can gather points and money by stealing from other strippers");
-        floor = new Room("on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
-        jail = new Room("you're in jail, deal with it.");
-        
         home.setExit("back", back);
 
         back.setExit("floor", floor);
         back.setExit("locker", locker);
+
         back.setExit("home", home);
 
         locker.setExit("back", back);
@@ -66,12 +68,9 @@ public class Game {
         motel.setExit("home", home);
 
         tower.setExit("home", home);
-        
-        jail.setExit("home", home);
-
 
         currentRoom = home;
-    }
+    }  
 
     public String getRoom(){
         return String.valueOf(currentRoom.hashCode()); 
@@ -159,5 +158,9 @@ public class Game {
         } else {
             return true;
         }
+    }
+    public String getName()
+    {
+        return currentRoom.getNameBackend();
     }
 }

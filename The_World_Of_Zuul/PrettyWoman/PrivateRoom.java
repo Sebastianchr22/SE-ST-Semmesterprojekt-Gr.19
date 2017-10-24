@@ -1,8 +1,10 @@
 package PrettyWoman;
 
 public class PrivateRoom
-{    
+{
+    
     public void privateRoomInvite(Regular regular, PlayerStats playerStats){
+        
         //If the regular is a minor, a raid might happen
         Chance chance = new Chance();
         if(regular.getAge() <= 21){
