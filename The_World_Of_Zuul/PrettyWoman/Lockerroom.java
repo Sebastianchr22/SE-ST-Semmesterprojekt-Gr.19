@@ -46,7 +46,3 @@ public class Lockerroom {
         locker.steal(itemlist,inv);
         System.out.println("");
         inv.showInventory();
-        
-    }
-    
-}
