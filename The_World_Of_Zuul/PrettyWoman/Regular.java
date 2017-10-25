@@ -23,7 +23,7 @@ class Regular
         this.name = name;
         this.age = age;
         this.looks = looks;
-        wealth = Math.round(500+Math.random()*1500000000);
+        wealth = Math.round(1000+Math.random()*2200000);
         this.preference0 = preference0;
         this.preference1 = preference1;
     }

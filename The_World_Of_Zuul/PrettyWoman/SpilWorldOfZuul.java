@@ -19,7 +19,6 @@ public class SpilWorldOfZuul
     public static void main(String[] args)
     {
         
-        Regular sebastian = new Regular(0, "Sebastian", 22, "Swaggy", "boobs", 10, "ass", 10);
         Game game = new Game();
         game.play();
        

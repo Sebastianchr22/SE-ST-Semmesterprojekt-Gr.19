@@ -2,26 +2,46 @@ package PrettyWoman;
 import java.util.*;
 
 public class DanceMech {
+    public int move1ExpRequired = 0;
+    public int move2ExpRequired = 25;
+    PlayerStats playerStats = new PlayerStats();
+    Chance chance = new Chance();
+    Inventory inv = new Inventory();
+    ArrayList<Regular> reglist = new ArrayList<>();
+    ListOfRegulars listReg = new ListOfRegulars(reglist);
+    
+    
     
     //Example of items, as a set of starting items
-    public Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring", "Wedding",3);
+    public Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring", "Silver",3);
     public Item goldring = new Item(1, "Gold Ring", "A nice gold ring", "Gold",3);
     public Item goldearring = new Item(2, "Gold Earring", "A nice gold earring", "Gold",3);
     public Item goldnecklace = new Item(3, "Gold Ring", "A nice gold necklace", "Gold",3);
     public Item goldwristwatch = new Item(4, "Gold Wristwatch", "A nice gold wristwatch", "Gold",3);
     public Item goldbracelet = new Item(5, "Gold Bracelet", "A nice gold bracelet", "Gold",3);
     public int amountOfItems = 4;
-    Inventory itemlist = new Inventory();
     
+        
+    public void addToInv(){
+        //Adds all starting items to the inventory:
+        inv.addToIventory(weddingring);
+        inv.addToIventory(goldring);
+        inv.addToIventory(goldearring);
+        inv.addToIventory(goldnecklace);
+        inv.addToIventory(goldwristwatch);
+        inv.addToIventory(goldbracelet);
+        inv.showInventory();
+    }
     
-    public int move1ExpRequired = 0;
-    public int move2ExpRequired = 25;
-    PlayerStats playerStats = new PlayerStats();
-    Chance chance = new Chance();
     
     Preference Gold = new Preference("Gold",2);
-    Preference Silver = new Preference("Silver",0);
-    Regular Sebastian = new Regular(1,"Sebastian",12,"Swaggy",Gold,Silver);
+    Preference Silver = new Preference("Silver",1);
+    Preference Wig  = new Preference("Wig",1);
+    Regular Sebastian = new Regular(1,"Sebastian",22,"Swaggy",Gold,Silver);
+    Regular John = new Regular(1,"John Mayer", 34, "Nice guy",Gold,Wig);
+    Regular Carl = new Regular(2,"CORRAAAAAAL!",12,"small, whiny",Silver,Wig);
+    
+    
     /**
      * Prints the money and experience gained by the player:
      * @return nothing.
@@ -29,20 +49,12 @@ public class DanceMech {
     public void printInterface(){     
         System.out.println("$" + Math.round((playerStats.getMoneySaved())*100.0)/100.0 + "      " + "Exp: " + playerStats.getExperience());//Prints the saved money rounded off to two digits.
     }
-    public void addToInv(){
-        //Adds all starting items to the inventory:
-        itemlist.addToIventory(goldring);
-        itemlist.addToIventory(goldearring);
-        itemlist.addToIventory(goldnecklace);
-        itemlist.addToIventory(goldwristwatch);
-        itemlist.addToIventory(goldbracelet);
-        itemlist.showInventory();
+    public void defaultRegList(){
+        reglist.add(Sebastian);
+        reglist.add(Carl);
+        reglist.add(John);
     }
-    public void Match(){
-        //Boolean method to check if a regular and a player is a match:
-        RegularPlayerMatch match = new RegularPlayerMatch(itemlist,Sebastian);
-    }
-    
+      
     
     public static void main(String[] args) {
         
@@ -51,7 +63,8 @@ public class DanceMech {
         
         DanceMech gameplay = new DanceMech();
         gameplay.addToInv();
-        gameplay.Match();
+        gameplay.defaultRegList();
+
         int om = 1;
         do {
             
@@ -100,7 +113,7 @@ public class DanceMech {
             //Insert from move 1:
             danceMovePrint(playerStats.getExperience(), move2ExpRequired);
         }if(danceMoveChoosen.equals("3")){
-            pRoom.privateRoomInvite(Sebastian,playerStats);
+            pRoom.privateRoomInvite(Sebastian,playerStats,inv,listReg);
         }if(danceMoveChoosen.equals("map")){
             playerStats.printMap("Floor");
         }
