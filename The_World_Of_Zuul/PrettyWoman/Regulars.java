@@ -1,5 +1,7 @@
 package PrettyWoman;
 
+import java.util.ArrayList;
+
     /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,8 +12,23 @@ package PrettyWoman;
  *
  * @author Obel
  */
-//public class Regulars
-//{
+public class Regulars
+{
+    ArrayList<Regular> reglist = new ArrayList<>();
+    ListOfRegulars listReg = new ListOfRegulars(reglist);
+    
+    Regulars(){
+    Preference Gold = new Preference("Gold", 2);
+    Preference Silver = new Preference("Silver", 1);
+    Preference Wig = new Preference("Wig", 1);
+    Regular Sebastian = new Regular(1, "Sebastian", 22, "Swaggy", Gold, Silver);
+    Regular John = new Regular(1, "John Mayer", 34, "Nice guy", Gold, Wig);
+    Regular Carl = new Regular(2, "CORRAAAAAAL!", 12, "small, whiny", Silver, Wig);
+    reglist.add(Sebastian);
+    reglist.add(Carl);
+    reglist.add(John);
+    }
+}
 //    public String[][] regulars = new String[][] 
 //    {
 //        {"0", "Charlie Sheen", "52", "Handsome man, dressed casually, but well.", "150000000", "Personal enhancements", "PV1", "Preference2", "PV2", ""},
@@ -29,4 +46,3 @@ package PrettyWoman;
 //        {"12", "Raphael Bankes", "Age", "Looks", "Wealth", "Preference1", "PV1", "Preference2", "PV2", ""},
 //        {"13", "Scott Calderwood", "Age", "Looks", "Wealth", "Preference1", "PV1", "Preference2", "PV2", ""},
 //        {"14", "George Gerrard", "Age", "Looks", "Wealth", "Preference1", "PV1", "Preference2", "PV2", ""}};
-//}
