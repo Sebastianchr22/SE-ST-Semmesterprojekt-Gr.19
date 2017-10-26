@@ -14,26 +14,18 @@ class Regular
     private int age;
     private String looks;
     private double wealth;
-    private String preference0;
-    private String preference1;
-    private int preferenceValue0;
-    private int preferenceValue1;
-    
-    Regular()
-    {
-    }
-    
-    public Regular(int ID, String name, int age, String looks, String preference0, int preferenceValue0, String preference1, int preferenceValue1) 
+    private Preference preference0;
+    private Preference preference1;
+ 
+    Regular(int ID, String name, int age, String looks, Preference preference0, Preference preference1) 
     {
         this.ID = ID;
         this.name = name;
         this.age = age;
         this.looks = looks;
-        wealth = Math.round(500+Math.random()*1500000000);
+        wealth = Math.round(1000+Math.random()*2200000);
         this.preference0 = preference0;
-        this.preferenceValue0 = preferenceValue0;
         this.preference1 = preference1;
-        this.preferenceValue1 = preferenceValue1;
     }
 
     public int getID()
@@ -58,11 +50,22 @@ class Regular
     }
     public String getPreferences()
     {
-        return "Preferences:\n" + Integer.toString(preferenceValue0) + " " + preference0 + " are needed.\n" + Integer.toString(preferenceValue1) + ": " + preference1 + " are needed.\n";
+        return "Preferences:\n" + preference0.getAmount() + " " + preference0.getName() + " are needed.\n" + preference1.getAmount() + ": " + preference1.getName() + " are needed.\n";
+    }
+    public Preference getPreference0()
+    {
+        return this.preference0;
+    }
+    public Preference getPreference1()
+    {
+        return this.preference1;
     }
     public boolean getInvite()
     {
         return false;
+    }
+    public String info(){
+        return name + ", " + age + "Looks " + "\"" + looks + "\"" + "\n" + preference0.getPreference() + " Also " + preference1.getPreference();
     }
 }
 

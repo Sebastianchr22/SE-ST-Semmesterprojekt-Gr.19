@@ -21,6 +21,15 @@ public class Game {
         parser = new Parser();
     }
 
+    
+    //Items:
+    public Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring", "Wedding",3);
+    public Item goldring = new Item(1, "Gold Ring", "A nice gold ring", "Gold",3);
+    public Item goldearring = new Item(2, "Gold Earring", "A nice gold earring", "Gold",3);
+    public Item goldnecklace = new Item(3, "Gold Ring", "A nice gold necklace", "Gold",3);
+    public Item goldwristwatch = new Item(4, "Gold Wristwatch", "A nice gold wristwatch", "Gold",3);
+    public Item goldbracelet = new Item(5, "Gold Bracelet", "A nice gold bracelet", "Gold",3);
+    
     private void createRooms() {
 
         Room home, back, locker, floor, privateRoom, office, outside, motel, tower;

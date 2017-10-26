@@ -6,8 +6,41 @@ public class DanceMech {
     public int move2ExpRequired = 25;
     PlayerStats playerStats = new PlayerStats();
     Chance chance = new Chance();
+    Inventory inv = new Inventory();
+    ArrayList<Regular> reglist = new ArrayList<>();
+    ListOfRegulars listReg = new ListOfRegulars(reglist);
     
-    Regular Sebastian = new Regular(1,"Sebastian",12,"Swaggy","Gold",2,"Silver",3);
+    
+    
+    //Example of items, as a set of starting items
+    public Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring", "Silver",3);
+    public Item goldring = new Item(1, "Gold Ring", "A nice gold ring", "Gold",3);
+    public Item goldearring = new Item(2, "Gold Earring", "A nice gold earring", "Gold",3);
+    public Item goldnecklace = new Item(3, "Gold Ring", "A nice gold necklace", "Gold",3);
+    public Item goldwristwatch = new Item(4, "Gold Wristwatch", "A nice gold wristwatch", "Gold",3);
+    public Item goldbracelet = new Item(5, "Gold Bracelet", "A nice gold bracelet", "Gold",3);
+    public int amountOfItems = 4;
+    
+        
+    public void addToInv(){
+        //Adds all starting items to the inventory:
+        inv.addToIventory(weddingring);
+        inv.addToIventory(goldring);
+        inv.addToIventory(goldearring);
+        inv.addToIventory(goldnecklace);
+        inv.addToIventory(goldwristwatch);
+        inv.addToIventory(goldbracelet);
+        inv.showInventory();
+    }
+    
+    
+    Preference Gold = new Preference("Gold",2);
+    Preference Silver = new Preference("Silver",1);
+    Preference Wig  = new Preference("Wig",1);
+    Regular Sebastian = new Regular(1,"Sebastian",22,"Swaggy",Gold,Silver);
+    Regular John = new Regular(1,"John Mayer", 34, "Nice guy",Gold,Wig);
+    Regular Carl = new Regular(2,"CORRAAAAAAL!",12,"small, whiny",Silver,Wig);
+    
     
     /**
      * Prints the money and experience gained by the player:
@@ -16,11 +49,22 @@ public class DanceMech {
     public void printInterface(){     
         System.out.println("$" + Math.round((playerStats.getMoneySaved())*100.0)/100.0 + "      " + "Exp: " + playerStats.getExperience());//Prints the saved money rounded off to two digits.
     }
-    
+    public void defaultRegList(){
+        reglist.add(Sebastian);
+        reglist.add(Carl);
+        reglist.add(John);
+    }
+      
     
     public static void main(String[] args) {
+        
+        
         boolean RegularInRoom;
+        
         DanceMech gameplay = new DanceMech();
+        gameplay.addToInv();
+        gameplay.defaultRegList();
+
         int om = 1;
         do {
             
@@ -31,7 +75,6 @@ public class DanceMech {
             Scanner mainFloorInput = new Scanner(System.in);//Scanner created
 
             //Main interface printout:
-            
             System.out.println("You are at the dance floor:");
             System.out.println("The crowd looks to have some money to spend on a good show.");
             System.out.println("1.  Dance");
@@ -70,7 +113,7 @@ public class DanceMech {
             //Insert from move 1:
             danceMovePrint(playerStats.getExperience(), move2ExpRequired);
         }if(danceMoveChoosen.equals("3")){
-            pRoom.privateRoomInvite(Sebastian);
+            pRoom.privateRoomInvite(Sebastian,playerStats,inv,listReg);
         }if(danceMoveChoosen.equals("map")){
             playerStats.printMap("Floor");
         }
@@ -78,14 +121,20 @@ public class DanceMech {
             //Unknown dancemove
         }
     }
+    public int exptips(int experience, int required){
+        if(required>experience){
+            return 0;
+        }else{
+            return (experience-required)*3;
+        }
+    }
     
-
     public void danceMovePrint(int experience, int danceMoveExpRequired){
         if (experience >= danceMoveExpRequired) {
             //You have enough experience to perform this move:
             System.out.println("Your move was successful.");
             playerStats.addExperience(1);
-            double tipsFromMove = tipsGained(experience-danceMoveExpRequired*3);
+            double tipsFromMove = tipsGained(exptips(experience,danceMoveExpRequired));
             System.out.println("You received $" + tipsFromMove + " in tips for that move.");
             playerStats.addMoneySaved(tipsFromMove);
         } else {
@@ -94,7 +143,7 @@ public class DanceMech {
                 //It was successful:
                 System.out.println("Although you are not experienced with that move, you were successful.");
                 playerStats.addExperience(1);
-                double tipsFromMove = tipsGained(experience-danceMoveExpRequired*3);
+                double tipsFromMove = tipsGained(exptips(experience,danceMoveExpRequired));
                 System.out.println("You received $" + tipsFromMove + " in tips for that move.");
                 playerStats.addMoneySaved(tipsFromMove);
 

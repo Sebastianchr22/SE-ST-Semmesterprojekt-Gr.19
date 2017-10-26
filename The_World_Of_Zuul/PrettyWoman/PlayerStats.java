@@ -1,5 +1,6 @@
 package PrettyWoman;
 class PlayerStats {
+    Inventory inv = new Inventory();
     private int Experience = 0;
     private int Enhancements = 0;
     private double moneySaved = 0;
@@ -43,7 +44,6 @@ class PlayerStats {
     }
     
     public void printMap(String CurrentRoom){
-        String PlayerPosition = "";
         String[] Map = new String[18];
         Map[0] = "         OFFICE    OUTSIDE                 / \\    ";
         Map[1] = "          -----     -----                 /   \\   ";
@@ -65,23 +65,29 @@ class PlayerStats {
         Map[17] ="                                        PENTHOUSE  ";
         
         switch(CurrentRoom){
-            case "LOCKER":
+            case "LOCKER ROOM":
                 Map[11] = "        | X |          -----            |        | ";
                 break;
-            case "OUTSIDE":
+            case "FRONT":
                 Map[1] = "          |   |     | X |                /  o  \\  ";
                 break;
-            case "P. ROOM":
+            case "PRIVATE ROOM":
                 Map[12] = "        -----          | X |  - - - - > |        | ";
                 break;
             case "HOME":
                 Map[6] = "| X  | ____ |   | ___ |   |             |  | |   | ";
                 break;
-            case "B. ROOM":
+            case "BACKROOM":
                 Map[6] = "|    | ____ | X | ___ |   |             |  | |   | ";
                 break;
-            case "FLOOR":
+            case "DANCE FLOOR":
                 Map[6] = "|    | ____ |   | ___ | X |             |  | |   | ";
+                break;
+            case "OFFICE":
+                Map[2] = "          | X |     |   |                /  o  \\  ";
+                break;
+            case "TOWER":
+                Map[6] = "|    | ____ |   | ___ |   |             |  |X|   | ";
                 break;
         }
         for(int i = 0; i <= 17; i++){
