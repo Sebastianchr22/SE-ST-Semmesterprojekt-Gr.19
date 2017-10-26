@@ -33,21 +33,21 @@ public class ListOfRegulars {
                 return (int)t1.getWealth()-(int)t.getWealth();
             }
         });
-        for(Regular regular : regularList){
-            System.out.println(regular.getName()+" "+regular.getWealth());
+        for(Regular regular : regularList){//For debugging
+            System.out.println(regular.getName()+" $"+regular.getWealth());
         }
     }
-    public int winDegree(Regular regular){
+    public double winDegree(Regular regular){
         //Returns the index of the regular, on sorted/ un-sorted list:
         //List is sorted by most wealthy at index 0:
         sortByWealth();
         double Index = regularList.indexOf(regular);
-        System.out.println("Index: "+Index);
-        System.out.println("Regular matched with: "+regular.info());
-        System.out.println("Total Regulars: "+countRegulars());
+        System.out.println("Index: "+Index); //Debug
+        System.out.println("Regular matched with: "+regular.info());//Debug
+        System.out.println("Total Regulars: "+countRegulars());//Debug
         double WinPercent = ((countRegulars()-Index++)/countRegulars())*100.0;
-        System.out.println("Percentage: "+WinPercent);
+        System.out.println("Percentage: "+WinPercent); //Debug
         
-        return 1;
+        return WinPercent;
     }
 }

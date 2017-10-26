@@ -21,7 +21,7 @@ public class RegularPlayerMatch {
     public void RegularPlayerMatch(Inventory inv, Regular regular, PlayerStats playerstats, ListOfRegulars reglist){
         if(Match(inv,regular.getPreference0()) && Match(inv,regular.getPreference1())){
             System.out.println("They are a match!");
-            if(chance.ChanceCalc(100, 100)){
+            if(chance.ChanceCalc(50, 100)){
                 //Invite to hotel / motel:
                 HotelMotelInvite invite = new HotelMotelInvite(playerstats,inv,regular,reglist);
                 
