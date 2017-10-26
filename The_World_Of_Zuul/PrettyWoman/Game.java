@@ -36,7 +36,7 @@ public class Game {
       
         privateRoom = new Room("Private room", "in the private room, where everything can happen");        
         office = new Room("Office", "in the managers office");
-        outside = new Room("Front", "in front of the strip club");
+        outside = new Room("Outside", "in front of the strip club");
         motel = new Room("Motel", "in a motel");
         tower = new Room("Tower", "in the home of your new lover");
         home = new Room("Home", "home, where your daughter is");
@@ -57,7 +57,7 @@ public class Game {
 
         floor.setExit("outside", outside);
 
-        floor.setExit("private room", privateRoom);
+        floor.setExit("private", privateRoom);
 
         privateRoom.setExit("floor", floor);
 
@@ -71,10 +71,6 @@ public class Game {
 
         currentRoom = home;
     }  
-
-    public String getRoom(){
-        return String.valueOf(currentRoom.hashCode()); 
-    }
 
     public void play() {
         printWelcome();
@@ -112,15 +108,34 @@ public class Game {
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
         }else if(commandWord == CommandWord.MAP){
-            System.out.println(getRoom());
-            playerStats.printMap(getRoom());
-        }else if (commandWord == CommandWord.FLIRT && getRoom().equals("outside")){
-            System.out.println("FLIRTIN WOROSH");
-        }else if (commandWord == CommandWord.QUIT) {
+            playerStats.printMap(currentRoom.getNameBackend());
+        }else if (commandWord == CommandWord.FLIRT && currentRoom.getNameBackend().equals("OUTSIDE")){
+            
+        }else if(commandWord == CommandWord.DANCE && command.hasSecondWord()){
+            //Calls danceMech with 
+            String danceMoveChoosen = getDanceMove(command);
+            //As parser variables.
+            
+        }else if(commandWord == CommandWord.STEAL && currentRoom.getNameBackend().equals("LOCKER ROOM")){
+            //Call lockerroom(); with an itemlist and a player inventory parameters.
+            
+        }
+        else if (commandWord == CommandWord.QUIT) {
 
             wantToQuit = quit(command);
         }
         return wantToQuit;
+    }
+    private String getDanceMove(Command command){
+        if(command.hasSecondWord()){
+            //Return the secondword:
+            return command.getSecondWord();
+            
+        }else{
+            //Not a known dance move:
+            System.out.println("You have not specified a dance move.");
+            return "error";
+        }
     }
 
     private void printHelp() {
@@ -139,7 +154,7 @@ public class Game {
 
         Room nextRoom = currentRoom.getExit(direction);
         
-        if ("home".equals(direction)) {
+        if (currentRoom.getNameBackend().equals("HOME")) {
             moves.resetMoves();
         }if (nextRoom == null) {
             System.out.println("There is no door!");

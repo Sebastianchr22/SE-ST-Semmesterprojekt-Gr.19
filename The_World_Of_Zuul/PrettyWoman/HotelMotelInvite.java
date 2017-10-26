@@ -9,15 +9,11 @@ public class HotelMotelInvite {
         //Check degree of success in the game:
             System.out.println(reglist.countRegulars());
             //Print win degree:
-            System.out.println(reglist.winDegree(regular));
+            WinTranslation trans = new WinTranslation(reglist.winDegree(regular));
     }
     public void Motel(){
         System.out.println("You have been invited to a Motel.");
-        //Check degree of success in the game:
-            //Print win degree:
-            System.out.println(reglist.winDegree(regular));
-        //Inform that the game could have been won better.
-        
+        WinTranslation trans = new WinTranslation(reglist.winDegree(regular));
     }
     HotelMotelInvite(PlayerStats playerstats, Inventory inv, Regular regular, ListOfRegulars reglist){
         this.playerstats=playerstats;

@@ -56,7 +56,7 @@ public class Room
     
     public String getNameBackend()
     {
-        return name;
+        return name.toUpperCase();
     }
 }
 
