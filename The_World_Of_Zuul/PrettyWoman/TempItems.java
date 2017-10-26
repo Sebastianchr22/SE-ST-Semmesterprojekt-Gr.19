@@ -7,11 +7,9 @@ package PrettyWoman;
 
 /**
  *
- * @author JD
+ * @author Obel
  */
-public class Interface 
+public class TempItems
 {
-    
-    
     
 }

@@ -4,11 +4,15 @@ package PrettyWoman;
  * @author Michael Kolling and David J. Barnes
  * @version 2006.03.30
  */
+import java.util.*;
 public class Game {
-
-    DanceMech DanceMechanics = new DanceMech();
+    Regulars regulars = new Regulars();
     PlayerStats playerStats = new PlayerStats();
+    Inventory inv = new Inventory();
     Chance chanceCalc = new Chance();
+    ArrayList<Regulars> list = new ArrayList<>();
+    ListOfRegulars reglist = new ListOfRegulars(list);
+    DanceMech mech = new DanceMech(playerStats, regulars, inv, reglist);
     private Parser parser;
     private Room currentRoom;
   
@@ -77,6 +81,9 @@ public class Game {
     }
 
     public void play() {
+        PlayerStats playerStats = new PlayerStats();
+        Regulars regulars = new Regulars();
+        
         printWelcome();
         boolean finished = false;
         while (!finished) {

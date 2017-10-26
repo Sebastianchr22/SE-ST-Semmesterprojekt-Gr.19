@@ -50,4 +50,13 @@ public class ListOfRegulars {
         
         return WinPercent;
     }
+    @Override
+    public String toString()
+    {
+        for(Regular regular : regularList)
+        {
+            System.out.println(regular.info());
+        }
+        return "";
+    }
 }

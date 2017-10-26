@@ -63,9 +63,9 @@ class Inventory extends Item{
             totalWeight=totalSize*5;
         }
     }
-    public boolean checkCapasity(int itemWeight){
+    public boolean checkCapacity(Item item){
         countItems();
-        if(totalWeight + itemWeight <= 1000){
+        if(totalWeight + item.getSize() <= 1000){
             //Under capasity:
             return true;
         }else{
