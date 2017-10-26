@@ -23,13 +23,11 @@ public class Game {
 
     private void createRooms() {
 
-        Room home, back, locker, floor, privateRoom, office, outside, motel, tower;
-
+        Room home, back, locker, floor, privateRoom, office, outside, front, motel, tower;
+        
         privateRoom = new Room("in the private room, where everything can happen");
         office = new Room("in the managers office");
         outside = new Room("outside of the strip club"+"\n"+"There is a bit of line of people waiting to get in.."+"\n"+"The bouncer is out here, he always smiles at me..");
-
-        Room home, back, locker, floor, privateRoom, office, front, motel, tower;
 
         privateRoom = new Room("in the private room, where everything can happen");
         office = new Room("in the managers office");
