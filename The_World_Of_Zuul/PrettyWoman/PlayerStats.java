@@ -69,7 +69,7 @@ class PlayerStats {
                 Map[11] = "        | X |          -----            |        | ";
                 break;
             case "FRONT":
-                Map[1] = "          |   |     | X |                /  o  \\  ";
+                Map[2] = "          |   |     | X |                /  o  \\  ";
                 break;
             case "PRIVATE ROOM":
                 Map[12] = "        -----          | X |  - - - - > |        | ";
