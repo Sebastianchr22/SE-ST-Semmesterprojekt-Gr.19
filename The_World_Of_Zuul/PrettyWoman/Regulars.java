@@ -25,7 +25,6 @@ public class Regulars
         reglist.addToList(Sebastian);
         reglist.addToList(Carl);
         reglist.addToList(John);
-        System.out.println(reglist);
     }
 
 }

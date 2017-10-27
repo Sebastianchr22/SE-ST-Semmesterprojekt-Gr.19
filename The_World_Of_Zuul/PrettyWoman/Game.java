@@ -6,33 +6,30 @@ package PrettyWoman;
  */
 import java.util.*;
 public class Game {
-    Regulars regulars = new Regulars();
+    //Regulars regulars = new Regulars();
     PlayerStats playerStats = new PlayerStats();
     Inventory inv = new Inventory();
     Chance chanceCalc = new Chance();
-    ArrayList<Regulars> list = new ArrayList<>();
-    ListOfRegulars reglist = new ListOfRegulars(list);
-    DanceMech mech = new DanceMech(playerStats, regulars, inv, reglist);
+    //ArrayList<Regulars> list = new ArrayList<>();
+    //ListOfRegulars reglist = new ListOfRegulars(list);
+    //DanceMech mech = new DanceMech(playerStats, regulars, inv, reglist);
     private Parser parser;
     private Room currentRoom;
   
     public Moves moves = new Moves();
 
-    public Game() {
-
+    public Game(ListOfRegulars reglist, Regulars regulars) {
+        
         createRooms();
-
+        dance(reglist, regulars);
         parser = new Parser();
     }
+    public void dance(ListOfRegulars reglist, Regulars regulars)
+    {
+    DanceMech mech = new DanceMech(playerStats, regulars, inv, reglist);
+    }
 
-    
-    //Items:
-    public Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring", "Wedding",3);
-    public Item goldring = new Item(1, "Gold Ring", "A nice gold ring", "Gold",3);
-    public Item goldearring = new Item(2, "Gold Earring", "A nice gold earring", "Gold",3);
-    public Item goldnecklace = new Item(3, "Gold Ring", "A nice gold necklace", "Gold",3);
-    public Item goldwristwatch = new Item(4, "Gold Wristwatch", "A nice gold wristwatch", "Gold",3);
-    public Item goldbracelet = new Item(5, "Gold Bracelet", "A nice gold bracelet", "Gold",3);
+   
     
     private void createRooms() {
 
@@ -77,9 +74,8 @@ public class Game {
     }  
 
     public void play() {
-        PlayerStats playerStats = new PlayerStats();
-        Regulars regulars = new Regulars();
-        
+//        regulars.createReglist(reglist);
+//        reglist.toString();
         printWelcome();
         boolean finished = false;
         while (!finished) {

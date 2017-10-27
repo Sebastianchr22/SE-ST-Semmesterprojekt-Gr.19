@@ -28,6 +28,10 @@ public class RegularPlayerMatch {
             }
         }else{
             System.out.println("No match..");
+            System.out.println(regular.getPreferences());
+            inv.showInventory();
+            System.out.println(inv.goldItems + "Gold");
+            System.out.println(inv.silverItems + "Silver");
         }
         
     }

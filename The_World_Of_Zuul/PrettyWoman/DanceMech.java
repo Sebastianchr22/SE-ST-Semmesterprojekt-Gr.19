@@ -8,27 +8,7 @@ public class DanceMech
     public int move1ExpRequired = 0;
     public int move2ExpRequired = 25;
     Chance chance = new Chance();
-
-    //Example of items, as a set of starting items
-    public Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring", "Silver", 3);
-    public Item goldring = new Item(1, "Gold Ring", "A nice gold ring", "Gold", 3);
-    public Item goldearring = new Item(2, "Gold Earring", "A nice gold earring", "Gold", 3);
-    public Item goldnecklace = new Item(3, "Gold Ring", "A nice gold necklace", "Gold", 3);
-    public Item goldwristwatch = new Item(4, "Gold Wristwatch", "A nice gold wristwatch", "Gold", 3);
-    public Item goldbracelet = new Item(5, "Gold Bracelet", "A nice gold bracelet", "Gold", 3);
-    public int amountOfItems = 4;
-
-    public void addToInv(Inventory inv)
-    {
-        //Adds all starting items to the inventory:
-        inv.addToIventory(weddingring);
-        inv.addToIventory(goldring);
-        inv.addToIventory(goldearring);
-        inv.addToIventory(goldnecklace);
-        inv.addToIventory(goldwristwatch);
-        inv.addToIventory(goldbracelet);
-        inv.showInventory();
-    }
+    
 
     /**
      * Prints the money and experience gained by the player:
@@ -44,7 +24,6 @@ public class DanceMech
 
     DanceMech(PlayerStats playerStats, Regulars regulars, Inventory inv, ListOfRegulars reglist)
     {
-        
         boolean RegularInRoom;
 
 
@@ -99,6 +78,7 @@ public class DanceMech
         if (danceMoveChoosen.equals("3"))
         {
             pRoom.privateRoomInvite(regulars.Sebastian, playerStats, inv, regList, regulars);
+            System.out.println(regulars.Sebastian.info());
         }
         if (danceMoveChoosen.equals("map"))
         {
