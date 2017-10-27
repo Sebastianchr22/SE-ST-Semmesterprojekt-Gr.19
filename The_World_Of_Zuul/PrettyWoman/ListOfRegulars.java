@@ -37,6 +37,14 @@ public class ListOfRegulars {
             System.out.println(regular.getName()+" $"+regular.getWealth());
         }
     }
+    public Regular getRegularAtIndex(int index){
+        return this.regularList.get(index);
+    }
+    public Regular getRandomRegular(){
+        int lenght = countRegulars();
+        int random = (int) Math.round(1+Math.random()*lenght);
+        return getRegularAtIndex(random);
+    }
     public double winDegree(Regular regular){
         //Returns the index of the regular, on sorted/ un-sorted list:
         //List is sorted by most wealthy at index 0:

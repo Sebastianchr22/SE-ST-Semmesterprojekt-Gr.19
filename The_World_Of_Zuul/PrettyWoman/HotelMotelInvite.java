@@ -1,32 +1,24 @@
 package PrettyWoman;
 public class HotelMotelInvite {
-    private PlayerStats playerstats;
-    private Inventory inv;
-    private Regular regular;
-    private ListOfRegulars reglist;
-    public void Hotel(ListOfRegulars reglist){
+    public void Hotel(Driver driver, Regular regular){
         System.out.println("You have been invited to a Hotel.");
         //Check degree of success in the game:
-            System.out.println(reglist.countRegulars());
+            System.out.println(driver.reglist.countRegulars());
             //Print win degree:
-            WinTranslation trans = new WinTranslation(reglist.winDegree(regular));
+            WinTranslation trans = new WinTranslation(driver.reglist.winDegree(regular));
     }
-    public void Motel(){
+    public void Motel(Driver driver, Regular regular){
         System.out.println("You have been invited to a Motel.");
-        WinTranslation trans = new WinTranslation(reglist.winDegree(regular));
+        WinTranslation trans = new WinTranslation(driver.reglist.winDegree(regular));
     }
-    HotelMotelInvite(PlayerStats playerstats, Inventory inv, Regular regular, ListOfRegulars reglist){
-        this.playerstats=playerstats;
-        this.regular=regular;
-        this.reglist=reglist;
-        this.inv=inv;
+    HotelMotelInvite(Driver driver, Regular regular){
         
         if(regular.getWealth() >= 1500000){
             //If regular is worth more than or equals to 1.5M invite to hotel:
-            Hotel(reglist);
+            Hotel(driver, regular);
         }else{
             //Invite to motel:
-            Motel();
+            Motel(driver, regular);
         }
     }
 }

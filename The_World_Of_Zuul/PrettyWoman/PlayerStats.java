@@ -1,10 +1,9 @@
 package PrettyWoman;
 class PlayerStats {
-    Inventory inv = new Inventory();
     private int Experience = 0;
     private int Enhancements = 0;
-    private double moneySaved = 0;
-    private int currentHunger = 100;
+    private double moneySaved = 1000;
+    private int currentHunger = 60;
     PlayerStats(){}
     public double getMoneySaved(){
         return this.moneySaved;
@@ -33,7 +32,17 @@ class PlayerStats {
     public void removeEnhancements(int value){
         this.Enhancements-=value;
     }
+    public boolean addHunger(int value){
+        if(this.currentHunger+value <= 100){
+            this.currentHunger+=value;
+            return true;
+        }else{
+            return false;
+        }         
+    }
     public void printUI(){
+        System.out.println("");
+        System.out.println("");
         System.out.println("");System.out.println("                      "+"           Hunger:");
         System.out.print("                      "+"----------------------------"+"     $ " + moneySaved+" "     +"\n"+"                      "+"|");
         for(int i = 0; i <= currentHunger/4; i++){

@@ -4,37 +4,27 @@ package PrettyWoman;
  * @author Michael Kolling and David J. Barnes
  * @version 2006.03.30
  */
+import java.util.*;
+
 public class Game {
 
-    DanceMech DanceMechanics = new DanceMech();
-    PlayerStats playerStats = new PlayerStats();
-    Chance chanceCalc = new Chance();
     private Parser parser;
     private Room currentRoom;
-  
+
     public Moves moves = new Moves();
 
-    public Game() {
+    public Game(Driver driver) {
 
         createRooms();
 
         parser = new Parser();
     }
 
-    
-    //Items:
-    public Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring", "Wedding",3);
-    public Item goldring = new Item(1, "Gold Ring", "A nice gold ring", "Gold",3);
-    public Item goldearring = new Item(2, "Gold Earring", "A nice gold earring", "Gold",3);
-    public Item goldnecklace = new Item(3, "Gold Ring", "A nice gold necklace", "Gold",3);
-    public Item goldwristwatch = new Item(4, "Gold Wristwatch", "A nice gold wristwatch", "Gold",3);
-    public Item goldbracelet = new Item(5, "Gold Bracelet", "A nice gold bracelet", "Gold",3);
-    
     private void createRooms() {
 
         Room home, back, locker, floor, privateRoom, office, outside, motel, tower;
-      
-        privateRoom = new Room("Private room", "in the private room, where everything can happen");        
+
+        privateRoom = new Room("Private room", "in the private room, where everything can happen");
         office = new Room("Office", "in the managers office");
         outside = new Room("Outside", "in front of the strip club");
         motel = new Room("Motel", "in a motel");
@@ -44,7 +34,7 @@ public class Game {
         locker = new Room("Locker room", "in the locker room. Here you can gather points and money by stealing from other strippers");
         floor = new Room("Dance floor", "on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
 
-        home.setExit("back", back);
+        home.setExit("work", back);
 
         back.setExit("floor", floor);
         back.setExit("locker", locker);
@@ -70,18 +60,22 @@ public class Game {
         tower.setExit("home", home);
 
         currentRoom = home;
-    }  
+    }
 
-    public void play() {
+    public void play(Driver driver) {
         printWelcome();
         boolean finished = false;
         while (!finished) {
-            playerStats.printUI();
-            
-            System.out.println("Moves left: " + moves.getMoves());
+            driver.playerStats.printUI();
+            if (currentRoom.getNameBackend().equals("HOME")) {
+                BuyFromHome buy = new BuyFromHome(driver.playerStats);
+            }if(currentRoom.getNameBackend().toUpperCase().equals("DANCE FLOOR")){
+                DanceMech dance = new DanceMech();
+            }
 
+            //System.out.println("Moves left: " + moves.getMoves());
             Command command = parser.getCommand();
-            finished = processCommand(command);
+            finished = processCommand(command, driver);
         }
         System.out.println("Thank you for playing.  Good bye.");
     }
@@ -94,9 +88,8 @@ public class Game {
         System.out.println(currentRoom.getLongDescription());
     }
 
-    private boolean processCommand(Command command) {
+    private boolean processCommand(Command command, Driver driver) {
         boolean wantToQuit = false;
-
         CommandWord commandWord = command.getCommandWord();
 
         if (commandWord == CommandWord.UNKNOWN) {
@@ -107,31 +100,33 @@ public class Game {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
-        }else if(commandWord == CommandWord.MAP){
-            playerStats.printMap(currentRoom.getNameBackend());
-        }else if (commandWord == CommandWord.FLIRT && currentRoom.getNameBackend().equals("OUTSIDE")){
-            
-        }else if(commandWord == CommandWord.DANCE && command.hasSecondWord()){
+        } else if (commandWord == CommandWord.MAP) {
+            driver.playerStats.printMap(currentRoom.getNameBackend());
+        } else if (commandWord == CommandWord.FLIRT && currentRoom.getNameBackend().equals("OUTSIDE")) {
+
+        } else if (nextRoom.getNameBackend().toUpperCase().equals("DANCE FLOOR")) {
             //Calls danceMech with 
-            String danceMoveChoosen = getDanceMove(command);
+            DanceMech dance = new DanceMech(driver, command);
             //As parser variables.
-            
-        }else if(commandWord == CommandWord.STEAL && currentRoom.getNameBackend().equals("LOCKER ROOM")){
+
+        } else if (commandWord == CommandWord.STEAL && currentRoom.getNameBackend().equals("LOCKER ROOM")) {
             //Call lockerroom(); with an itemlist and a player inventory parameters.
-            
-        }
-        else if (commandWord == CommandWord.QUIT) {
+
+        } else if (commandWord == CommandWord.QUIT) {
 
             wantToQuit = quit(command);
+        } else if (commandWord == CommandWord.BUY && currentRoom.getNameBackend().toUpperCase().equals("HOME")) {
+            BuyFromHome buy = new BuyFromHome(driver, command);
         }
         return wantToQuit;
     }
-    private String getDanceMove(Command command){
-        if(command.hasSecondWord()){
+
+    private String getDanceMove(Command command) {
+        if (command.hasSecondWord()) {
             //Return the secondword:
             return command.getSecondWord();
-            
-        }else{
+
+        } else {
             //Not a known dance move:
             System.out.println("You have not specified a dance move.");
             return "error";
@@ -143,20 +138,21 @@ public class Game {
         System.out.println("Your command words are:");
         parser.showCommands();
     }
+    public Room nextRoom;
 
     private void goRoom(Command command) {
         if (!command.hasSecondWord()) {
             System.out.println("Go where?");
-            return;
         }
 
         String direction = command.getSecondWord();
 
-        Room nextRoom = currentRoom.getExit(direction);
-        
+        nextRoom = currentRoom.getExit(direction);
+
         if (currentRoom.getNameBackend().equals("HOME")) {
             moves.resetMoves();
-        }if (nextRoom == null) {
+        }
+        if (nextRoom == null) {
             System.out.println("There is no door!");
         } else {
             currentRoom = nextRoom;
@@ -174,8 +170,8 @@ public class Game {
             return true;
         }
     }
-    public String getName()
-    {
+
+    public String getName() {
         return currentRoom.getNameBackend();
     }
 }
