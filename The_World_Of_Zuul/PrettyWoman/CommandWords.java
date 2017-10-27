@@ -12,7 +12,6 @@ import java.util.HashMap;
 public class CommandWords
 {
     
-    
     /**
      * ?? Hashes a string input, and checks for each word, if the given is not an unknown command.
      * no too sure, please revise.
