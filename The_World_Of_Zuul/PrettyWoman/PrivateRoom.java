@@ -2,20 +2,20 @@ package PrettyWoman;
 
 public class PrivateRoom
 {
-    public double tipsGained(double bonus, PlayerStats playerStats)
+    public double tipsGained(double bonus, Driver driver, double i)
     {
-        double percentageBonusTip = 1 + playerStats.getEnhancements() * 0.05;//Calculates a percentage of bonus based on improvements
+        double percentageBonusTip = 1 + driver.playerStats.getEnhancements() * 0.05;//Calculates a percentage of bonus based on improvements
         double tips = 5.0 + Math.random() * 30.0;//Calculates a random number between 5 to 30
-        return Math.round((percentageBonusTip * tips + bonus) * 100.0) / 100.0; //Returns the random* the percentage, rounded off with two digits after the comma.
+        return Math.round((percentageBonusTip * tips + bonus + i) * 100.0) / 100.0; //Returns the random* the percentage, rounded off with two digits after the comma.
     }
     
-    public void Match(Inventory inv,Regular regular, PlayerStats playerstats, ListOfRegulars reglist){
+    public void Match(Driver driver, Regular regular){
         //Boolean method to check if a regular and a player is a match:
         RegularPlayerMatch match = new RegularPlayerMatch();
-        match.RegularPlayerMatch(inv, regular, playerstats, reglist);
+        match.RegularPlayerMatch(driver, regular);
     }
     
-    public void privateRoomInvite(Regular regular, PlayerStats playerstats, Inventory inv, ListOfRegulars reglist, Regulars regulars){
+    public void privateRoomInvite(Driver driver, Regular regular){
         
         //If the regular is a minor, a raid might happen
         Chance chance = new Chance();
@@ -26,23 +26,23 @@ public class PrivateRoom
                 System.out.println("A police raid just happened and you just got busted dancing for a minor.");
                 System.out.println("The police hand you a $500 fine, and you are being held at the police station over night.");
                 System.out.println("You gained some experience from the raid, and from your arrest.");
-                playerstats.removeMoneySaved(500);
-                playerstats.addExperience(3);
+                driver.playerStats.removeMoneySaved(500);
+                driver.playerStats.addExperience(3);
             }else{
                 //Returned false:
                 System.out.println("A police raid just happened, thankfully the police did not notice that you were dancing for a minor.");
-                pRoomTips(250, playerstats, reglist, regulars);
+                pRoomTips(250, driver);
             }
         }else{
             //No razzia:
             //No minor:
-            Match(inv,regular,playerstats, reglist);
-            pRoomTips(0, playerstats, reglist, regulars);
+            Match(driver, regular);
+            pRoomTips(0, driver);
         }
     }
-    public void pRoomTips(int bonus, PlayerStats playerStats, ListOfRegulars reglist, Regulars regulars){
-        double amount = Math.round((tipsGained(playerStats.getEnhancements()*6.5+350+bonus, playerStats))*100.0)/100.0;
-        playerStats.addMoneySaved(amount);
+    public void pRoomTips(int bonus, Driver driver){
+        double amount = Math.round((tipsGained(bonus, driver, driver.playerStats.getEnhancements()*6.5+350+bonus))*100.0)/100.0;
+        driver.playerStats.addMoneySaved(amount);
         System.out.println("You gained $" + amount + " from dancing.");
     }
 }

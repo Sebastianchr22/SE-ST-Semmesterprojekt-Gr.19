@@ -36,7 +36,7 @@ class Inventory extends Item{
         System.out.println("Created in Inventory Class");
     }
     
-    public void addToIventory(Item item){
+    public void addToInventory(Item item){
         Inventory.add(item);
     }
     public void removeFromInventory(Item item){

@@ -6,27 +6,20 @@ package PrettyWoman;
  */
 import java.util.*;
 public class Game {
-    //Regulars regulars = new Regulars();
-    PlayerStats playerStats = new PlayerStats();
-    Inventory inv = new Inventory();
-    Chance chanceCalc = new Chance();
-    //ArrayList<Regulars> list = new ArrayList<>();
-    //ListOfRegulars reglist = new ListOfRegulars(list);
-    //DanceMech mech = new DanceMech(playerStats, regulars, inv, reglist);
     private Parser parser;
     private Room currentRoom;
   
     public Moves moves = new Moves();
 
-    public Game(ListOfRegulars reglist, Regulars regulars) {
+    public Game(Driver driver) {
         
         createRooms();
-        dance(reglist, regulars);
+        dance(driver);
         parser = new Parser();
     }
-    public void dance(ListOfRegulars reglist, Regulars regulars)
+    public void dance(Driver driver)
     {
-    DanceMech mech = new DanceMech(playerStats, regulars, inv, reglist);
+    DanceMech mech = new DanceMech(driver);
     }
 
    
@@ -73,18 +66,18 @@ public class Game {
         currentRoom = home;
     }  
 
-    public void play() {
+    public void play(Driver driver) {
 //        regulars.createReglist(reglist);
 //        reglist.toString();
         printWelcome();
         boolean finished = false;
         while (!finished) {
-            playerStats.printUI();
+            driver.playerStats.printUI();
             
             System.out.println("Moves left: " + moves.getMoves());
 
             Command command = parser.getCommand();
-            finished = processCommand(command);
+            finished = processCommand(command, driver);
         }
         System.out.println("Thank you for playing.  Good bye.");
     }
@@ -97,7 +90,7 @@ public class Game {
         System.out.println(currentRoom.getLongDescription());
     }
 
-    private boolean processCommand(Command command) {
+    private boolean processCommand(Command command, Driver driver) {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
@@ -111,7 +104,7 @@ public class Game {
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
         }else if(commandWord == CommandWord.MAP){
-            playerStats.printMap(currentRoom.getNameBackend());
+            driver.playerStats.printMap(currentRoom.getNameBackend());
         }else if (commandWord == CommandWord.FLIRT && currentRoom.getNameBackend().equals("OUTSIDE")){
             
         }else if(commandWord == CommandWord.DANCE && command.hasSecondWord()){
@@ -150,7 +143,6 @@ public class Game {
     private void goRoom(Command command) {
         if (!command.hasSecondWord()) {
             System.out.println("Go where?");
-            return;
         }
 
         String direction = command.getSecondWord();

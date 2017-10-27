@@ -22,7 +22,7 @@ public class DanceMech
 
 
 
-    DanceMech(PlayerStats playerStats, Regulars regulars, Inventory inv, ListOfRegulars reglist)
+    DanceMech(Driver driver)
     {
         boolean RegularInRoom;
 
@@ -31,7 +31,7 @@ public class DanceMech
         do
         {
 
-            printInterface(playerStats);
+            printInterface(driver.playerStats);
             //Basic test values set:
             String mainFloorChoice;
 
@@ -51,38 +51,38 @@ public class DanceMech
             //Input prompt:
             System.out.print("> ");
             mainFloorChoice = mainFloorInput.next();
-            danceMoveYield(mainFloorChoice, regulars, playerStats, inv, reglist);
+            danceMoveYield(mainFloorChoice,driver);
         }
         while (om == 1);
     }
 
-    public double tipsGained(double bonus, PlayerStats playerStats)
+    public double tipsGained(double bonus, Driver driver)
     {
-        double percentageBonusTip = 1 + playerStats.getEnhancements() * 0.05;//Calculates a percentage of bonus based on improvements
+        double percentageBonusTip = 1 + driver.playerStats.getEnhancements() * 0.05;//Calculates a percentage of bonus based on improvements
         double tips = 5.0 + Math.random() * 30.0;//Calculates a random number between 5 to 30
         return Math.round((percentageBonusTip * tips + bonus) * 100.0) / 100.0; //Returns the random* the percentage, rounded off with two digits after the comma.
     }
 
-    public void danceMoveYield(String danceMoveChoosen, Regulars regulars, PlayerStats playerStats, Inventory inv, ListOfRegulars regList)
+    public void danceMoveYield(String danceMoveChoosen, Driver driver)
     {
         PrivateRoom pRoom = new PrivateRoom();
         if (danceMoveChoosen.equals("1"))
         {
-            danceMovePrint(move1ExpRequired, playerStats);//Calls the method below to print success or failure.
+            danceMovePrint(move1ExpRequired, driver);//Calls the method below to print success or failure.
         }
         if (danceMoveChoosen.equals("2"))
         {
             //Insert from move 1:
-            danceMovePrint(move2ExpRequired, playerStats);
+            danceMovePrint(move2ExpRequired, driver);
         }
         if (danceMoveChoosen.equals("3"))
         {
-            pRoom.privateRoomInvite(regulars.Sebastian, playerStats, inv, regList, regulars);
-            System.out.println(regulars.Sebastian.info());
+            pRoom.privateRoomInvite(driver, driver.reg.Sebastian);
+            System.out.println(driver.reg.Sebastian.info());
         }
         if (danceMoveChoosen.equals("map"))
         {
-            playerStats.printMap("Floor");
+            driver.playerStats.printMap("Floor");
         }
         else
         {
@@ -90,28 +90,28 @@ public class DanceMech
         }
     }
 
-    public int exptips(int experience, int required)
+    public int exptips(Driver driver, int required)
     {
-        if (required > experience)
+        if (required > driver.playerStats.getExperience())
         {
             return 0;
         }
         else
         {
-            return (experience - required) * 3;
+            return (driver.playerStats.getExperience() - required) * 3;
         }
     }
 
-    public void danceMovePrint(int danceMoveExpRequired, PlayerStats playerStats)
+    public void danceMovePrint(int danceMoveExpRequired, Driver driver)
     {
-        if (playerStats.getExperience() >= danceMoveExpRequired)
+        if (driver.playerStats.getExperience() >= danceMoveExpRequired)
         {
             //You have enough experience to perform this move:
             System.out.println("Your move was successful.");
-            playerStats.addExperience(1);
-            double tipsFromMove = tipsGained(exptips(playerStats.getExperience(), danceMoveExpRequired), playerStats);
+            driver.playerStats.addExperience(1);
+            double tipsFromMove = tipsGained(exptips(driver, danceMoveExpRequired), driver);
             System.out.println("You received $" + tipsFromMove + " in tips for that move.");
-            playerStats.addMoneySaved(tipsFromMove);
+            driver.playerStats.addMoneySaved(tipsFromMove);
         }
         else
         {
@@ -120,10 +120,10 @@ public class DanceMech
             {
                 //It was successful:
                 System.out.println("Although you are not experienced with that move, you were successful.");
-                playerStats.addExperience(1);
-                double tipsFromMove = tipsGained(exptips(playerStats.getExperience(), danceMoveExpRequired), playerStats);
+                driver.playerStats.addExperience(1);
+                double tipsFromMove = tipsGained(exptips(driver, danceMoveExpRequired), driver);
                 System.out.println("You received $" + tipsFromMove + " in tips for that move.");
-                playerStats.addMoneySaved(tipsFromMove);
+                driver.playerStats.addMoneySaved(tipsFromMove);
 
             }
             else

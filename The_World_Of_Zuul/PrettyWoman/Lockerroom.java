@@ -18,7 +18,7 @@ public class Lockerroom {
         int random = genRandom(itemlist);
         System.out.println("");
         System.out.println("You found a "+itemlist.Inventory.get(random).getName());
-        inv.addToIventory(itemlist.Inventory.get(random));
+        inv.addToInventory(itemlist.Inventory.get(random));
         System.out.println("");
         itemlist.removeFromInventory(itemlist.Inventory.get(random));
         System.out.println("");
