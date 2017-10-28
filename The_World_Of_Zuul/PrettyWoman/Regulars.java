@@ -1,16 +1,4 @@
 package PrettyWoman;
-
-import java.util.ArrayList;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author Obel
- */
 public class Regulars
 {
     public Preference Gold = new Preference("Gold", 2);
@@ -25,6 +13,8 @@ public class Regulars
         reglist.addToList(Sebastian);
         reglist.addToList(Carl);
         reglist.addToList(John);
+       
+        
     }
 
 }

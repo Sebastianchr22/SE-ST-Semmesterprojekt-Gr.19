@@ -24,14 +24,9 @@ public class RegularPlayerMatch {
             if(chance.ChanceCalc(50, 100)){
                 //Invite to hotel / motel:
                 HotelMotelInvite invite = new HotelMotelInvite(driver, regular);
-                
             }
         }else{
             System.out.println("No match..");
-            System.out.println(regular.getPreferences());
-            driver.inv.showInventory();
-            System.out.println(driver.inv.goldItems + "Gold");
-            System.out.println(driver.inv.silverItems + "Silver");
         }
         
     }

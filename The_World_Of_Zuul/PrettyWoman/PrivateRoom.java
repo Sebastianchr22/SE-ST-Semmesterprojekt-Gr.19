@@ -27,10 +27,12 @@ public class PrivateRoom
                 System.out.println("The police hand you a $500 fine, and you are being held at the police station over night.");
                 System.out.println("You gained some experience from the raid, and from your arrest.");
                 driver.playerStats.removeMoneySaved(500);
-                driver.playerStats.addExperience(3);
+                driver.playerStats.addExperience(0);
             }else{
                 //Returned false:
                 System.out.println("A police raid just happened, thankfully the police did not notice that you were dancing for a minor.");
+                System.out.println("You gained some experience from that raid.");
+                driver.playerStats.addExperience(3);
                 pRoomTips(250, driver);
             }
         }else{
@@ -38,6 +40,7 @@ public class PrivateRoom
             //No minor:
             Match(driver, regular);
             pRoomTips(0, driver);
+            driver.playerStats.addExperience(3);
         }
     }
     public void pRoomTips(int bonus, Driver driver){

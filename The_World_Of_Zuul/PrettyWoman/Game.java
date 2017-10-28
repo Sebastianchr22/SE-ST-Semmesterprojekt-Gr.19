@@ -89,6 +89,14 @@ public class Game {
         System.out.println(currentRoom.getLongDescription());
     }
 
+    private void printInventory(Driver driver) {
+        System.out.println("");
+        System.out.println("");
+        System.out.println("____________________________Your inventory:___________________________");
+        driver.inv.showInventory();
+        System.out.println("______________________________________________________________________");
+    }
+
     private boolean processCommand(Command command, Driver driver) {
         boolean wantToQuit = false;
         CommandWord commandWord = command.getCommandWord();
@@ -103,6 +111,22 @@ public class Game {
             goRoom(command);
         } else if (commandWord == CommandWord.MAP) {
             driver.playerStats.printMap(currentRoom.getNameBackend());
+        } else if (commandWord == CommandWord.SHOW) {
+            if (command.hasSecondWord()) {
+                String Show = command.getSecondWord();
+
+                switch (Show.toUpperCase()) {
+                    case "INVENTORY":
+                        printInventory(driver);
+                        break;
+                    case "INV":
+                        printInventory(driver);
+                        break;
+                }
+            } else {
+                System.out.println("Show what?");
+            }
+
         } else if (commandWord == CommandWord.FLIRT && currentRoom.getNameBackend().equals("OUTSIDE")) {
 
         } else if (nextRoom.getNameBackend().toUpperCase().equals("DANCE FLOOR")) {

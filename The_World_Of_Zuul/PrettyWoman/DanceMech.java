@@ -7,7 +7,6 @@ public class DanceMech {
     int move1ExpRequired = 0;
     int move2ExpRequired = 25;
     Chance chance = new Chance();
-    boolean RegularInRoom = false;
 
     /**
      * Prints the money and experience gained by the player:
@@ -27,10 +26,29 @@ public class DanceMech {
     }
 
     public String infoOnRegular(Driver driver) {
-        if (RegularInRoom) {
+        if (driver.regularInRoom != null) {
             return driver.regularInRoom.info();
         } else {
-            return "There are no regulars in here.";
+            return "There is no regular in here.";
+        }
+    }
+
+    public void resetRegularInRoom(Driver driver) {
+        System.out.println(driver.regularInRoom.getName() + " left the club.");
+        driver.regularInRoom = null;
+    }
+
+    public void PrivateRoomInvite(Driver driver, Regular regular, Command command, boolean accepted) {
+        if (accepted != true) {
+            System.out.println("You have been invited to private room by " + driver.regularInRoom.getName());
+            System.out.println("Do you accept the invitation?");
+        } else {
+            if (command.getCommandWord() == CommandWord.ACCEPT || command.getCommandWord() == CommandWord.YES) {
+                PrivateRoom proom = new PrivateRoom(driver, regular);
+            } else if (command.getCommandWord() != CommandWord.INFO) {
+                System.out.println(driver.regularInRoom.getName() + " left the club.");
+                resetRegularInRoom(driver);
+            }
         }
     }
 
@@ -39,19 +57,40 @@ public class DanceMech {
     }
 
     DanceMech(Driver driver, Command command) {
-        
-        if (chance.ChanceCalc(35, 100) && RegularInRoom != true) {
+
+        if (chance.ChanceCalc(35, 100) && driver.regularInRoom == null) {
             //Regular appears in the club:
-            RegularInRoom = true;
             driver.regularInRoom = driver.reglist.getRandomRegular();
-            System.out.println("A regular just appeared. Type info to learn who, and what he likes.");
+            //Prompt accept private room invite:
+            System.out.println("A regular just appeared. Type info to learn more.");     
+        }if(driver.regularInRoom != null){
+            //Someone in here:
+            //Chance of invite to private room:
+            if(chance.ChanceCalc(25, 100)){
+                PrivateRoomInvite(driver, driver.regularInRoom, command, false);
+            }
         }
+
         //Input prompt:
         if (command.hasSecondWord()) {
+            if (driver.regularInRoom != null) {
+                System.out.println("There is a regular in here.");
+            }
             danceMoveYield(command.getSecondWord(), driver);
+
         } else {
             if (command.getCommandWord() == CommandWord.INFO) {
                 System.out.println(infoOnRegular(driver));
+            }
+            if (command.getCommandWord() == CommandWord.ACCEPT || command.getCommandWord() == CommandWord.YES) {
+                PrivateRoomInvite(driver, driver.regularInRoom, command, true);
+            }
+            if (command.getCommandWord() == CommandWord.REJECT || command.getCommandWord() == CommandWord.NO) {
+                if (driver.regularInRoom != null) {
+                    resetRegularInRoom(driver);
+                }else{
+                    System.out.println("There are no regulars to reject.");
+                }
             } else {
                 System.out.println("Please choose a specific dance to perform");
             }

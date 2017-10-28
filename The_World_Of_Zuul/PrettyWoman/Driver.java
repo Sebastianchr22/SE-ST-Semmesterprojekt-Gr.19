@@ -15,7 +15,11 @@ public class Driver
     Regular regularInRoom;
     
     
-    
+    public void List(){
+        for(int i = 0; i <= 2; i++){
+            System.out.println("Index: " + i  + " " + regularList.get(i).info());
+        }
+    }
     Driver()
     {
         reg.createReglist(reglist);
