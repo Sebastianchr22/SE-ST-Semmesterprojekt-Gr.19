@@ -69,6 +69,8 @@ public class DanceMech {
             if(chance.ChanceCalc(25, 100)){
                 PrivateRoomInvite(driver, driver.regularInRoom, command, false);
             }
+        }if(driver.regularInRoom != null){
+            System.out.println("You recognize a regular in the room");
         }
 
         //Input prompt:
