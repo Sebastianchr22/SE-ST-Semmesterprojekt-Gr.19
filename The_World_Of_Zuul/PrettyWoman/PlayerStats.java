@@ -1,105 +1,106 @@
 package PrettyWoman;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-/**
- *
- * @author Abdi
- */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author Sebas
- */
 class PlayerStats {
-
-    private int Experience = 77;
-    private int personalImprovements = 5;
-    private double moneySaved = 0;
-    private int hunger = 50;
-
-    PlayerStats() {
-    }
-
-    public double getMoneySaved() {
+    private int Experience = 0;
+    private int Enhancements = 0;
+    private double moneySaved = 1000;
+    private int currentHunger = 60;
+    PlayerStats(){}
+    public double getMoneySaved(){
         return this.moneySaved;
     }
-
-    public int getPersonalImprovements() {
-        return this.personalImprovements;
+    public int getEnhancements(){
+        return this.Enhancements;
     }
-
-    public int getExperience() {
+    public int getExperience(){
         return this.Experience;
     }
-
-    public int addExperience(int value) {
-        if (this.Experience - value > 0) {
-            return this.Experience += value;     
+    public void addExperience(int value){
+        this.Experience+=value;
+    }
+    public void removeExperience(int value){
+        this.Experience-=value;
+    }
+    public void addMoneySaved(double value){
+        this.moneySaved+=value;
+    }
+    public void removeMoneySaved(double value){
+        this.moneySaved-=value;
+    }
+    public void addEnhancements(int value){
+        this.Enhancements+=value;
+    }
+    public void removeEnhancements(int value){
+        this.Enhancements-=value;
+    }
+    public boolean addHunger(int value){
+        if(this.currentHunger+value <= 100){
+            this.currentHunger+=value;
+            return true;
         }else{
-            return Experience;
+            return false;
+        }         
+    }
+    public void printUI(){
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");System.out.println("                      "+"           Hunger:");
+        System.out.print("                      "+"----------------------------"+"     $ " + moneySaved+" "     +"\n"+"                      "+"|");
+        for(int i = 0; i <= currentHunger/4; i++){
+            System.out.print("/");
+        }for(int j = 24-currentHunger/4;j >= 0; j--) 
+            System.out.print(" ");
+        System.out.print("|"+"     Enhancements: "+Enhancements+"\n"+"                      "+"----------------------------"+"     Experience: "+Experience+"\n");
+    }
+    
+    public void printMap(String CurrentRoom){
+        String[] Map = new String[18];
+        Map[0] = "         OFFICE    OUTSIDE                 / \\    ";
+        Map[1] = "          -----     -----                 /   \\   ";
+        Map[2] = "          |   |     |   |                /  o  \\  ";
+        Map[3] = "          -----     -----               /       \\ ";
+        Map[4] = "              |         |               ---------- ";
+        Map[5] = "------      -----     -----             |        | ";
+        Map[6] = "|    | ____ |   | ___ |   |             |  | |   | ";
+        Map[7] = "------      -----     -----             |        | ";
+        Map[8] = " HOME      B. ROOM    FLOOR             |        | ";
+        Map[9] = "            /           |               |        | ";
+        Map[10] ="        -----           |               |        | ";
+        Map[11] ="        |   |          -----            |        | ";
+        Map[12] ="        -----          |   |  - - - - > |        | ";
+        Map[13] ="       LOCKER          -----            |        | ";
+        Map[14] ="                      P. ROOM           |   _    | ";
+        Map[15] ="                                        |  |'|   | ";
+        Map[16] ="                                        ---------- ";
+        Map[17] ="                                        PENTHOUSE  ";
+        
+        switch(CurrentRoom){
+            case "LOCKER ROOM":
+                Map[11] = "        | X |          -----            |        | ";
+                break;
+            case "FRONT":
+                Map[2] = "          |   |     | X |                /  o  \\  ";
+                break;
+            case "PRIVATE ROOM":
+                Map[12] = "        -----          | X |  - - - - > |        | ";
+                break;
+            case "HOME":
+                Map[6] = "| X  | ____ |   | ___ |   |             |  | |   | ";
+                break;
+            case "BACKROOM":
+                Map[6] = "|    | ____ | X | ___ |   |             |  | |   | ";
+                break;
+            case "DANCE FLOOR":
+                Map[6] = "|    | ____ |   | ___ | X |             |  | |   | ";
+                break;
+            case "OFFICE":
+                Map[2] = "          | X |     |   |                /  o  \\  ";
+                break;
+            case "TOWER":
+                Map[6] = "|    | ____ |   | ___ |   |             |  |X|   | ";
+                break;
         }
-    }
-
-    public double addMoneySaved(double value) {
-        return this.moneySaved += value;
-    }
-
-    public int addPersonalImprovements(int value) {
-        return this.personalImprovements += value;
-    }
-
-    public int addHunger(int value) {
-        if (this.hunger + value <= 100) {
-            return this.hunger += value;
-        } else {
-            System.out.println("Hunger is full.");
-            return hunger;
+        for(int i = 0; i <= 17; i++){
+            System.out.println(Map[i]);
         }
-
-    }
-
-    public int removeHunger(int value) {
-        if (this.hunger - value > 0) {
-            return this.hunger -= value;
-        } else {
-            System.out.println("Your daughter is starving...");
-            return hunger;
-
-        }
-    }
-    public int getHunger(){
-        return this.hunger;
-    }
-
-    public String printMap(String CurrentRoom, String ManagerPossition) {
-        String Map
-                = "          -----     -----                   / \\   " + "\n"
-                + "          |   |     |   |                 /    \\  " + "\n"
-                + "          -----     -----               /       \\ " + "\n"
-                + "              |         |               --------- " + "\n"
-                + "------      -----     -----             |        | " + "\n"
-                + "|    | ____ |   | ___ |   |             |        | " + "\n"
-                + "------      -----     -----             |        | " + "\n"
-                + "            /           |               |        | " + "\n"
-                + "        -----           |               |        | " + "\n"
-                + "        |   |          -----            |        | " + "\n"
-                + "        -----          |   |  - - - - - |        | " + "\n"
-                + "                       -----            |        | " + "\n"
-                + "                                        |        | " + "\n"
-                + "                                        |        | " + "\n"
-                + "                                        ---------- " + "\n"
-                + "                                                   " + "\n"
-                + "                                                   ";
-
-        return Map;
     }
 }
