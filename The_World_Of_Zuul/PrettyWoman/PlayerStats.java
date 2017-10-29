@@ -2,7 +2,7 @@ package PrettyWoman;
 class PlayerStats {
     private int Experience = 0;
     private int Enhancements = 0;
-    private int Moves = 2;
+    private int Moves = 10;
     private double moneySaved = 1000;
     private int currentHunger = 60;
     PlayerStats(){}
@@ -48,7 +48,7 @@ class PlayerStats {
         this.Moves+=value;
     }
     public void resetMoves(){
-        this.Moves=2;
+        this.Moves=10;
     }
     public int getMoves(){
         return this.Moves;

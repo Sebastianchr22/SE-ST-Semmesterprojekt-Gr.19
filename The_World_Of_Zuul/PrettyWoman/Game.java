@@ -11,17 +11,18 @@ public class Game {
     private Parser parser;
     private Room currentRoom;
     public Preference Gold0 = new Preference("Gold", 0);
+    public Manager manager;
+
 
     public Regular Bouncer = new Regular(3, "Jack the bouncer", 45, "muscular, he's always smiled at you, and greets you every morning. Maybe he fancies you a bit..?", Gold0, Gold0);
-
     public Game(Driver driver) {
 
-        createRooms();
+        createRooms(driver);
 
         parser = new Parser();
     }
 
-    private void createRooms() {
+    private void createRooms(Driver driver) {
 
         Room home, back, locker, floor, privateRoom, office, outside, motel, tower;
 
@@ -61,13 +62,17 @@ public class Game {
         tower.setExit("home", home);
 
         currentRoom = home;
+        manager = new Manager("Manager James", office, driver);
+
 
     }
 
     public void play(Driver driver) {
         printWelcome();
+        
         boolean finished = false;
         while (!finished) {
+            manager.moveManager();
             driver.playerStats.printUI(driver);
             if (currentRoom.getNameBackend().equals("HOME")) {
                 BuyFromHome buy = new BuyFromHome(driver.playerStats);
@@ -103,7 +108,7 @@ public class Game {
         boolean wantToQuit = false;
         CommandWord commandWord = command.getCommandWord();
         if (driver.playerStats.getMoves() == 0) {
-            createRooms();
+            createRooms(driver);
             System.out.println("You've gone home, after a long day at work.");
             driver.playerStats.resetMoves();
         }
@@ -113,6 +118,10 @@ public class Game {
             return false;
         } else {
             driver.playerStats.minusMoves();
+            if(currentRoom.getNameBackend().toUpperCase().equals(manager.getRoom()) && !currentRoom.getNameBackend().toUpperCase().equals("DANCE FLOOR")){
+                System.out.println("Your manager just spotted you leaving, and took his 15% cut.");
+                driver.playerStats.removeMoneySaved(driver.playerStats.getMoneySaved()*manager.getPercentage());
+            }
             if (commandWord == CommandWord.HELP) {
                 printHelp();
                 driver.playerStats.addMoves(1);
