@@ -14,6 +14,10 @@ public class RegularPlayerMatch {
                 if(preference.getAmount() <= driver.inv.silverItems){
                     res=true;
                 }
+            case "Wedding":
+                if(preference.getAmount() <= driver.inv.weddingring){
+                    res=true;
+                }
                 break;
         }
         return res;

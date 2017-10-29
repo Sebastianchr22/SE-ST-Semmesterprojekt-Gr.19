@@ -2,6 +2,7 @@ package PrettyWoman;
 class PlayerStats {
     private int Experience = 0;
     private int Enhancements = 0;
+    private int Moves = 2;
     private double moneySaved = 1000;
     private int currentHunger = 60;
     PlayerStats(){}
@@ -40,7 +41,19 @@ class PlayerStats {
             return false;
         }         
     }
-    public void printUI(){
+    public void minusMoves(){
+        this.Moves--;
+    }
+    public void addMoves(int value){
+        this.Moves+=value;
+    }
+    public void resetMoves(){
+        this.Moves=2;
+    }
+    public int getMoves(){
+        return this.Moves;
+    }
+    public void printUI(Driver driver){
         System.out.println("");
         System.out.println("");
         System.out.println("");System.out.println("                      "+"           Hunger:");
@@ -49,7 +62,7 @@ class PlayerStats {
             System.out.print("/");
         }for(int j = 24-currentHunger/4;j >= 0; j--) 
             System.out.print(" ");
-        System.out.print("|"+"     Enhancements: "+Enhancements+"\n"+"                      "+"----------------------------"+"     Experience: "+Experience+"\n");
+        System.out.print("|"+"     Enhancements: "+Enhancements+ "          "+ driver.inv.weightToString() + "\n"+"                      "+"----------------------------"+"     Experience: "+Experience + "            " + "Moves: " + Moves + "\n");
     }
     
     public void printMap(String CurrentRoom){

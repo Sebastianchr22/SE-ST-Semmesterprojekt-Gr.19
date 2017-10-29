@@ -15,7 +15,7 @@ class Inventory extends Item {
     public int wig = 0;
     public int shoes = 0;
     public int makeup = 0;
-    public boolean weddingring;
+    public int weddingring;
 
     //Items:
     Inventory() {
@@ -70,7 +70,7 @@ class Inventory extends Item {
         wig = 0;
         shoes = 0;
         makeup = 0;
-        weddingring = false;
+        weddingring = 0;
         for (Item item : Inventory) {
             switch (item.getCat()) {
                 case "Gold":
@@ -92,7 +92,7 @@ class Inventory extends Item {
                     makeup++;
                     break;
                 case "Wedding":
-                    weddingring = true;
+                    weddingring = 1;
                     break;
             }
             totalSize += item.getSize();
@@ -117,7 +117,8 @@ class Inventory extends Item {
         return this.totalWeight;
     }
 
-    public void weightToString() {
-        System.out.println("Capacity: " + totalWeight + "/1000g");
+    public String weightToString() {
+        countItems();
+        return "Capacity: " + totalWeight + "/1000g";
     }
 }

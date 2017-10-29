@@ -94,6 +94,7 @@ public class DanceMech {
                     System.out.println("There are no regulars to reject.");
                 }
             } else {
+                driver.playerStats.addMoves(1);
                 System.out.println("Please choose a specific dance to perform");
             }
         }

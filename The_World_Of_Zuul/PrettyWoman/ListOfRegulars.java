@@ -42,9 +42,6 @@ public class ListOfRegulars {
                 return (int) t1.getWealth() - (int) t.getWealth();
             }
         });
-        for (Regular regular : regularList) {//For debugging
-            System.out.println(regular.getName() + " $" + regular.getWealth());
-        }
     }
 
     public Regular getRegularAtIndex(int index) {
@@ -71,13 +68,12 @@ public class ListOfRegulars {
         //List is sorted by most wealthy at index 0:
         sortByWealth();
         double Index = regularList.indexOf(regular);
-        System.out.println("Index: " + Index); //Debug
-        System.out.println("Regular matched with: " + regular.info());//Debug
-        System.out.println("Total Regulars: " + countRegulars());//Debug
         double WinPercent = ((countRegulars() - Index++) / countRegulars()) * 100.0;
-        System.out.println("Percentage: " + WinPercent); //Debug
-
-        return WinPercent;
+        if (regular.getName().equals("Ex-boyfriend Daniel") || regular.getName().toUpperCase().equals("JACK THE BOUNCER")) {
+            return 100.0;
+        } else {
+            return WinPercent;
+        }
     }
 
     public void showList() {
