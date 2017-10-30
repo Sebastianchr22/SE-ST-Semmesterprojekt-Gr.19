@@ -8,7 +8,7 @@ public class Preference {
         this.amount = amount;
     }
     public String getPreference(){
-        return "Likes " + amount + " " + name+ " items.";
+        return "likes " + amount + " " + name+ " item(s).";
     }
     public void updatePreference(String name, int amount){
         this.name=name;

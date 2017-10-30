@@ -1,12 +1,4 @@
 package PrettyWoman;
-
-
-
-
-/**
- * @author  Michael Kolling and David J. Barnes
- * @version 2006.03.30
- */
 class Regular 
 {
     private int ID;
@@ -60,9 +52,8 @@ class Regular
     {
         return this.preference1;
     }
-    public boolean getInvite()
-    {
-        return false;
+    public String info(){
+        return "You are looking at " + name + ", " + age + ", Looks " + looks + "\n" + "He " + preference0.getPreference() + " He also " + preference1.getPreference();
     }
     public String info(){
         return name + ", " + age + "Looks " + "\"" + looks + "\"" + "\n" + preference0.getPreference() + " Also " + preference1.getPreference();

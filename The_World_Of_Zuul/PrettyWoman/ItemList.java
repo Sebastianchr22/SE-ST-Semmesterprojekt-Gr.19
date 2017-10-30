@@ -58,6 +58,9 @@ public class ItemList
     Item lightMakeupM = new Item(35, "Light Makeup", "Makeup for a more neutral and healthy look", "Makeup", makeupWeigth);
 
     itemList.add(goldring);
+    itemList.add(goldearring);
+    itemList.add(yeezyS);
+    itemList.add(adidasS);
     }
     
     public int countItems()
@@ -69,9 +72,20 @@ public class ItemList
         }
         return counter;
     }
+    public Item get(int i){
+        return itemList.get(i);
+    }
     public void removeItem(Item item)
     {
         itemList.remove(item);
+    }
+    public void addItem(Item item){
+        itemList.add(item);
+    }
+    public void showItemList(){
+        for(Item item : itemList){
+            System.out.println(item.getValues());
+        }
     }
     //SORT ITEMLIST:
     
