@@ -13,17 +13,13 @@ public class Game {
     public Preference Gold0 = new Preference("Gold", 0);
     public Manager manager;
 
-    public Regular Bouncer = new Regular(3, "Jack the bouncer", 45, "muscular, he's always smiled at you, and greets you every morning. Maybe he fancies you a bit..?", Gold0, Gold0);
+    public Regular Bouncer = new Regular("Jack the bouncer", 45, "muscular, he's always smiled at you, and greets you every morning. Maybe he fancies you a bit..?", Gold0, Gold0);
 
     public Game(Driver driver) {
 
         createRooms(driver);
 
         parser = new Parser();
-    }
-    public void dance(Driver driver)
-    {
-    DanceMech mech = new DanceMech(driver);
     }
 
     private void createRooms(Driver driver) {
@@ -72,6 +68,7 @@ public class Game {
 
     public void play(Driver driver) {
         printWelcome();
+
         boolean finished = false;
         while (!finished) {
 
@@ -218,17 +215,6 @@ public class Game {
             wantToQuit = true;
         }
         return wantToQuit;
-    }
-    private String getDanceMove(Command command){
-        if(command.hasSecondWord()){
-            //Return the secondword:
-            return command.getSecondWord();
-            
-        }else{
-            //Not a known dance move:
-            System.out.println("You have not specified a dance move.");
-            return "error";
-        }
     }
 
     private String getDanceMove(Command command) {

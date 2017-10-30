@@ -1,7 +1,6 @@
 package PrettyWoman;
 class Regular 
 {
-    private int ID;
     private String name;
     private int age;
     private String looks;
@@ -9,9 +8,8 @@ class Regular
     private Preference preference0;
     private Preference preference1;
  
-    Regular(int ID, String name, int age, String looks, Preference preference0, Preference preference1) 
+    Regular(String name, int age, String looks, Preference preference0, Preference preference1) 
     {
-        this.ID = ID;
         this.name = name;
         this.age = age;
         this.looks = looks;
@@ -20,10 +18,6 @@ class Regular
         this.preference1 = preference1;
     }
 
-    public int getID()
-    {
-        return ID;
-    }
     public String getName()
     {
         return name;
@@ -54,9 +48,6 @@ class Regular
     }
     public String info(){
         return "You are looking at " + name + ", " + age + ", Looks " + looks + "\n" + "He " + preference0.getPreference() + " He also " + preference1.getPreference();
-    }
-    public String info(){
-        return name + ", " + age + "Looks " + "\"" + looks + "\"" + "\n" + preference0.getPreference() + " Also " + preference1.getPreference();
     }
 }
 
