@@ -45,7 +45,7 @@ public class DanceMech {
         } else {
             if (command.getCommandWord() == CommandWord.ACCEPT || command.getCommandWord() == CommandWord.YES) {
                 PrivateRoom proom = new PrivateRoom(driver, regular);
-            } else if (command.getCommandWord() != CommandWord.INFO) {
+            } else if (command.getCommandWord() == CommandWord.NO || command.getCommandWord() == CommandWord.REJECT) {
                 System.out.println(driver.regularInRoom.getName() + " left the club.");
                 resetRegularInRoom(driver);
             }
@@ -57,22 +57,23 @@ public class DanceMech {
     }
 
     DanceMech(Driver driver, Command command) {
-
-        if (chance.ChanceCalc(35, 100) && driver.regularInRoom == null) {
-            //Regular appears in the club:
-            driver.regularInRoom = driver.reglist.getRandomRegular();
-            //Prompt accept private room invite:
-            System.out.println("A regular just appeared. Type info to learn more.");
-        }
-        if (driver.regularInRoom != null) {
-            //Someone in here:
-            //Chance of invite to private room:
-            if (chance.ChanceCalc(25, 100)) {
-                PrivateRoomInvite(driver, driver.regularInRoom, command, false);
+        if (driver.getWon() != true) {
+            if (chance.ChanceCalc(35, 100) && driver.regularInRoom == null) {
+                //Regular appears in the club:
+                driver.regularInRoom = driver.reglist.getRandomRegular();
+                //Prompt accept private room invite:
+                System.out.println("A regular just appeared. Type info to learn more.");
             }
-        }
-        if (driver.regularInRoom != null) {
-            System.out.println("You recognize a regular in the room");
+            if (driver.regularInRoom != null) {
+                //Someone in here:
+                //Chance of invite to private room:
+                if (chance.ChanceCalc(25, 100)) {
+                    PrivateRoomInvite(driver, driver.regularInRoom, command, false);
+                }
+            }
+            if (driver.regularInRoom != null && driver.inPRoom != true) {
+                System.out.println("You recognize a regular in the room");
+            }
         }
 
         //Input prompt:
@@ -83,11 +84,10 @@ public class DanceMech {
         } else {
             if (command.getCommandWord() == CommandWord.INFO) {
                 System.out.println(infoOnRegular(driver));
-            }
-            if (command.getCommandWord() == CommandWord.ACCEPT || command.getCommandWord() == CommandWord.YES) {
+            } else if (command.getCommandWord() == CommandWord.ACCEPT || command.getCommandWord() == CommandWord.YES) {
                 PrivateRoomInvite(driver, driver.regularInRoom, command, true);
-            }
-            if (command.getCommandWord() == CommandWord.REJECT || command.getCommandWord() == CommandWord.NO) {
+                resetRegularInRoom(driver);
+            } else if (command.getCommandWord() == CommandWord.REJECT || command.getCommandWord() == CommandWord.NO) {
                 if (driver.regularInRoom != null) {
                     resetRegularInRoom(driver);
                 } else {

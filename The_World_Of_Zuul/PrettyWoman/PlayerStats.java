@@ -15,6 +15,9 @@ class PlayerStats {
     public int getExperience(){
         return this.Experience;
     }
+    public int getHunger(){
+        return this.currentHunger;
+    }
     public void addExperience(int value){
         this.Experience+=value;
     }
@@ -27,11 +30,14 @@ class PlayerStats {
     public void removeMoneySaved(double value){
         this.moneySaved-=value;
     }
-    public void addEnhancements(int value){
-        this.Enhancements+=value;
-    }
     public void removeEnhancements(int value){
         this.Enhancements-=value;
+    }
+    public void removeHunger(){
+        this.currentHunger-=1;
+    }
+    public void addEnhancements(int value){
+        this.Enhancements+=value;
     }
     public boolean addHunger(int value){
         if(this.currentHunger+value <= 100){

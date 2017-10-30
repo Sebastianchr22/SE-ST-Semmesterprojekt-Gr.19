@@ -11,12 +11,12 @@ public class PrivateRoom
     
     public void Match(Driver driver, Regular regular){
         //Boolean method to check if a regular and a player is a match:
-        RegularPlayerMatch match = new RegularPlayerMatch();
-        match.RegularPlayerMatch(driver, regular);
+        RegularPlayerMatch match = new RegularPlayerMatch(driver, regular);
+        
     }
     
     PrivateRoom(Driver driver, Regular regular){
-        
+        driver.setInPRoom(true);
         //If the regular is a minor, a raid might happen
         Chance chance = new Chance();
         if(regular.getAge() < 21){
@@ -35,11 +35,12 @@ public class PrivateRoom
                 driver.playerStats.addExperience(3);
                 pRoomTips(250, driver);
             }
+            driver.setInPRoom(false);
         }else{
             //No razzia:
             //No minor:
+            pRoomTips(100,driver);
             Match(driver, regular);
-            pRoomTips(0, driver);
             driver.playerStats.addExperience(3);
         }
     }

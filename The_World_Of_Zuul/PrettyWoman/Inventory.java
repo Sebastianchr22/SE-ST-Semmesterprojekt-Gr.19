@@ -45,9 +45,15 @@ class Inventory extends Item {
     }
 
     public String showInventory() {
+        int counter = 0;
+        System.out.println("Item Name:                         Weight:");
+        System.out.println("");
         for (Item item : Inventory) {
-            System.out.println("* " + item.getValues());
+            System.out.println(counter + ". " + item.getValues() + "     |  " + item.getSize()*5 + "g");
+            counter++;
         }
+        System.out.println("");
+        System.out.println(weightToString());
         return "";
     }
 

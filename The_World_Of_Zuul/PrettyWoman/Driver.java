@@ -13,6 +13,8 @@ public class Driver
     Chance chanceCalc = new Chance();
     ItemList itemlist = new ItemList();
     Regular regularInRoom;
+    boolean gameWon;
+    boolean inPRoom;
     
     
     public void List(){
@@ -23,5 +25,20 @@ public class Driver
     Driver()
     {
         reg.createReglist(reglist);
+    }
+    public void setWon(boolean bool){
+        this.gameWon=bool;
+    }
+    public void resetWon(){
+        this.gameWon = false;
+    }
+    public void setInPRoom(boolean bool){
+        this.inPRoom = bool;
+    }
+    public boolean getInPRoom(){
+        return this.inPRoom;
+    }
+    public boolean getWon(){
+        return this.gameWon;
     }
 }

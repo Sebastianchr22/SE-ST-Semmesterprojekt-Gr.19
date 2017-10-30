@@ -22,15 +22,15 @@ public class RegularPlayerMatch {
         }
         return res;
     }
-    public void RegularPlayerMatch(Driver driver, Regular regular){
+    RegularPlayerMatch(Driver driver, Regular regular){
         if(Match(driver,regular.getPreference0()) && Match(driver, regular.getPreference1())){
-            System.out.println("They are a match!");
+            System.out.println("The two of you are a match!");
             if(chance.ChanceCalc(50, 100)){
                 //Invite to hotel / motel:
                 HotelMotelInvite invite = new HotelMotelInvite(driver, regular);
             }
         }else{
-            System.out.println("No match..");
+            System.out.println("You two are not a match..");
         }
         
     }

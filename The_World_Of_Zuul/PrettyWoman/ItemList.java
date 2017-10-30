@@ -79,6 +79,9 @@ public class ItemList
     {
         itemList.remove(item);
     }
+    public void addItem(Item item){
+        itemList.add(item);
+    }
     public void showItemList(){
         for(Item item : itemList){
             System.out.println(item.getValues());
