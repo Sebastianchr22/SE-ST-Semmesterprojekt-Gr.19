@@ -10,17 +10,19 @@ public class Game {
 
     private Parser parser;
     private Room currentRoom;
+    public Preference Gold0 = new Preference("Gold", 0);
+    public Manager manager;
 
-    public Moves moves = new Moves();
+    public Regular Bouncer = new Regular(3, "Jack the bouncer", 45, "muscular, he's always smiled at you, and greets you every morning. Maybe he fancies you a bit..?", Gold0, Gold0);
 
     public Game(Driver driver) {
 
-        createRooms();
+        createRooms(driver);
 
         parser = new Parser();
     }
 
-    private void createRooms() {
+    private void createRooms(Driver driver) {
 
         Room home, back, locker, floor, privateRoom, office, outside, motel, tower;
 
@@ -60,16 +62,22 @@ public class Game {
         tower.setExit("home", home);
 
         currentRoom = home;
+        manager = new Manager("Manager James", office, driver);
+
     }
 
     public void play(Driver driver) {
         printWelcome();
+
         boolean finished = false;
         while (!finished) {
-            driver.playerStats.printUI();
+
+            manager.moveManager();
+            driver.playerStats.printUI(driver);
             if (currentRoom.getNameBackend().equals("HOME")) {
                 BuyFromHome buy = new BuyFromHome(driver.playerStats);
-            }if(currentRoom.getNameBackend().toUpperCase().equals("DANCE FLOOR")){
+            }
+            if (currentRoom.getNameBackend().toUpperCase().equals("DANCE FLOOR")) {
                 DanceMech dance = new DanceMech();
             }
 
@@ -88,35 +96,123 @@ public class Game {
         System.out.println(currentRoom.getLongDescription());
     }
 
+    private void printInventory(Driver driver) {
+        System.out.println("");
+        System.out.println("");
+        System.out.println("____________________________Your inventory:___________________________");
+        driver.inv.showInventory();
+        System.out.println("______________________________________________________________________");
+    }
+
     private boolean processCommand(Command command, Driver driver) {
         boolean wantToQuit = false;
-        CommandWord commandWord = command.getCommandWord();
+        if (driver.playerStats.getMoneySaved() > 0) {
+            CommandWord commandWord = command.getCommandWord();
+            if (driver.playerStats.getMoves() == 0) {
+                createRooms(driver);
+                System.out.println("You've gone home, after a long day at work.");
+                driver.playerStats.resetMoves();
+            }
 
-        if (commandWord == CommandWord.UNKNOWN) {
-            System.out.println("I don't know what you mean...");
-            return false;
+            if (commandWord == CommandWord.UNKNOWN) {
+                System.out.println("I don't know what you mean...");
+                return false;
+            } else {
+                driver.playerStats.minusMoves();
+                driver.playerStats.removeHunger();
+                if (currentRoom.getNameBackend().toUpperCase().equals(manager.getRoom()) && !currentRoom.getNameBackend().toUpperCase().equals("DANCE FLOOR")) {
+                    System.out.println("Your manager just spotted you leaving, and took his 15% cut.");
+                    driver.playerStats.removeMoneySaved(driver.playerStats.getMoneySaved() * manager.getPercentage());
+                }
+                if (commandWord == CommandWord.HELP) {
+                    printHelp();
+                    driver.playerStats.addMoves(1);
+                } else if (commandWord == CommandWord.GO) {
+                    goRoom(command, driver);
+                } else if (commandWord == CommandWord.MAP) {
+                    driver.playerStats.printMap(currentRoom.getNameBackend());
+                    driver.playerStats.addMoves(1);
+                } else if (commandWord == CommandWord.SHOW) {
+                    driver.playerStats.addMoves(1);
+                    if (command.hasSecondWord()) {
+                        String Show = command.getSecondWord();
+
+                        switch (Show.toUpperCase()) {
+                            case "INVENTORY":
+                                printInventory(driver);
+                                break;
+                            case "INV":
+                                printInventory(driver);
+                                break;
+                            case "MAP":
+                                driver.playerStats.printMap(currentRoom.getNameBackend());
+                                break;
+                        }
+                    } else {
+                        System.out.println("Show what?");
+                    }
+
+                } else if (commandWord == CommandWord.DROP) {
+                    driver.playerStats.addMoves(1);
+                    if (command.hasSecondWord()) {
+                        String itemnr = command.getSecondWord();
+                        if (driver.inv.listLenght() >= Integer.valueOf(itemnr)) {
+                            Item item = driver.inv.Inventory.get(Integer.valueOf(itemnr));
+                            if (driver.inv.Inventory.contains(item)) {
+                                driver.inv.removeFromInventory(item);
+                                System.out.println(item.getName() + " has been removed from your inventory");
+                                driver.itemlist.addItem(item);
+                            } else {
+                                System.out.println("The choosen item, is not in your inventory.");
+                            }
+                        } else {
+                            System.out.println("The choosen item, is not in your inventory.");
+                        }
+                    } else {
+                        System.out.println("Please enter the index number of the item you wish to drop.");
+                    }
+                    //Drop a specific item:
+
+                    //Place it back in the itemlist:
+                    //Remove from inv:
+                } else if (commandWord == CommandWord.FLIRT) {
+                    if (currentRoom.getNameBackend().equals("OUTSIDE")) {
+                        Flirt flirt = new Flirt(driver, Bouncer);
+                    } else {
+                    }
+                } else if (currentRoom.getNameBackend().equals("DANCE FLOOR")) {
+                    //Calls danceMech with 
+                    DanceMech dance = new DanceMech(driver, command);
+
+                    //As parser variables.
+                } else if (commandWord == CommandWord.STEAL) {
+                    //Call lockerroom(); with an itemlist and a player inventory parameters.
+                    if (currentRoom.getNameBackend().equals("LOCKER ROOM")) {
+                        Lockerroom locker = new Lockerroom(driver);
+                    } else {
+                        System.out.println("There is nothing to steal here.");
+                    }
+                } else if (commandWord == CommandWord.BUY && currentRoom.getNameBackend().equals("HOME")) {
+                    BuyFromHome buy = new BuyFromHome(driver, command);
+                    driver.playerStats.addMoves(1);
+                } else if (commandWord == CommandWord.QUIT) {
+
+                    wantToQuit = quit(command);
+                } else {
+                    driver.playerStats.addMoves(1);
+                    System.out.println("Something went wrong.");
+                }
+            }
+        } else {
+            wantToQuit = true;
+            System.out.println("You have run out of money, therefore you've lost the game.");
         }
-        if (commandWord == CommandWord.HELP) {
-            printHelp();
-        } else if (commandWord == CommandWord.GO) {
-            goRoom(command);
-        } else if (commandWord == CommandWord.MAP) {
-            driver.playerStats.printMap(currentRoom.getNameBackend());
-        } else if (commandWord == CommandWord.FLIRT && currentRoom.getNameBackend().equals("OUTSIDE")) {
-
-        } else if (nextRoom.getNameBackend().toUpperCase().equals("DANCE FLOOR")) {
-            //Calls danceMech with 
-            DanceMech dance = new DanceMech(driver, command);
-            //As parser variables.
-
-        } else if (commandWord == CommandWord.STEAL && currentRoom.getNameBackend().equals("LOCKER ROOM")) {
-            //Call lockerroom(); with an itemlist and a player inventory parameters.
-
-        } else if (commandWord == CommandWord.QUIT) {
-
-            wantToQuit = quit(command);
-        } else if (commandWord == CommandWord.BUY && currentRoom.getNameBackend().toUpperCase().equals("HOME")) {
-            BuyFromHome buy = new BuyFromHome(driver, command);
+        if (driver.playerStats.getHunger() <= 0) {
+            wantToQuit = true;
+            System.out.println("Your daughter is starving, therefore you've lost the game.");
+        }
+        if (driver.getWon() == true) {
+            wantToQuit = true;
         }
         return wantToQuit;
     }
@@ -140,7 +236,7 @@ public class Game {
     }
     public Room nextRoom;
 
-    private void goRoom(Command command) {
+    private void goRoom(Command command, Driver driver) {
         if (!command.hasSecondWord()) {
             System.out.println("Go where?");
         }
@@ -150,24 +246,29 @@ public class Game {
         nextRoom = currentRoom.getExit(direction);
 
         if (currentRoom.getNameBackend().equals("HOME")) {
-            moves.resetMoves();
+            driver.playerStats.resetMoves();
         }
         if (nextRoom == null) {
+            driver.playerStats.addMoves(1);
             System.out.println("There is no door!");
         } else {
             currentRoom = nextRoom;
-            moves.removeMoves();
             System.out.println(currentRoom.getLongDescription());
 
         }
     }
 
     private boolean quit(Command command) {
-        if (command.hasSecondWord()) {
+        if (!command.hasSecondWord()) {
             System.out.println("Quit what?");
             return false;
         } else {
-            return true;
+            if (command.getSecondWord().toUpperCase().equals("GAME")) {
+                return true;
+            } else {
+                System.out.println("Quit what?");
+                return false;
+            }
         }
     }
 

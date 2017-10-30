@@ -2,6 +2,7 @@ package PrettyWoman;
 class PlayerStats {
     private int Experience = 0;
     private int Enhancements = 0;
+    private int Moves = 10;
     private double moneySaved = 1000;
     private int currentHunger = 60;
     PlayerStats(){}
@@ -13,6 +14,9 @@ class PlayerStats {
     }
     public int getExperience(){
         return this.Experience;
+    }
+    public int getHunger(){
+        return this.currentHunger;
     }
     public void addExperience(int value){
         this.Experience+=value;
@@ -26,11 +30,14 @@ class PlayerStats {
     public void removeMoneySaved(double value){
         this.moneySaved-=value;
     }
-    public void addEnhancements(int value){
-        this.Enhancements+=value;
-    }
     public void removeEnhancements(int value){
         this.Enhancements-=value;
+    }
+    public void removeHunger(){
+        this.currentHunger-=2;
+    }
+    public void addEnhancements(int value){
+        this.Enhancements+=value;
     }
     public boolean addHunger(int value){
         if(this.currentHunger+value <= 100){
@@ -40,7 +47,19 @@ class PlayerStats {
             return false;
         }         
     }
-    public void printUI(){
+    public void minusMoves(){
+        this.Moves--;
+    }
+    public void addMoves(int value){
+        this.Moves+=value;
+    }
+    public void resetMoves(){
+        this.Moves=10;
+    }
+    public int getMoves(){
+        return this.Moves;
+    }
+    public void printUI(Driver driver){
         System.out.println("");
         System.out.println("");
         System.out.println("");System.out.println("                      "+"           Hunger:");
@@ -49,7 +68,7 @@ class PlayerStats {
             System.out.print("/");
         }for(int j = 24-currentHunger/4;j >= 0; j--) 
             System.out.print(" ");
-        System.out.print("|"+"     Enhancements: "+Enhancements+"\n"+"                      "+"----------------------------"+"     Experience: "+Experience+"\n");
+        System.out.print("|"+"     Enhancements: "+Enhancements+ "          "+ driver.inv.weightToString() + "\n"+"                      "+"----------------------------"+"     Experience: "+Experience + "            " + "Moves: " + Moves + "\n");
     }
     
     public void printMap(String CurrentRoom){

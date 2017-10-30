@@ -1,12 +1,13 @@
+
 package PrettyWoman;
 
 import java.util.*;
 
 public class DanceMech {
+
     int move1ExpRequired = 0;
     int move2ExpRequired = 25;
     Chance chance = new Chance();
-    boolean RegularInRoom = false; 
 
     /**
      * Prints the money and experience gained by the player:
@@ -25,21 +26,78 @@ public class DanceMech {
         System.out.println("Advanced");
     }
 
+    public String infoOnRegular(Driver driver) {
+        if (driver.regularInRoom != null) {
+            return driver.regularInRoom.info();
+        } else {
+            return "There is no regular in here.";
+        }
+    }
+
+    public void resetRegularInRoom(Driver driver) {
+        System.out.println(driver.regularInRoom.getName() + " left the club.");
+        driver.regularInRoom = null;
+    }
+
+    public void PrivateRoomInvite(Driver driver, Regular regular, Command command, boolean accepted) {
+        if (accepted != true) {
+            System.out.println("You have been invited to private room by " + driver.regularInRoom.getName());
+            System.out.println("Do you accept the invitation?");
+        } else {
+            if (command.getCommandWord() == CommandWord.ACCEPT || command.getCommandWord() == CommandWord.YES) {
+                PrivateRoom proom = new PrivateRoom(driver, regular);
+            } else if (command.getCommandWord() == CommandWord.NO || command.getCommandWord() == CommandWord.REJECT) {
+                System.out.println(driver.regularInRoom.getName() + " left the club.");
+                resetRegularInRoom(driver);
+            }
+        }
+    }
+
     DanceMech() {
         printPrompt();
     }
 
     DanceMech(Driver driver, Command command) {
-        if(chance.ChanceCalc(35, 100)){
-            //Regular appears in the club:
-            RegularInRoom = true;
-            driver.reglist.getRandomRegular();
+        if (driver.getWon() != true) {
+            if (chance.ChanceCalc(35, 100) && driver.regularInRoom == null) {
+                //Regular appears in the club:
+                driver.regularInRoom = driver.reglist.getRandomRegular();
+                //Prompt accept private room invite:
+                System.out.println("A regular just appeared. Type info to learn more.");
+            }
+            if (driver.regularInRoom != null) {
+                //Someone in here:
+                //Chance of invite to private room:
+                if (chance.ChanceCalc(25, 100)) {
+                    PrivateRoomInvite(driver, driver.regularInRoom, command, false);
+                }
+            }
+            if (driver.regularInRoom != null && driver.inPRoom != true) {
+                System.out.println("You recognize a regular in the room");
+            }
         }
+
         //Input prompt:
         if (command.hasSecondWord()) {
+
             danceMoveYield(command.getSecondWord(), driver);
+
         } else {
-            System.out.println("Please choose a specific dance to perform");
+            if (command.getCommandWord() == CommandWord.INFO) {
+                System.out.println(infoOnRegular(driver));
+            } else if (command.getCommandWord() == CommandWord.ACCEPT || command.getCommandWord() == CommandWord.YES) {
+                PrivateRoomInvite(driver, driver.regularInRoom, command, true);
+                resetRegularInRoom(driver);
+            } else if (command.getCommandWord() == CommandWord.REJECT || command.getCommandWord() == CommandWord.NO) {
+                if (driver.regularInRoom != null) {
+                    resetRegularInRoom(driver);
+                } else {
+                    System.out.println("There are no regulars to reject.");
+                }
+            } else {
+                driver.playerStats.addMoves(1);
+                System.out.println("Please choose a specific dance to perform");
+            }
         }
     }
 
@@ -58,6 +116,7 @@ public class DanceMech {
                 danceMovePrint(move2ExpRequired, driver);
                 break;
             default:
+                driver.playerStats.addMoves(1);
                 break;
         }
 
@@ -87,7 +146,7 @@ public class DanceMech {
                 //It was successful:
                 System.out.println("Although you are not experienced with that move, you were successful.");
                 driver.playerStats.addExperience(1);
-                double tipsFromMove = tipsGained(exptips(driver, danceMoveExpRequired)+25, driver);
+                double tipsFromMove = tipsGained(exptips(driver, danceMoveExpRequired) + 25, driver);
                 System.out.println("You received $" + tipsFromMove + " in tips for that move.");
                 driver.playerStats.addMoneySaved(tipsFromMove);
 

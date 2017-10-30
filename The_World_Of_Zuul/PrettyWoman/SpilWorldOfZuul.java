@@ -8,7 +8,6 @@ public class SpilWorldOfZuul
         Driver driver = new Driver();
         Game game = new Game(driver);
         game.play(driver);
-        System.out.println(game.getName());
     }
 
 }

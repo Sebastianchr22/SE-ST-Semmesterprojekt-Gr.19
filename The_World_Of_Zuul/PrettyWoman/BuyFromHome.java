@@ -42,6 +42,8 @@ public class BuyFromHome {
                     System.out.println("Not a known option.");
                     break;
             }
+        }else{
+            System.out.println("Buy what?");
         }
     }
 }
