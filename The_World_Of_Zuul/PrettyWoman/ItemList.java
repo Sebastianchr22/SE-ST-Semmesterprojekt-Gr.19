@@ -38,7 +38,6 @@ public class ItemList
     Item minecraftO = new Item(18, "Sexy Minecraft Outfit", "An outfit that will make you look like a sexy minecraft girl, made of blocks", "Outfit", outfitWeigth);
     Item bunnyO = new Item(19, "Bunny Outfit", "An outfit that will make you look sexy with bunny ears and tail", "Outfit", outfitWeigth);
     Item devilO = new Item(20, "Devil Outfit", "An outfit that will make you look like a sexy devil", "Outfit", outfitWeigth);
-    Item adidasO = new Item(21, "Adidas Outfit", "An outfit that will make you into a real slav", "Outfit", outfitWeigth);
     Item superWomanO = new Item(22, "Super Woman Outfit", "An outfit that will make you look like the sexy Super Woman", "Outfit", outfitWeigth);
     //wigs
     Item curlyBlondeW = new Item(23, "Curly Blonde Wig", "Classy curly blonde hair", "Wig", wigWeigth);
@@ -48,7 +47,6 @@ public class ItemList
     Item superSaiyanW = new Item(27, "Super Saiyan Wig", "Makes your hair glow yellow, Over 9000!!", "Wig", wigWeigth);
     //shoes
     Item yeezyS = new Item(28, "Yeezy", "Shoes for a real swagster", "Shoe", shoesWeigth);
-    Item adidasS = new Item(29, "Adidas Shoes", "The only shoes for a real slav", "Shoe", shoesWeigth);
     Item sandalsS = new Item(30, "Sandals", "Usefull for walking on the beach", "Shoe", shoesWeigth);
     Item highHeelsS = new Item(31, "Red High Heels", "Classy red heels for at classy woman", "Shoe", shoesWeigth);
     Item gucciS = new Item(32, "Gucci Shoes", "Show through your shoes that you got money and bad style", "Shoe", shoesWeigth);
@@ -56,7 +54,10 @@ public class ItemList
     Item heavyMakeupM = new Item(33, "Heavy Makeup", "When you have to look really good, even if you need a full facemask of makeup", "Makeup", makeupWeigth);
     Item mediumMakeupM = new Item(34, "Medium Makeup", "When you really wanna look good, but still won't use too much makeup", "Makeup", makeupWeigth);
     Item lightMakeupM = new Item(35, "Light Makeup", "Makeup for a more neutral and healthy look", "Makeup", makeupWeigth);
-
+    //three stripes
+    Item adidasS = new Item(29, "Adidas Shoes", "The only shoes for a real slav", "Adidas", shoesWeigth);
+    Item adidasO = new Item(21, "Adidas Outfit", "An outfit that will make you into a real slav", "Outfit", outfitWeigth);
+    
     itemList.add(goldring);
     itemList.add(goldearring);
     itemList.add(yeezyS);
