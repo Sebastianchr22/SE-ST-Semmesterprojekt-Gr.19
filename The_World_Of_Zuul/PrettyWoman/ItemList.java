@@ -59,8 +59,39 @@ public class ItemList
 
     itemList.add(goldring);
     itemList.add(goldearring);
+    itemList.add(goldwristwatch);
+    itemList.add(goldbracelet);
+    itemList.add(goldnecklace);
+    itemList.add(silverring);
+    itemList.add(silverearring);
+    itemList.add(silverwristwatch);
+    itemList.add(silverbracelet);
+    itemList.add(silvernecklace);
+    itemList.add(schoolO);
+    itemList.add(nurseO);
+    itemList.add(ninjaO);
+    itemList.add(maidO);
+    itemList.add(policeO);
+    itemList.add(cheerleaderO);
+    itemList.add(cowgirlO);
+    itemList.add(minecraftO);
+    itemList.add(bunnyO);
+    itemList.add(devilO);
+    itemList.add(adidasO);
+    itemList.add(superWomanO);
+    itemList.add(curlyBlondeW);
+    itemList.add(longBlueW);
+    itemList.add(baldW);
+    itemList.add(shortStylishW);
+    itemList.add(superSaiyanW);
     itemList.add(yeezyS);
     itemList.add(adidasS);
+    itemList.add(sandalsS);
+    itemList.add(highHeelsS);
+    itemList.add(gucciS);
+    itemList.add(heavyMakeupM);
+    itemList.add(mediumMakeupM);
+    itemList.add(lightMakeupM);
     }
     
     public int countItems()
