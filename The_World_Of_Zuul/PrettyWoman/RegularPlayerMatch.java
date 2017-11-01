@@ -14,6 +14,31 @@ public class RegularPlayerMatch {
                 if(preference.getAmount() <= driver.inv.silverItems){
                     res=true;
                 }
+            case "Outfit":
+                if(preference.getAmount() <= driver.inv.Outfit){
+                    res=true;
+                }
+                break;
+            case "Wig":
+                if(preference.getAmount() <= driver.inv.wig){
+                    res=true;
+                }
+                break;
+            case "Shoes":
+                if(preference.getAmount() <= driver.inv.shoes){
+                    res=true;
+                }
+                break;
+            case "Makeup":
+                if(preference.getAmount() <= driver.inv.makeup){
+                    res=true;
+                }
+                break;
+            case "Adidas":
+                if(preference.getAmount() <= driver.inv.Adidas){
+                    res=true;
+                }
+                break;
             case "Wedding":
                 if(preference.getAmount() <= driver.inv.weddingring){
                     res=true;

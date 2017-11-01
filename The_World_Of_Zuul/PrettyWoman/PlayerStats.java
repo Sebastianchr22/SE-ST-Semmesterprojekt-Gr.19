@@ -34,7 +34,7 @@ class PlayerStats {
         this.Enhancements-=value;
     }
     public void removeHunger(){
-        this.currentHunger-=1;
+        this.currentHunger-=2;
     }
     public void addEnhancements(int value){
         this.Enhancements+=value;

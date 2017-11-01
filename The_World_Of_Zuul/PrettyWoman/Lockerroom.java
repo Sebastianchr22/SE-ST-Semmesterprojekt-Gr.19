@@ -21,8 +21,6 @@ public class Lockerroom {
                 driver.inv.addToInventory(driver.itemlist.get(random));
                 driver.itemlist.removeItem(driver.itemlist.get(random));
                 System.out.println("");
-                System.out.println("Items in locker room:");
-                driver.itemlist.showItemList();
             } else {
                 System.out.println("");
             }

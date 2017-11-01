@@ -15,25 +15,15 @@ class Inventory extends Item {
     public int wig = 0;
     public int shoes = 0;
     public int makeup = 0;
-    public int weddingring;
-
+    public int weddingring = 0;
+    public int Adidas = 0;
     //Items:
     Inventory() {
         //Items:
         Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring", "Silver", 3);
-        Item goldring = new Item(1, "Gold Ring", "A nice gold ring", "Gold", 3);
-        Item goldearring = new Item(2, "Gold Earring", "A nice gold earring", "Gold", 3);
-        Item goldnecklace = new Item(3, "Gold Ring", "A nice gold necklace", "Gold", 3);
-        Item goldwristwatch = new Item(4, "Gold Wristwatch", "A nice gold wristwatch", "Gold", 3);
-        Item goldbracelet = new Item(5, "Gold Bracelet", "A nice gold bracelet", "Gold", 3);
-
+        
         //Adds all starting items to the inventory:
         Inventory.add(weddingring);
-        Inventory.add(goldring);
-        Inventory.add(goldearring);
-        Inventory.add(goldnecklace);
-        Inventory.add(goldwristwatch);
-        Inventory.add(goldbracelet);
     }
 
     public void addToInventory(Item item) {
@@ -77,6 +67,7 @@ class Inventory extends Item {
         shoes = 0;
         makeup = 0;
         weddingring = 0;
+        Adidas = 0;
         for (Item item : Inventory) {
             switch (item.getCat()) {
                 case "Gold":
@@ -96,6 +87,9 @@ class Inventory extends Item {
                     break;
                 case "Makeup":
                     makeup++;
+                    break;
+                case "Adidas":
+                    Adidas++;
                     break;
                 case "Wedding":
                     weddingring = 1;

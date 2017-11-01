@@ -13,7 +13,7 @@ public class Game {
     public Preference Gold0 = new Preference("Gold", 0);
     public Manager manager;
 
-    public Regular Bouncer = new Regular(3, "Jack the bouncer", 45, "muscular, he's always smiled at you, and greets you every morning. Maybe he fancies you a bit..?", Gold0, Gold0);
+    public Regular Bouncer = new Regular( "Jack the bouncer", 45, "muscular, he's always smiled at you, and greets you every morning. Maybe he fancies you a bit..?", Gold0, Gold0);
 
     public Game(Driver driver) {
 
@@ -177,6 +177,7 @@ public class Game {
                     //Remove from inv:
                 } else if (commandWord == CommandWord.FLIRT) {
                     if (currentRoom.getNameBackend().equals("OUTSIDE")) {
+                        System.out.println("You flirt with the bouncer");
                         Flirt flirt = new Flirt(driver, Bouncer);
                     } else {
                     }
