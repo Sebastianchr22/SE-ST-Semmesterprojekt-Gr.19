@@ -120,7 +120,7 @@ public class Game {
             } else {
                 driver.playerStats.minusMoves();
                 driver.playerStats.removeHunger();
-                if (currentRoom.getNameBackend().toUpperCase().equals(manager.getRoom()) && !currentRoom.getNameBackend().toUpperCase().equals("DANCE FLOOR")) {
+                if (currentRoom.getNameBackend().toUpperCase().equals(manager.getRoom()) && !currentRoom.getNameBackend().toUpperCase().equals("DANCE FLOOR") && !currentRoom.getNameBackend().toUpperCase().equals("LOCKER ROOM")) {
                     System.out.println("Your manager just spotted you leaving, and took his 15% cut.");
                     driver.playerStats.removeMoneySaved(driver.playerStats.getMoneySaved() * manager.getPercentage());
                 }

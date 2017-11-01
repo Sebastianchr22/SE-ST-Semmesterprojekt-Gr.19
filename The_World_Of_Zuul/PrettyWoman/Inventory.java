@@ -20,7 +20,7 @@ class Inventory extends Item {
     //Items:
     Inventory() {
         //Items:
-        Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring", "Silver", 3);
+        Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring given to you by your ex- boyfriend", "Wedding", 3);
         
         //Adds all starting items to the inventory:
         Inventory.add(weddingring);
@@ -103,7 +103,7 @@ class Inventory extends Item {
 
     public boolean checkCapacity(Item item) {
         countItems();
-        if (totalWeight + item.getSize() <= 1000) {
+        if (totalWeight + item.getSize()*5 <= 1000) {
             //Under capasity:
             return true;
         } else {
