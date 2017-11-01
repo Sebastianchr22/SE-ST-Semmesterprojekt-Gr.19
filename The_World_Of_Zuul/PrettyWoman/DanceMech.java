@@ -59,7 +59,7 @@ public class DanceMech {
 
     DanceMech(Driver driver, Command command) {
         if (driver.getWon() != true) {
-            if (chance.ChanceCalc(35, 100) && driver.regularInRoom == null) {
+            if (chance.ChanceCalc(18, 100) && driver.regularInRoom == null) {
                 //Regular appears in the club:
                 driver.regularInRoom = driver.reglist.getRandomRegular();
                 //Prompt accept private room invite:
@@ -68,7 +68,7 @@ public class DanceMech {
             if (driver.regularInRoom != null) {
                 //Someone in here:
                 //Chance of invite to private room:
-                if (chance.ChanceCalc(25, 100)) {
+                if (chance.ChanceCalc(20, 100)) {
                     PrivateRoomInvite(driver, driver.regularInRoom, command, false);
                 }
             }
