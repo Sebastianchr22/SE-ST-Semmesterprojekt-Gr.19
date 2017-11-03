@@ -13,7 +13,7 @@ public class Game {
     public Preference Gold0 = new Preference("Gold", 0);
     public Manager manager;
 
-    public Regular Bouncer = new Regular( "Jack the bouncer", 45, "muscular, he's always smiled at you, and greets you every morning. Maybe he fancies you a bit..?", Gold0, Gold0);
+    public Regular Bouncer = new Regular("Jack the bouncer", 45, "muscular, he's always smiled at you, and greets you every morning. Maybe he fancies you a bit..?", Gold0, Gold0);
 
     public Game(Driver driver) {
 
@@ -112,6 +112,10 @@ public class Game {
                 createRooms(driver);
                 System.out.println("You've gone home, after a long day at work.");
                 driver.playerStats.resetMoves();
+                if (driver.playerStats.getAge() >= 20) {
+                    System.out.println("You've aged too much, and are no longer desirable. You've lost the game.");
+                    wantToQuit = true;
+                }
             }
 
             if (commandWord == CommandWord.UNKNOWN) {

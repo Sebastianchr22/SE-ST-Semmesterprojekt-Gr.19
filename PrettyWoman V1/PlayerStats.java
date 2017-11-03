@@ -2,9 +2,10 @@ package PrettyWoman;
 class PlayerStats {
     private int Experience = 0;
     private int Enhancements = 0;
-    private int Moves = 10;
+    private int Moves = 12;
     private double moneySaved = 1000;
-    private int currentHunger = 60;
+    private int currentHunger = 100;
+    private int age = 0;
     PlayerStats(){}
     public double getMoneySaved(){
         return this.moneySaved;
@@ -17,6 +18,9 @@ class PlayerStats {
     }
     public int getHunger(){
         return this.currentHunger;
+    }
+    public int getAge(){
+        return this.age;
     }
     public void addExperience(int value){
         this.Experience+=value;
@@ -39,6 +43,9 @@ class PlayerStats {
     public void addEnhancements(int value){
         this.Enhancements+=value;
     }
+    public void addAge(){
+        this.age++;
+    }
     public boolean addHunger(int value){
         if(this.currentHunger+value <= 100){
             this.currentHunger+=value;
@@ -55,6 +62,7 @@ class PlayerStats {
     }
     public void resetMoves(){
         this.Moves=10;
+        this.age++;
     }
     public int getMoves(){
         return this.Moves;
