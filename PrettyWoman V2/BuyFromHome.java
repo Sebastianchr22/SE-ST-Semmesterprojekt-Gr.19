@@ -7,7 +7,7 @@ public class BuyFromHome {
 
     public void printOptions() {
         System.out.println("You can now buy:");
-        System.out.println("1x 'Enhancements' to make more money for $" + enhancementPrice + ".");
+        System.out.println("1x 'Enhancements' to make more money for $" + enhancementPrice + ", and also increases days left before retirement" +".");
         System.out.println("10x 'Food' for your daughter for $" + foodPrice + ".");
     }
     BuyFromHome(PlayerStats playerStats){
@@ -20,6 +20,7 @@ public class BuyFromHome {
                 case "enhancements":
                     if (driver.playerStats.getMoneySaved() >= enhancementPrice) {
                         driver.playerStats.addEnhancements(1);
+                        driver.playerStats.addDaysLeft();
                         driver.playerStats.removeMoneySaved(enhancementPrice);
                         System.out.println("You bought an enhancement.");
                     } else {
