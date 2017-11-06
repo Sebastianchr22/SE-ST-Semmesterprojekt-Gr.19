@@ -7,6 +7,7 @@ package PrettyWoman;
 import java.util.*;
 
 public class Game {
+    
     private txtSaver save = new txtSaver();
     private Parser parser;
     private Room currentRoom;
@@ -74,6 +75,7 @@ public class Game {
             
             save.saveGame(driver);
             save.loadGame(driver);
+
             manager.moveManager();
             driver.playerStats.printUI(driver);
             if (currentRoom.getNameBackend().equals("HOME")) {
@@ -93,6 +95,10 @@ public class Game {
     private void printWelcome() {
         System.out.println();
         System.out.println("Welcome to the Pretty Woman Strip Club!");
+        System.out.println("You're a single mother living a hard life as a stripper to feed your daugther.");
+        System.out.println("Your goal in life is to find a successful rich man whom you can marry and take care of you and your daugther,");
+        System.out.println("but to do that you need to find various accesories to help you reach your goal.");
+        System.out.println();
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
@@ -114,7 +120,8 @@ public class Game {
                 createRooms(driver);
                 System.out.println("You've gone home, after a long day at work.");
                 driver.playerStats.resetMoves();
-                if (driver.playerStats.getAge() >= 20) {
+                driver.playerStats.removeDaysLeft(1);
+                if (driver.playerStats.getDaysLeft() <= 0) {
                     System.out.println("You've aged too much, and are no longer desirable. You've lost the game.");
                     wantToQuit = true;
                 }
