@@ -5,7 +5,7 @@ class PlayerStats {
     private int Moves = 12;
     private double moneySaved = 1000;
     private int currentHunger = 100;
-    private int age = 0;
+    private int daysLeft = 20;
     PlayerStats(){}
     public double getMoneySaved(){
         return this.moneySaved;
@@ -19,8 +19,8 @@ class PlayerStats {
     public int getHunger(){
         return this.currentHunger;
     }
-    public int getAge(){
-        return this.age;
+    public int getDaysLeft(){
+        return this.daysLeft;
     }
     public void addExperience(int value){
         this.Experience+=value;
@@ -40,11 +40,14 @@ class PlayerStats {
     public void removeHunger(){
         this.currentHunger-=2;
     }
+    public void removeDaysLeft(int value){
+        this.daysLeft-=value;
+    }
     public void addEnhancements(int value){
         this.Enhancements+=value;
     }
-    public void addAge(){
-        this.age++;
+    public void addDaysLeft(){
+        this.daysLeft++;
     }
     public boolean addHunger(int value){
         if(this.currentHunger+value <= 100){
@@ -61,8 +64,7 @@ class PlayerStats {
         this.Moves+=value;
     }
     public void resetMoves(){
-        this.Moves=10;
-        this.age++;
+        this.Moves=12;
     }
     public int getMoves(){
         return this.Moves;
@@ -71,7 +73,7 @@ class PlayerStats {
         System.out.println("");
         System.out.println("");
         System.out.println("");System.out.println("                      "+"           Hunger:");
-        System.out.print("                      "+"----------------------------"+"     $ " + moneySaved+" "     +"\n"+"                      "+"|");
+        System.out.print("                      "+"----------------------------"+"     $ " + moneySaved+"                 "     +"Days left: "+daysLeft+"\n"+"                      "+"|");
         for(int i = 0; i <= currentHunger/4; i++){
             System.out.print("/");
         }for(int j = 24-currentHunger/4;j >= 0; j--) 
