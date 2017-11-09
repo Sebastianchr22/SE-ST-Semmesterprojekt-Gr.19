@@ -39,6 +39,7 @@ public class Regulars
         reglist.addToList(Tom);
         reglist.addToList(Vlad);
         reglist.addToList(Kim);
+        reglist.addToList(Generic);
     }
 
 }

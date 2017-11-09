@@ -23,7 +23,7 @@ public class Manager {
         String returnValue = "";
         switch (random) {
             case 1:
-                returnValue = "privateRoom";
+                returnValue = "private";
                 break;
             case 2:
                 returnValue = "office";
@@ -46,7 +46,6 @@ public class Manager {
         return returnValue;
     }
     public void moveManager() {
-        //currentRoom = currentRoom.getExit(currentRoom.getNameBackend());
         System.out.println("Manager at: " + currentRoom.getNameBackend());
         if (driver.chanceCalc.ChanceCalc(20, 100)) {
             nextRoom = null;
@@ -59,7 +58,6 @@ public class Manager {
 
         //Generate random, corresponding to a room.
         //Find out it currentroom leads to the random room, else generate a new random
-        //minus the non-functional random.
     }
 
     public String getRoom() {
