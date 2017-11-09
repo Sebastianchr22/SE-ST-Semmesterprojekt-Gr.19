@@ -1,4 +1,4 @@
- package PrettyWoman;
+package PrettyWoman;
 
 import java.util.ArrayList;
 
@@ -15,13 +15,12 @@ class Inventory implements ListBuilder {
     private int wig = 0;
     private int shoes = 0;
     private int makeup = 0;
-    private int weddingring = 0;
+    private int weddingringvar = 0;
     private int Adidas = 0;
+    Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring given to you by your ex- boyfriend", "Wedding", 3);
 
     //Items:
     Inventory() {
-        //Items:
-        Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring given to you by your ex- boyfriend", "Wedding", 3);
 
         //Adds all starting items to the inventory:
         Inventory.add(weddingring);
@@ -69,7 +68,7 @@ class Inventory implements ListBuilder {
         wig = 0;
         shoes = 0;
         makeup = 0;
-        weddingring = 0;
+        weddingringvar = 0;
         Adidas = 0;
         for (Item item : Inventory) {
             switch (item.getCat()) {
@@ -95,7 +94,7 @@ class Inventory implements ListBuilder {
                     Adidas++;
                     break;
                 case "Wedding":
-                    weddingring = 1;
+                    weddingringvar = 1;
                     break;
             }
             totalSize += item.getSize();
@@ -141,7 +140,7 @@ class Inventory implements ListBuilder {
             case "Makeup":
                 return this.makeup;
             case "Wedding":
-                return this.weddingring;
+                return this.weddingringvar;
             case "Adidas":
                 return this.Adidas;
             default:
