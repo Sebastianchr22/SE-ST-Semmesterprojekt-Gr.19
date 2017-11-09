@@ -50,8 +50,8 @@ public class TXTSaver implements SaveBuilder {
         }
     }
 
-    @Override
-    public void setDriver(String value, int index, Driver driver) {
+    
+    private void setDriver(String value, int index, Driver driver) {
 
         if (value != null) {
             if (index <= 6) {
