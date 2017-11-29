@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.FXMLDocumentController">
+   <children>
+      <GridPane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="266.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="266.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="266.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="146.27296447753906" minHeight="10.0" prefHeight="79.18608856201172" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="234.65723419189453" minHeight="10.0" prefHeight="191.9385528564453" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="208.0614471435547" minHeight="10.0" prefHeight="208.0614471435547" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="172.73892211914062" minHeight="10.0" prefHeight="152.38937377929688" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <GridPane fx:id="IMGContainer" onMouseMoved="#MouseMoved" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <AnchorPane fx:id="ClickerPane" onMouseClicked="#PaneClicked" onMouseMoved="#MouseMoved" prefHeight="400.0" prefWidth="800.0">
+                     <children>
+                        <AnchorPane fx:id="StatusContainer" prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: white;">
+                           <children>
+                              <ImageView fx:id="RoomIMGContainer" fitHeight="400.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="MapIMG" fitHeight="350.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <image>
+                                    <Image url="@../FXML/Visuals/Highres/Map/HOME.png" />
+                                 </image>
+                                 <rotationAxis>
+                                    <Point3D />
+                                 </rotationAxis>
+                              </ImageView>
+                           </children></AnchorPane>
+                     </children></AnchorPane>
+               </children>
+            </GridPane>
+            <GridPane fx:id="textContainer" GridPane.columnSpan="3" GridPane.rowIndex="3">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="138.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
+                  <TextArea fx:id="textOutput" editable="false" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" wrapText="true">
+                     <GridPane.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </GridPane.margin></TextArea>
+                  <Label fx:id="coordinates" text="Label" />
+               </children>
+            </GridPane>
+            <GridPane fx:id="MenuGrid" GridPane.columnSpan="3">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="65.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="802.0" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
+                  <Label onMouseClicked="#ShowStats" text="STATUS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label onMouseClicked="#ShowInventory" text="INVENTORY" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label onMouseClicked="#ShowMap" text="MAP" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#HelpClicked" onMouseEntered="#HelpHover" onMouseExited="#HelpExited" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../FXML/Visuals/Icons/icons8-help.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" onMouseClicked="#ShowSettings" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../FXML/Visuals/Icons/icons8-settings.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </ImageView>
+                  <Circle fx:id="StatusCircle" fill="#00000003" onMouseClicked="#ShowSettings" radius="20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Circle>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#ShowStats" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../FXML/Visuals/Icons/icons8-female-user.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets right="70.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#ShowInventory" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../FXML/Visuals/Icons/icons8-backpack.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets right="100.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#ShowMap" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../FXML/Visuals/Icons/icons8-user-location.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets right="50.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <Line disable="true" endX="35.0" opacity="0.1" rotate="90.0" startX="-0.0">
+                     <GridPane.margin>
+                        <Insets left="143.0" />
+                     </GridPane.margin>
+                  </Line>
+                  <Line disable="true" endX="35.0" opacity="0.1" rotate="90.0" startX="-0.0">
+                     <GridPane.margin>
+                        <Insets left="305.0" />
+                     </GridPane.margin>
+                  </Line>
+                  <Line disable="true" endX="35.0" opacity="0.1" rotate="90.0" startX="-0.0">
+                     <GridPane.margin>
+                        <Insets left="465.0" />
+                     </GridPane.margin>
+                  </Line>
+                  <Line disable="true" endX="35.0" opacity="0.1" rotate="90.0" startX="-0.0">
+                     <GridPane.margin>
+                        <Insets left="625.0" />
+                     </GridPane.margin>
+                  </Line>
+                  <AnchorPane onMouseClicked="#ShowInventory" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                  <AnchorPane onMouseClicked="#ShowMap" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
+                  <AnchorPane onMouseClicked="#ShowStats" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                  <AnchorPane onMouseClicked="#ShowSettings" prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane onMouseClicked="#HelpClicked" onMouseEntered="#HelpHover" onMouseExited="#HelpExited" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" />
+               </children>
+            </GridPane>
+            <GridPane fx:id="InvitationGrid" GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="34.049652099609375" minHeight="0.0" prefHeight="5.408966064453125" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="64.53662109375" minHeight="10.0" prefHeight="48.933807373046875" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="68.6524658203125" minHeight="10.0" prefHeight="53.392425537109375" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="58.09454345703125" minHeight="10.0" prefHeight="45.607574462890625" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="31.5413818359375" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="200.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="270.0" GridPane.halignment="CENTER" GridPane.rowSpan="4" GridPane.valignment="CENTER" />
+                  <Rectangle fill="#54d36b" height="45.0" onMouseClicked="#AcceptInvitation" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Rectangle>
+                  <Label onMouseClicked="#AcceptInvitation" text="ACCEPT" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Rectangle fill="#d15b54" height="45.0" onMouseClicked="#DeclineInvitation" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Label onMouseClicked="#DeclineInvitation" text="DECLINE" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Rectangle fill="WHITE" height="45.0" onMouseClicked="#InfoOnRegular" stroke="BLACK" strokeType="INSIDE" width="115.0" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets left="35.0" />
+                     </GridPane.margin>
+                  </Rectangle>
+                  <Label onMouseClicked="#InfoOnRegular" text="INFO" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets left="65.0" />
+                     </GridPane.margin>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="30.0" />
+               </GridPane.margin>
+            </GridPane>
+         </children>
+      </GridPane>
+      <GridPane fx:id="HelpGrid" prefHeight="600.0" prefWidth="802.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.10365295410156" minWidth="10.0" prefWidth="285.0405578613281" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="383.45501708984375" minWidth="10.0" prefWidth="258.125" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="383.45501708984375" minWidth="10.0" prefWidth="200.875" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="298.0855712890625" minWidth="10.0" prefWidth="95.17401123046875" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="123.83822631835938" minHeight="10.0" prefHeight="98.54408264160156" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="112.75224304199219" minHeight="10.0" prefHeight="94.45591735839844" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="143.37388610839844" minHeight="10.0" prefHeight="143.37388610839844" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="121.80633544921875" minHeight="10.0" prefHeight="116.23876953125" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="97.21621704101562" minHeight="10.0" prefHeight="83.76123046875" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <AnchorPane fx:id="HelpPane" prefHeight="362.0" prefWidth="220.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
+               <children>
+                  <Rectangle fx:id="HelpContainer" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="361.0" layoutX="-2.0" layoutY="-1.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="268.0" />
+                  <TextArea fx:id="HelpText" editable="false" layoutX="7.0" layoutY="8.0" prefHeight="344.0" prefWidth="250.0" style="-fx-background-color: white;" wrapText="true" />
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
+      <GridPane fx:id="SettingsGrid" prefHeight="600.0" prefWidth="800.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="266.6" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="266.6" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="266.6" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="265.9520263671875" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="312.43980407714844" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="214.63180541992188" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Rectangle fx:id="SettingsBackdrop" fill="#00000099" height="600.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="803.0" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
+            <Rectangle fx:id="SettingsContainer" fill="WHITE" height="350.0" stroke="WHITE" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" width="267.0" x="250.0" y="125.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowSpan="3" />
+            <ImageView fx:id="SettingsQuit" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#CloseSettings" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../FXML/Visuals/Icons/ic_clear_black_24dp_2x.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets right="210.0" top="100.0" />
+               </GridPane.margin>
+            </ImageView>
+            <GridPane fx:id="SaveGrid" prefHeight="200.0" prefWidth="230.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Rectangle fx:id="Quitcontainer" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="53.0" onMouseClicked="#QuitGame" opacity="0.2" stroke="#030303" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" style="-fx-arc-height: 0; -fx-arc-width: 0;" width="180.0" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Rectangle>
+                  <Rectangle fx:id="Loadcontainer" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="55.0" onMouseClicked="#LoadGame" opacity="0.2" stroke="#030303" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" style="-fx-arc-height: 0; -fx-arc-width: 0;" width="270.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Rectangle fx:id="Savecontainer" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="55.0" onMouseClicked="#SaveGame" opacity="0.2" stroke="#030303" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" style="-fx-arc-height: 0; -fx-arc-width: 0;" width="270.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label fx:id="Quittext" onMouseClicked="#QuitGame" text="QUIT" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="75.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="Loadtext" onMouseClicked="#LoadGame" text="LOAD GAME" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="25.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="Savetext" onMouseClicked="#SaveGame" text="SAVE GAME" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="25.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <ImageView fx:id="Saveicon" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#SaveGame" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../FXML/Visuals/Icons/icons8-save.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="50.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="Loadicon" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#LoadGame" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../FXML/Visuals/Icons/icons8-download.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="50.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="ScoreIcon" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#ShowScore" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../FXML/Visuals/Icons/icons8-christmas-star.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <Rectangle fx:id="ScoreContainer" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="53.0" onMouseClicked="#ShowScore" opacity="0.2" stroke="#030303" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" style="-fx-arc-height: 120; -fx-arc-width: 120;" width="55.0" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets right="11.0" />
+                     </GridPane.margin></Rectangle>
+               </children>
+            </GridPane>
+            <GridPane fx:id="ScoreGrid" prefHeight="200.0" prefWidth="230.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <ImageView fx:id="BackIcon" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#CloseScore" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@../FXML/Visuals/Icons/icons8-back-filled-50.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets left="10.0" top="100.0" />
+               </GridPane.margin>
+            </ImageView>
+         </children>
+      </GridPane>
+      <GridPane fx:id="StatusGrid" maxHeight="300.0" maxWidth="450.0" minHeight="300.0" minWidth="450.0" prefHeight="300.0" prefWidth="300.0" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <AnchorPane fx:id="HelpPane1" maxHeight="300.0" maxWidth="450.0" minHeight="300.0" minWidth="450.0" prefHeight="300.0" prefWidth="450.0" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowSpan="6" GridPane.valignment="CENTER">
+               <children>
+                  <Rectangle fx:id="HelpContainer1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="350.0" layoutX="-2.0" layoutY="-1.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <GridPane prefHeight="350.0" prefWidth="450.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.1107177734375" minWidth="10.0" prefWidth="44.69203186035156" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="278.30796813964844" minWidth="10.0" prefWidth="212.88232421875" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.11767578125" minWidth="10.0" prefWidth="130.27679443359375" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="58.72320556640625" minWidth="10.0" prefWidth="58.72320556640625" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <image>
+                              <Image url="@../FXML/Visuals/Icons/MoneySaved.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="MONEY SAVED" GridPane.columnIndex="1" />
+                        <Label text="EXPERIENCE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <image>
+                              <Image url="@../FXML/Visuals/Icons/Experience.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="ENHANCEMENTS" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                           <image>
+                              <Image url="@../FXML/Visuals/Icons/Enhancements.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="CAPACITY" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                           <image>
+                              <Image url="@../FXML/Visuals/Icons/Capacity.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="MOVES LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <image>
+                              <Image url="@../FXML/Visuals/Icons/MovesLeft.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+                           <image>
+                              <Image url="@../FXML/Visuals/Icons/Hunger.png" />
+                           </image>
+                        </ImageView>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff8c2100" height="40.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="320.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                        <Rectangle fx:id="HungerMeter" arcHeight="5.0" arcWidth="5.0" fill="#ff8921" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="320.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+                           <GridPane.margin>
+                              <Insets left="13.0" />
+                           </GridPane.margin></Rectangle>
+                        <Label fx:id="MoneyAmount" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Label fx:id="ExpAmount" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Label fx:id="EnhAmount" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                        <Label fx:id="CapacityAmount" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                        <Label fx:id="MovesAmount" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        <Rectangle fill="#5dbf50" height="35.0" onMouseClicked="#BuyEnhancements" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="35.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                        <Label onMouseClicked="#BuyEnhancements" text="+" textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                        <Rectangle fill="#5dbf50" height="35.0" onMouseClicked="#BuyFood" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="35.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                        <Label onMouseClicked="#BuyFood" text="+" textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                        <Label text="DAYS LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                           <image>
+                              <Image url="@../FXML/Visuals/Icons/DaysLeft.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="DaysAmount" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                        <Label fx:id="HungerString" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                     </children>
+                  </GridPane>
+               </children>
+               <GridPane.margin>
+                  <Insets top="38.0" />
+               </GridPane.margin>
+            </AnchorPane>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.10365295410156" minWidth="10.0" prefWidth="285.0405578613281" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="383.45501708984375" minWidth="10.0" prefWidth="258.125" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="383.45501708984375" minWidth="10.0" prefWidth="200.875" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="298.0855712890625" minWidth="10.0" prefWidth="95.17401123046875" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="123.83822631835938" minHeight="10.0" prefHeight="98.54408264160156" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="112.75224304199219" minHeight="10.0" prefHeight="94.45591735839844" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="143.37388610839844" minHeight="10.0" prefHeight="143.37388610839844" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="121.80633544921875" minHeight="10.0" prefHeight="116.23876953125" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="97.21621704101562" minHeight="10.0" prefHeight="83.76123046875" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="InvGrid" maxHeight="300.0" maxWidth="450.0" minHeight="300.0" minWidth="450.0" prefHeight="300.0" prefWidth="450.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="60.0">
+         <children>
+            <AnchorPane fx:id="HelpPane11" maxHeight="300.0" maxWidth="450.0" minHeight="300.0" minWidth="450.0" prefHeight="300.0" prefWidth="450.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="5" GridPane.valignment="CENTER">
+               <children>
+                  <Rectangle fx:id="HelpContainer11" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="300.0" layoutX="-2.0" layoutY="-1.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <GridPane prefHeight="275.0" prefWidth="435.0" AnchorPane.bottomAnchor="12.5" AnchorPane.leftAnchor="7.5" AnchorPane.rightAnchor="7.5" AnchorPane.topAnchor="12.5">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.49310302734375" minWidth="10.0" prefWidth="293.5484619140625" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="222.5692138671875" minWidth="10.0" prefWidth="156.4515380859375" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="117.25260925292969" minHeight="10.0" prefHeight="67.04325866699219" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="127.75433349609375" minHeight="10.0" prefHeight="64.38754272460938" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="112.90484619140625" minHeight="10.0" prefHeight="66.95675659179688" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="89.5692138671875" minHeight="10.0" prefHeight="77.04324340820312" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ListView fx:id="InventoryListView" prefHeight="300.0" prefWidth="300.0" GridPane.halignment="CENTER" GridPane.rowSpan="4" GridPane.valignment="CENTER" />
+                        <GridPane maxHeight="50.0" maxWidth="100.0" minHeight="50.0" minWidth="100.0" onMouseClicked="#DropItem" prefHeight="50.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="71.5692138671875" minWidth="10.0" prefWidth="38.72320556640625" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.34774780273438" minWidth="10.0" prefWidth="61.27679443359375" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Rectangle fill="#1f93ff00" height="50.0" onMouseClicked="#DropItem" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="100.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets left="2.0" />
+                                 </GridPane.margin>
+                              </Rectangle>
+                              <Label onMouseClicked="#DropItem" text="DROP" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets right="8.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#DropItem" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets left="8.0" />
+                                 </GridPane.margin>
+                                 <image>
+                                    <Image url="@../FXML/Visuals/Icons/Drop.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <GridPane.margin>
+                              <Insets right="35.0" />
+                           </GridPane.margin>
+                        </GridPane>
+                        <GridPane maxHeight="50.0" maxWidth="140.0" minHeight="50.0" minWidth="140.0" onMouseClicked="#InspectItem" prefHeight="50.0" prefWidth="140.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <children>
+                              <Rectangle fill="#1f93ff00" height="50.0" onMouseClicked="#InspectItem" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="135.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label onMouseClicked="#InspectItem" text="INSPECT" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="-10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#InspectItem" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <image>
+                                    <Image url="@../FXML/Visuals/Icons/Inspect.png" />
+                                 </image>
+                                 <GridPane.margin>
+                                    <Insets left="8.0" />
+                                 </GridPane.margin>
+                              </ImageView>
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="71.5692138671875" minWidth="10.0" prefWidth="49.76300048828125" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="99.23699951171875" minWidth="10.0" prefWidth="99.23699951171875" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </GridPane>
+               </children>
+               <GridPane.margin>
+                  <Insets top="20.0" />
+               </GridPane.margin>
+            </AnchorPane>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.10365295410156" minWidth="10.0" prefWidth="285.0405578613281" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="298.0855712890625" minWidth="10.0" prefWidth="95.17401123046875" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="123.83822631835938" minHeight="10.0" prefHeight="98.54408264160156" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="112.75224304199219" minHeight="10.0" prefHeight="94.45591735839844" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="143.37388610839844" minHeight="10.0" prefHeight="143.37388610839844" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="121.80633544921875" minHeight="10.0" prefHeight="116.23876953125" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="97.21621704101562" minHeight="10.0" prefHeight="83.76123046875" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+   </children>
+</AnchorPane>
