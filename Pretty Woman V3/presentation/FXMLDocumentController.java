@@ -2,10 +2,13 @@ package presentation;
 
 import acq.IGUI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -14,7 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class FXMLDocumentController implements Initializable {
@@ -76,10 +78,8 @@ public class FXMLDocumentController implements Initializable {
     private Label HungerString;
     @FXML
     private GridPane InvitationGrid;
-    
-    private acq.IItem item;
-  
 
+    private acq.IItem item;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -115,7 +115,7 @@ public class FXMLDocumentController implements Initializable {
 
         InvitationGrid.setOpacity(0);
         InvitationGrid.setDisable(true);
-        
+
         gui = PresentationFacade.getInstance();
 
         //Load items into inventory tab::
@@ -127,7 +127,8 @@ public class FXMLDocumentController implements Initializable {
         setRoomImage();
 
     }
-    public void changeInvitationState(int i, boolean bool){
+
+    public void changeInvitationState(int i, boolean bool) {
         InvitationGrid.setOpacity(i);
         InvitationGrid.setDisable(bool);
     }
@@ -152,7 +153,7 @@ public class FXMLDocumentController implements Initializable {
                 Point Table = new Point(279, 237);
                 keys = new ClickableField(Table, 100, 250);
                 break;
-                
+
             case "DRIVE":
                 door.destroy();
                 keys.destroy();
@@ -161,7 +162,7 @@ public class FXMLDocumentController implements Initializable {
                 Point homedoor = new Point(0, 0);
                 home = new ClickableField(homedoor, 370, 225);
                 break;
-                
+
             case "BACKROOM":
                 home.destroy();
                 car.destroy();
@@ -170,8 +171,8 @@ public class FXMLDocumentController implements Initializable {
                 Point dance = new Point(350, 90);
                 dancefloor = new ClickableField(dance, 100, 100);
                 break;
-                
-            case "LOCKER":
+
+            case "LOCKER ROOM":
                 lockerroom.destroy();
                 dancefloor.destroy();
                 Point steal = new Point(100, 95);
@@ -179,10 +180,8 @@ public class FXMLDocumentController implements Initializable {
                 Point back = new Point(0, 300);
                 backroom = new ClickableField(back, 80, 790);
                 break;
-                
+
             case "DANCE FLOOR":
-                stealC.destroy();
-                backroom.destroy();
                 lockerroom.destroy();
                 dancefloor.destroy();
                 Point dancer = new Point(433, 65);
@@ -196,8 +195,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public String processCommands(String command) {
-        if(gui.managerPlayerSameRoom()){
-            System.out.println(gui.managerTakesCut());
+        if (gui.managerPlayerSameRoom()) {
             textOutput.setText(gui.managerTakesCut());
         }
         String val = gui.processCommand(command);
@@ -219,21 +217,24 @@ public class FXMLDocumentController implements Initializable {
         RoomIMGContainer.setImage(room);
         setHelpText(gui.getCurrentRoom());
     }
-    
-    public void setTextOutput(String s){
-        
+
+    public void setTextOutput(String s) {
+        textOutput.setText(s);
     }
-    
+
     public void setHelpText(String string) {
         HelpText.setText(gui.getRoomHelpText());
     }
 
     @FXML
     private void PaneClicked(MouseEvent event) {
+        if (gui.getPRoomInvite()) {
+            changeInvitationState(1, false);
+        }
         setHitBoxes();
         if (gui.getCurrentRoom().equals("HOME")) {
             if (keys.hit(event)) {
-                processCommands("KEYS");
+                setTextOutput(processCommands("KEYS"));
             }
             if (door.hit(event)) {
                 processCommands("WORK");
@@ -252,7 +253,7 @@ public class FXMLDocumentController implements Initializable {
             if (dancefloor.hit(event)) {
                 processCommands("DANCEFLOOR");
             }
-        } else if (gui.getCurrentRoom().equals("LOCKER")) {
+        } else if (gui.getCurrentRoom().equals("LOCKER ROOM")) {
             if (stealC.hit(event)) {
                 textOutput.setText(processCommands("STEAL"));
 
@@ -280,6 +281,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void MouseMoved(MouseEvent event) {
         coordinates.setText("(" + event.getX() + "," + event.getY() + ")");
+
     }
 
     @FXML
@@ -496,11 +498,15 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void AcceptInvitation(MouseEvent event) {
+        gui.setPrivateRoomCommand("ACCEPT");
+        changeInvitationState(0, true);
+
     }
 
     @FXML
     private void DeclineInvitation(MouseEvent event) {
-        changeInvitationState(0,true);
+        gui.setPrivateRoomCommand("REJECT");
+        changeInvitationState(0, true);
     }
 
     @FXML

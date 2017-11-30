@@ -1,6 +1,7 @@
 package acq;
 
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public interface IGUI {
@@ -54,4 +55,9 @@ public interface IGUI {
 
     public String getRoomDescription();
 
+    public Scene getScene();
+    
+    public void setPrivateRoomCommand(String s);
+    
+    public boolean getPRoomInvite();
 }

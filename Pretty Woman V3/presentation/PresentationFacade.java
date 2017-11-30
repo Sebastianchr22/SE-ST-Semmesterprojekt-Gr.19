@@ -25,6 +25,12 @@ public class PresentationFacade implements IGUI {
         return IGUI;
     }
 
+    private Scene scene;
+
+    public Scene getScene() {
+        return scene;
+    }
+
     @Override
     public void start(Stage mainStage) throws Exception {
         IGUI = this;
@@ -35,7 +41,7 @@ public class PresentationFacade implements IGUI {
 
         mainStage.getIcons().add(icon);
 
-        Scene scene = new Scene(root);
+        scene = new Scene(root);
 
         mainStage.setMinHeight(600);
         mainStage.setMinWidth(800);
@@ -55,6 +61,7 @@ public class PresentationFacade implements IGUI {
             System.out.println(getDaysLeft());
             start(mainStage);
         } catch (Exception ex) {
+            System.out.println(ex);
             System.out.println("Something went wrong in Initialize");
         }
     }
@@ -140,6 +147,11 @@ public class PresentationFacade implements IGUI {
     }
 
     @Override
+    public void setPrivateRoomCommand(String s) {
+        logic.setPrivateRoomCommand(s);
+    }
+
+    @Override
     public String getRegularInRoomInfo() {
         return logic.getRegularInRoom().info();
     }
@@ -156,8 +168,12 @@ public class PresentationFacade implements IGUI {
         return logic.getRoomHelpText();
     }
 
-    public String getRoomDescription(){
+    public String getRoomDescription() {
         return logic.getRoomDescription();
+    }
+
+    public boolean getPRoomInvite(){
+        return logic.getPRoomInvite();
     }
 
 }

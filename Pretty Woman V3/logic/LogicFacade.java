@@ -27,31 +27,34 @@ public class LogicFacade implements acq.ILogic {
     Room locker = new Room("Locker room", "in the locker room. Here you can gather points and money by stealing from other strippers");
     Room floor = new Room("Dance floor", "on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
 
-    private final ArrayList<IRegular> regularList;
-    private ListOfRegulars reglist;
+    private Regulars reg = new Regulars();
+    private ArrayList<Regular> regularList = new ArrayList<>();
+    private ListOfRegulars reglist = new ListOfRegulars(regularList);
     private Player player;
     private Inventory inv;
     private ItemList itemlist;
-    private Regular regularInRoom;
+    private IRegular regularInRoom;
     private Room currentRoom = home;
     private double winPercent;
     private boolean gameWon;
     private boolean inPRoom;
     private int highscore;
+    private boolean pRoomInvite;
+    private String privateRoomCommand;
     Manager manager = new Manager("Manager", office);
 
     public LogicFacade() {
         logic = this;
+        reg.createReglist(reglist);
         Regulars reg = new Regulars();
-        regularList = new ArrayList<>();
-        reglist = new ListOfRegulars(regularList);
+        reg.createReglist(reglist);
+
         player = new Player();
         inv = new Inventory();
         itemlist = new ItemList();
         winPercent = 0;
         highscore = 0;
 
-        
         home.setExit("work", back);
 
         back.setExit("floor", floor);
@@ -174,6 +177,16 @@ public class LogicFacade implements acq.ILogic {
     }
 
     @Override
+    public void setPrivateRoomCommand(String s) {
+        this.privateRoomCommand = s;
+    }
+
+    @Override
+    public String getPrivateRoomCommand() {
+        return this.privateRoomCommand;
+    }
+
+    @Override
     public void addToInventory(Item item) {
         inv.addToList(item);
     }
@@ -202,8 +215,38 @@ public class LogicFacade implements acq.ILogic {
     }
 
     @Override
+    public void removeMoves(int i) {
+        this.player.removeMoves(i);
+    }
+
+    @Override
     public String getCurrentRoom() {
         return this.currentRoom.getNameBackend();
+    }
+
+    @Override
+    public boolean getPRoomInvite() {
+        return this.pRoomInvite;
+    }
+
+    @Override
+    public void setRegularInRoom(IRegular regular) {
+        this.regularInRoom = regular;
+    }
+
+    @Override
+    public void setPRoomInvite(boolean bool) {
+        this.pRoomInvite = bool;
+    }
+
+    @Override
+    public void removeMoney(double d) {
+        this.player.removeMoney(d);
+    }
+
+    @Override
+    public void addExperience(int i) {
+        this.player.addExperience(i);
     }
 
     @Override
@@ -251,6 +294,11 @@ public class LogicFacade implements acq.ILogic {
         player.setDaysLeft(i);
     }
 
+    @Override
+    public void addMoney(double d) {
+        this.player.addMoney(d);
+    }
+
     public Collection<String> getDataInv() {
         ArrayList<String> list = new ArrayList();
 
@@ -289,6 +337,11 @@ public class LogicFacade implements acq.ILogic {
     @Override
     public ArrayList getRegularList() {
         return new ArrayList(reglist.regularList);
+    }
+
+    @Override
+    public IRegular getRandomRegular() {
+        return this.reglist.getRandomRegular();
     }
 
     @Override
@@ -395,7 +448,7 @@ public class LogicFacade implements acq.ILogic {
     }
 
     @Override
-    public Regular getRegularInRoom() {
+    public IRegular getRegularInRoom() {
         return this.regularInRoom;
     }
 
@@ -463,11 +516,15 @@ public class LogicFacade implements acq.ILogic {
 
     @Override
     public boolean managerPlayerSameRoom() {
-        return this.currentRoom.equals(manager.getRoom()) && !this.currentRoom.equals("LOCKER") && !this.currentRoom.equals("DANCE FLOOR");
+        if (manager.getRoom().equals(this.currentRoom.getNameBackend()) && !this.currentRoom.equals("LOCKER ROOM") && !this.currentRoom.equals("DANCE FLOOR")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String managerTakesCut() {
-        return "Manager noticed you leaving, and took his " + manager.getPercentage()*100 + "% cut. He took $" + player.getMoneySaved() * (manager.getPercentage() / 100.0) + ".";
+        return "Manager noticed you leaving, and took his " + manager.getPercentage() * 100 + "% cut. He took $" + player.getMoneySaved() * (manager.getPercentage() / 100.0) + ".";
     }
 
     @Override
@@ -477,7 +534,7 @@ public class LogicFacade implements acq.ILogic {
                 if (!this.inv.Inventory.contains(inv.getCarKeys())) {
                     // No keys yet:
                     inv.Inventory.add(inv.getCarKeys());
-                    System.out.println("Added car keys");
+                    return "Added car keys";
                 } else {
                 }
                 break;
@@ -508,7 +565,7 @@ public class LogicFacade implements acq.ILogic {
             case "DANCEFLOOR":
                 goRoom(floor);
                 System.out.println("Went to DANCE FLOOR");
-                break;
+                return "The crowd looks to have some money to spend on a good show.";
 
             case "STEAL":
                 System.out.println("STOLE");
@@ -526,7 +583,13 @@ public class LogicFacade implements acq.ILogic {
                 break;
 
             case "DANCE":
-                break;
+                DanceMech dance = new DanceMech();
+                if (this.pRoomInvite) {
+                    System.out.println(this.getPrivateRoomCommand());
+                    return dance.PrivateRoomInvite(this.getPrivateRoomCommand());
+                } else {
+                    return dance.danceMovePrint();
+                }
 
             default:
                 break;
@@ -540,14 +603,14 @@ public class LogicFacade implements acq.ILogic {
     public void goRoom(Room room) {
         this.currentRoom = room;
     }
-    
-    public String getRoomDescription(){
+
+    public String getRoomDescription() {
         return this.currentRoom.getShortDescription();
     }
-    
-    public String getRoomHelpText(){
+
+    public String getRoomHelpText() {
         String help = "";
-        switch(this.currentRoom.getNameBackend()){
+        switch (this.currentRoom.getNameBackend()) {
             case "HOME":
                 help = "";
                 break;

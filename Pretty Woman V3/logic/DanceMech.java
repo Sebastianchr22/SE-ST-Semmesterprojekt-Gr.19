@@ -1,14 +1,14 @@
 package logic;
 
 import acq.ILogic;
+import acq.IRegular;
 
 public class DanceMech {
-    
-    private ILogic logic;
+
+    private ILogic logic = LogicFacade.getInstance();
     private Player player;
-    private ListOfRegulars reglist;
-    private Regular regularInRoom;
-    
+    private IRegular regularInRoom;
+
     int move1ExpRequired = 0;
     int move2ExpRequired = 25;
     Chance chance = new Chance();
@@ -32,127 +32,77 @@ public class DanceMech {
     public void resetRegularInRoom() {
         System.out.println(regularInRoom.getName() + " left the club.");
         regularInRoom = null;
+        logic.setRegularInRoom(null);
     }
 
-    public void PrivateRoomInvite(Regular regular, Command command, boolean accepted) {
-        if (accepted != true) {
-            System.out.println("You have been invited to private room by " + regularInRoom.getName());
-            System.out.println("Do you accept the invitation?");
+    public String PrivateRoomInvite(String command) {
+        String val = "";
+        if (logic.getInPRoom() != true) {
+            val += "You have been invited to private room by " + regularInRoom.getName();
+            val += "Do you accept the invitation?";
         } else {
-            if (command.getCommandWord() == CommandWord.ACCEPT || command.getCommandWord() == CommandWord.YES) {
-                PrivateRoom proom = new PrivateRoom(regular);
-            } else if (command.getCommandWord() == CommandWord.NO || command.getCommandWord() == CommandWord.REJECT) {
-                System.out.println(regularInRoom.getName() + " left the club.");
+            if (command.equals("ACCEPT")) {
+                PrivateRoom proom = new PrivateRoom(regularInRoom);
+            } else if (command.equals("REJECT")) {
+                val += regularInRoom.getName() + " left the club.";
                 resetRegularInRoom();
             }
         }
+        System.out.println(val);
+        return val;
     }
 
     DanceMech() {
         printPrompt();
+        logic = LogicFacade.getInstance();
         this.player = logic.getPlayer();
-        this.reglist.regularList = logic.getRegularList();
         this.regularInRoom = logic.getRegularInRoom();
-    }
-
-    DanceMech(Command command) {
         if (logic.getWon() != true) {
             if (chance.ChanceCalc(35, 100) && regularInRoom == null) {
                 //Regular appears in the club:
-                regularInRoom = reglist.getRandomRegular();
+                regularInRoom = logic.getRandomRegular();
+                logic.setRegularInRoom(regularInRoom);
                 //Prompt accept private room invite:
-                System.out.println("A regular just appeared. Type info to learn more.");
+                System.out.println(regularInRoom.getName() + " just appeared. Type info to learn more.");
             }
             if (regularInRoom != null) {
                 //Someone in here:
                 //Chance of invite to private room:
                 if (chance.ChanceCalc(25, 100)) {
-                    PrivateRoomInvite(regularInRoom, command, false);
+                    logic.setPRoomInvite(true);
                 }
             }
             if (regularInRoom != null && logic.inPRoom() != true) {
                 System.out.println("You recognize a regular in the room");
             }
         }
-
-        //Input prompt:
-        if (command.hasSecondWord()) {
-
-            danceMoveYield(command.getSecondWord());
-
-        } else {
-            if (command.getCommandWord() == CommandWord.INFO) {
-                System.out.println(infoOnRegular());
-            } else if (command.getCommandWord() == CommandWord.ACCEPT || command.getCommandWord() == CommandWord.YES) {
-                PrivateRoomInvite(regularInRoom, command, true);
-                resetRegularInRoom();
-            } else if (command.getCommandWord() == CommandWord.REJECT || command.getCommandWord() == CommandWord.NO) {
-                if (regularInRoom != null) {
-                    resetRegularInRoom();
-                } else {
-                    System.out.println("There are no regulars to reject.");
-                }
-            } else {
-                player.addMoves(1);
-                System.out.println("Please choose a specific dance to perform");
-            }
-        }
+        logic.removeMoves(1);
         logic.setPlayer(player);
+
     }
 
     public double tipsGained(double bonus) {
-        double percentageBonusTip = 1 + player.getEnhancements() * 0.05;//Calculates a percentage of bonus based on improvements
+        double percentageBonusTip = 1 + logic.getEnhencements() * 0.05;//Calculates a percentage of bonus based on improvements
         double tips = 5.0 + Math.random() * 30.0;//Calculates a random number between 5 to 30
         return Math.round((percentageBonusTip * tips + bonus) * 100.0) / 100.0; //Returns the random* the percentage, rounded off with two digits after the comma.
     }
 
-    public void danceMoveYield(String danceMoveChoosen) {
-        switch (danceMoveChoosen.toUpperCase()) {
-            case "BASIC":
-                danceMovePrint(move1ExpRequired);//Calls the method below to print success or failure.
-                break;
-            case "ADVANCED":
-                danceMovePrint(move2ExpRequired);
-                break;
-            default:
-                player.addMoves(1);
-                break;
-        }
-
-        //PrivateRoom proom = new PrivateRoom(driver, driver.reg.Sebastian);
-        //System.out.println(driver.reg.Sebastian.info());
+    //PrivateRoom proom = new PrivateRoom(driver, driver.reg.Sebastian);
+    //System.out.println(driver.reg.Sebastian.info());
+    public double exptips(int required) {
+        return (logic.getExperience() / 1000.0) * 3;
     }
 
-    public int exptips(int required) {
-        if (required > player.getExperience()) {
-            return 0;
-        } else {
-            return (player.getExperience() - required) * 3;
-        }
-    }
-
-    public void danceMovePrint(int danceMoveExpRequired) {
-        if (player.getExperience() >= danceMoveExpRequired) {
+    public String danceMovePrint() {
+        String s = "";
+        if (chance.ChanceCalc(85, 100)) {
             //You have enough experience to perform this move:
-            System.out.println("Your move was successful.");
-            player.addExperience(1);
-            double tipsFromMove = tipsGained(exptips(danceMoveExpRequired));
-            System.out.println("You received $" + tipsFromMove + " in tips for that move.");
-            player.addMoney(tipsFromMove);
-        } else {
-            //You do not have enough experience to perform this move:
-            if (chance.ChanceCalc(25, 100)) {
-                //It was successful:
-                System.out.println("Although you are not experienced with that move, you were successful.");
-                player.addExperience(1);
-                double tipsFromMove = tipsGained(exptips(danceMoveExpRequired) + 25);
-                System.out.println("You received $" + tipsFromMove + " in tips for that move.");
-                player.addMoney(tipsFromMove);
-
-            } else {
-                //You failed:
-                System.out.println("Your lack of experience clearly shows and the crowd are not happy.");
-            }
+            s += "Your move was successful." + "\n";
+            logic.addExperience(1);
+            double tipsFromMove = tipsGained(exptips(logic.getExperience()));
+            s += "You received $" + tipsFromMove + " in tips for that move.";
+            logic.addMoney(tipsFromMove);
         }
+        return s;
     }
 }

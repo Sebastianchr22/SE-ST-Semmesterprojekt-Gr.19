@@ -1,6 +1,7 @@
 package logic;
 
 import acq.ILogic;
+import acq.IRegular;
 
 public class PrivateRoom
 {
@@ -12,13 +13,13 @@ public class PrivateRoom
         return Math.round((percentageBonusTip * tips + bonus + i) * 100.0) / 100.0; //Returns the random* the percentage, rounded off with two digits after the comma.
     }
     
-    public void Match(Regular regular){
+    public void Match(IRegular regular){
         //Boolean method to check if a regular and a player is a match:
         RegularPlayerMatch match = new RegularPlayerMatch(regular);
         
     }
     
-    PrivateRoom(Regular regular){
+    PrivateRoom(IRegular regular){
         logic.setInPRoom(true);
         //If the regular is a minor, a raid might happen
         Chance chance = new Chance();

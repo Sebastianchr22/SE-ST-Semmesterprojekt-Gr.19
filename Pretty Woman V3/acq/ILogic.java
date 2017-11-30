@@ -105,7 +105,7 @@ public interface ILogic {
 
     public double getWinPercent();
 
-    public Regular getRegularInRoom();
+    public IRegular getRegularInRoom();
 
     public String getCurrentRoom();
 
@@ -134,5 +134,25 @@ public interface ILogic {
     public String getRoomHelpText();
 
     public String getRoomDescription();
+
+    public void addExperience(int i);
+
+    public void removeMoney(double d);
+
+    public IRegular getRandomRegular();
+
+    public void removeMoves(int i);
+
+    public void addMoney(double d);
+
+    public boolean getPRoomInvite();
+
+    public void setPRoomInvite(boolean bool);
+
+    public void setRegularInRoom(IRegular regular);
+
+    public void setPrivateRoomCommand(String s);
+
+    public String getPrivateRoomCommand();
 
 }

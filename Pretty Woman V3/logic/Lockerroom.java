@@ -48,6 +48,6 @@ public class Lockerroom {
         logic.setInventory(inv);
         logic.setItemList(itemlist);
         logic.setPlayer(player);
-        return "error";
+        return "You cannot carry anymore";
     }
 }

@@ -2,6 +2,7 @@ package logic;
 
 import acq.ILogic;
 import acq.IPreference;
+import acq.IRegular;
 
 public class RegularPlayerMatch {
 
@@ -59,7 +60,7 @@ public class RegularPlayerMatch {
         return res;
     }
 
-    RegularPlayerMatch(Regular regular) {
+    RegularPlayerMatch(IRegular regular) {
         if (Match(regular.getPreference0()) && Match(regular.getPreference1())) {
             System.out.println("The two of you are a match!");
             if (chance.ChanceCalc(50, 100)) {

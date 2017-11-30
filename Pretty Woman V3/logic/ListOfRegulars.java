@@ -1,5 +1,6 @@
 package logic;
 
+import acq.IRegular;
 import java.util.*;
 import java.util.Collections;
 
@@ -63,7 +64,7 @@ public class ListOfRegulars {
 
     }
 
-    public double winDegree(Regular regular) {
+    public double winDegree(IRegular regular) {
         //Returns the index of the regular, on sorted/ un-sorted list:
         //List is sorted by most wealthy at index 0:
         sortByWealth();

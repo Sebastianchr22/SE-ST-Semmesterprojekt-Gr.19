@@ -1,6 +1,7 @@
 package logic;
 
 import acq.ILogic;
+import acq.IRegular;
 
 
 
@@ -10,7 +11,7 @@ public class HotelMotelInvite {
     private ListOfRegulars reglist;
     
 
-    public void Hotel(Regular regular) {
+    public void Hotel(IRegular regular) {
         reglist.regularList = logic.getRegularList();
         
         System.out.println("You have been invited to a Hotel. Do you accept?");
@@ -21,14 +22,14 @@ public class HotelMotelInvite {
         logic.setWon(true);
     }
 
-    public void Motel(Regular regular) {
+    public void Motel(IRegular regular) {
         System.out.println("You have been invited to a Motel.");
         WinTranslation trans = new WinTranslation(reglist.winDegree(regular));
         //Set highscore:
         logic.setWon(true);
     }
 
-    HotelMotelInvite(Regular regular) {
+    HotelMotelInvite(IRegular regular) {
         if (!regular.getName().toUpperCase().equals("JACK THE BOUNCER") && !regular.getName().toUpperCase().equals("EX-BOYFRIEND DANIEL") ) {
             if (regular.getWealth() >= 1500000) {
                 //If regular is worth more than or equals to 1.5M invite to hotel:
