@@ -94,7 +94,7 @@ public class Game {
             //System.out.println("Moves left: " + moves.getMoves());
             Command command = parser.getCommand();
             finished = processCommand(command);
-            logic.setCurrentRoom(currentRoom.getNameBackend().toUpperCase());
+            logic.setCurrentRoom(currentRoom);
         }
         System.out.println("Thank you for playing.  Good bye.");
     }
@@ -279,7 +279,7 @@ public class Game {
             System.out.println(currentRoom.getLongDescription());
 
         }
-        logic.setCurrentRoom(currentRoom.getNameBackend().toUpperCase());
+        logic.setCurrentRoom(currentRoom);
     }
 
     private boolean quit(Command command) {

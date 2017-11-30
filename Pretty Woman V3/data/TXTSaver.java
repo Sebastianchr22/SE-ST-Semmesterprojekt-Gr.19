@@ -1,30 +1,28 @@
 package data;
 
 import acq.IData;
-import acq.IItem;
 import acq.IPlayer;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
-public class TXTSaver{
-    private IData data;
+public class TXTSaver {
+
+    private IData data = DataFacade.getInstance();
+
+    ;
     
-    public void save() {
-        
+    public void save(Collection<Integer> stats, Collection<String> inventory) {
         File save = new File("savefolder", "savefile.txt");
         save.getParentFile().mkdirs();
 
         try {
             PrintWriter saveWriter = new PrintWriter(save);
-            saveWriter.println(data.getDaysLeft());
-            saveWriter.println(data.getEnhencements());
-            saveWriter.println(data.getExperience());
-            saveWriter.println(data.getCurrentHunger());
-            saveWriter.println(data.getDaysLeft());
-            saveWriter.println(data.getMoves());
-            
-            for (String name : data.InventoryString()) {
+
+            for (Integer val : stats) {
+                saveWriter.println(val);
+            }
+
+            for (String name : inventory) {
                 saveWriter.println(name);
             }
             saveWriter.close();
@@ -34,8 +32,8 @@ public class TXTSaver{
         }
     }
 
-    
     private IPlayer newPlayer;
+
     public IPlayer load() {
         try { //try finding the file:
             BufferedReader reader = new BufferedReader(new FileReader("savefolder" + "/" + "savefile.txt"));
@@ -62,13 +60,13 @@ public class TXTSaver{
     private int exp;
     private int enh;
     private int hunger;
-    private double money;
     private int moves;
-    
+    private double money;
+
     private ArrayList<String> list = new ArrayList();
 
     private IPlayer loadPlayer(String value, int index, IData data) {
-        
+
         if (value != null) {
             if (index <= 6) {
                 switch (index) {
@@ -85,10 +83,10 @@ public class TXTSaver{
                         hunger = Integer.parseInt(value);
                         break;
                     case 4:
-                        money = Double.parseDouble(value);
+                        moves = Integer.parseInt(value);
                         break;
                     case 5:
-                        moves = Integer.parseInt(value);
+                        money = Double.parseDouble(value);
                         break;
                     case 6:
                         if (value.equals("Wedding Ring")) {
@@ -104,9 +102,9 @@ public class TXTSaver{
         } else {
             System.out.println("Value was null");
         }
-        
-        IPlayer player = new DataPlayer(exp,enh,moves,money,hunger,daysleft,list);
-        return player;
+
+        IPlayer newplayer = new DataPlayer(exp, enh, moves, money, hunger, daysleft, list);
+        return newplayer;
     }
-    
+
 }

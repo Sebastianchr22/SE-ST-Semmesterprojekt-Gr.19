@@ -1,6 +1,5 @@
 package data;
 
-import PrettyWoman.Driver;
 import acq.IData;
 import java.io.BufferedReader;
 import java.io.File;

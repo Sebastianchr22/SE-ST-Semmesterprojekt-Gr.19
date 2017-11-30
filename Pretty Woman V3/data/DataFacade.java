@@ -1,32 +1,39 @@
 package data;
 
-import acq.IItem;
+import acq.IData;
 import acq.ILogic;
 import acq.IPlayer;
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collection;
+import logic.LogicFacade;
 
-public class DataFacade implements acq.IData {
+public class DataFacade implements IData {
 
     private ArrayList<Integer> scores;
-    private ILogic logic;
+    private static ILogic logic = LogicFacade.getInstance();
+    private static IData data;
+    
 
     @Override
     public void injectLogic(ILogic logic) {
         this.logic = logic;
     }
+    
+    public static IData getInstance(){
+        return data;
+    }
 
     @Override
-    public void save() {
+    public void save(Collection<Integer> stats, Collection<String> inventory) {
+        data = this;
         TXTSaver saver = new TXTSaver();
-        saver.save();
+        saver.save(stats, inventory);
     }
 
     @Override
     public void saveHighScore() {
         HighScore saver = new HighScore();
-        saver.save(scoreCalc());
+        saver.save(100);
     }
     
     
@@ -46,49 +53,14 @@ public class DataFacade implements acq.IData {
         saver.load();
     }
 
-    @Override
     public Collection<String> InventoryString() {
         return logic.getDataInv();
     }
 
-    @Override
-    public int getExperience() {
-        return logic.getExperience();
-    }
-
-    @Override
-    public int getEnhencements() {
-        return logic.getEnhencements();
-    }
-
-    @Override
-    public int getMoves() {
-        return logic.getMoves();
-    }
-
-    @Override
-    public double getMoneySaved() {
-        return logic.getMoneySave();
-    }
-
-    @Override
-    public int getCurrentHunger() {
-        return logic.getCurrentHunger();
-    }
-
-    @Override
-    public int getDaysLeft() {
-        return logic.getDaysLeft();
-    }
-
-    public double getWinPercent() {
-        return logic.getWinPercent();
-    }
-
-    @Override
+   /* @Override
     public int scoreCalc() {
         return (int) (getMoneySaved() + (getMoneySaved() * 1 + (getWinPercent()) / 100.0) + 1.0 + ((getEnhencements() + getExperience()) / 100.0 * getDaysLeft()));
-    }
+    }*/
 
     @Override
     public ArrayList<Integer> highScores(ArrayList<Integer> list) {
@@ -101,5 +73,10 @@ public class DataFacade implements acq.IData {
         //Sort before returning:
 
         return this.scores;
+    }
+
+    @Override
+    public int scoreCalc() {
+        return 100;
     }
 }

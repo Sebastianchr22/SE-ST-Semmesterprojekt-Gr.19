@@ -2,7 +2,7 @@ package logic;
 
 import java.util.ArrayList;
 
-public class Inventory implements ListBuilder{
+public class Inventory implements ListBuilder {
 
     ArrayList<Item> Inventory = new ArrayList();
 
@@ -18,6 +18,8 @@ public class Inventory implements ListBuilder{
     private int weddingringvar = 0;
     private int Adidas = 0;
     private Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring given to you by your ex- boyfriend", "Wedding", 3);
+    private Item carkeys = new Item(90, "Car keys", "A bundle of keys", "Key", 0);
+
 
     //Items:
     Inventory() {
@@ -103,7 +105,12 @@ public class Inventory implements ListBuilder{
     }
 
     int getTotalWeight() {
+        countItems();
         return this.totalWeight;
+    }
+
+    String getShortHunger() {
+        return String.valueOf(this.getTotalWeight()) + "/" + "1000g";
     }
 
     String weightToString() {
@@ -134,10 +141,14 @@ public class Inventory implements ListBuilder{
                 return 0;
         }
     }
-    Item getWeddingRing(){
+
+    public Item getWeddingRing() {
         return this.weddingring;
     }
-    
+    public Item getCarKeys(){
+        return this.carkeys;
+    }
+
     public void showList() {
         int counter = 0;
         System.out.println("Item Name:                         Weight:");

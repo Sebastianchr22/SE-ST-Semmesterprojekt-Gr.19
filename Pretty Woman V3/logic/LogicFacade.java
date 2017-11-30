@@ -1,28 +1,47 @@
 package logic;
 
 import acq.IData;
+import acq.IItem;
+import acq.ILogic;
+import acq.IPlayer;
 import acq.IPreference;
 import acq.IRegular;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import javafx.collections.FXCollections;
+import javafx.collections.*;
 
 public class LogicFacade implements acq.ILogic {
 
     private IData data;
-    
+    private static ILogic logic;
+    Room privateRoom = new Room("Private room", "in the private room, where everything can happen");
+    Room office = new Room("Office", "in the managers office");
+    Room outside = new Room("Outside", "in front of the strip club");
+    Room motel = new Room("Motel", "in a motel");
+    Room tower = new Room("Tower", "in the home of your new lover");
+    Room home = new Room("Home", "home, where your daughter is");
+    Room drive = new Room("Drive", "The old parkinglot, where your old car is");
+    Room back = new Room("Backroom", "in the backroom.");
+    Room locker = new Room("Locker room", "in the locker room. Here you can gather points and money by stealing from other strippers");
+    Room floor = new Room("Dance floor", "on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
+
     private final ArrayList<IRegular> regularList;
     private ListOfRegulars reglist;
     private Player player;
     private Inventory inv;
     private ItemList itemlist;
     private Regular regularInRoom;
-    private String currentRoom;
+    private Room currentRoom = home;
     private double winPercent;
     private boolean gameWon;
     private boolean inPRoom;
     private int highscore;
+    Manager manager = new Manager("Manager", office);
 
     public LogicFacade() {
+        logic = this;
         Regulars reg = new Regulars();
         regularList = new ArrayList<>();
         reglist = new ListOfRegulars(regularList);
@@ -31,7 +50,32 @@ public class LogicFacade implements acq.ILogic {
         itemlist = new ItemList();
         winPercent = 0;
         highscore = 0;
-        currentRoom = "HOME";
+
+        
+        home.setExit("work", back);
+
+        back.setExit("floor", floor);
+        back.setExit("locker", locker);
+
+        back.setExit("home", home);
+
+        locker.setExit("back", back);
+
+        floor.setExit("back", back);
+
+        floor.setExit("outside", outside);
+
+        floor.setExit("private", privateRoom);
+
+        privateRoom.setExit("floor", floor);
+
+        office.setExit("back", back);
+
+        outside.setExit("floor", floor);
+
+        motel.setExit("home", home);
+
+        tower.setExit("home", home);
     }
 
 //    public int getScore(){
@@ -42,14 +86,70 @@ public class LogicFacade implements acq.ILogic {
         this.data = data;
     }
 
+    public static ILogic getInstance() {
+        return logic;
+    }
+
     @Override
     public void save() {
-        data.save();
+        Collection<Integer> stats = new ArrayList();
+        Collection<String> inventory = new ArrayList();
+
+        stats.add(player.getDaysLeft());
+        stats.add(player.getEnhancements());
+        stats.add(player.getExperience());
+        stats.add(player.getHunger());
+        stats.add(player.getMoves());
+        stats.add((int) player.getMoneySaved());
+
+        for (IItem item : inv.Inventory) {
+            inventory.add(item.getName());
+        }
+
+        data.save(stats, inventory);
     }
 
     @Override
     public void load() {
-        data.load();
+        IPlayer newplayer = data.load();
+        this.player.setCurrentHunger(newplayer.getHunger());
+        this.player.setDaysLeft(newplayer.getDaysLeft());
+        this.player.setEnhancements(newplayer.getEnhancements());
+        this.player.setExperience(newplayer.getExperience());
+        this.player.setMoneySaved(newplayer.getMoneySaved());
+        this.player.setMoves(newplayer.getMoves());
+        ArrayList<Item> newInv = new ArrayList();
+        ArrayList<Item> newItemList = new ArrayList();
+        newItemList = itemlist.itemList;
+
+        System.out.println(newplayer.getInv().toString());
+        for (String item : newplayer.getInv()) {
+            if (!item.equals("Wedding Ring") && !item.equals("Car keys")) {
+                Item found = containsItem(item);
+                newInv.add(found);
+                newItemList.remove(found);
+                System.out.println("Added " + found.getName() + " to inv, and removed from Itemlist");
+            } else if (item.equals("Wedding Ring")) {
+                newInv.add(inv.getWeddingRing());
+                System.out.println("added Wedding Ring");
+            }
+            if (item.equals("Car keys")) {
+            }
+        }
+
+        inv.Inventory = newInv;
+        itemlist.itemList = newItemList;
+    }
+
+    public Item containsItem(String name) {
+        itemlist = new ItemList();
+        for (Item listitem : itemlist.itemList) {
+            if (listitem.getName().equals(name)) {
+                System.out.println("ItemList contained: " + listitem.getName());
+                return listitem;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -103,12 +203,12 @@ public class LogicFacade implements acq.ILogic {
 
     @Override
     public String getCurrentRoom() {
-        return this.currentRoom;
+        return this.currentRoom.getNameBackend();
     }
 
     @Override
-    public void setCurrentRoom(String s) {
-        this.currentRoom = s;
+    public void setCurrentRoom(Room room) {
+        this.currentRoom = room;
     }
 
     @Override
@@ -237,7 +337,7 @@ public class LogicFacade implements acq.ILogic {
     }
 
     public void updatePreference(String name, int amount) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -299,4 +399,159 @@ public class LogicFacade implements acq.ILogic {
         return this.regularInRoom;
     }
 
+    @Override
+    public String getCapacity() {
+        return this.inv.weightToString();
+    }
+
+    public String getShortHunger() {
+        return this.player.getShortHunger();
+    }
+
+    @Override
+    public void buyFood() {
+        if (player.getMoneySaved() > 100 && player.getHunger() <= 90) {
+            this.player.addHunger(10);
+            this.player.removeMoney(100);
+        }
+    }
+
+    @Override
+    public void buyEnhancements() {
+        if (player.getMoneySaved() >= 150) {
+            this.player.addEnhancements(1);
+            this.player.removeMoney(150);
+        }
+    }
+
+    @Override
+    public ObservableList<IItem> getInventoryList() {
+        ObservableList<IItem> list = FXCollections.observableArrayList();
+        for (IItem item : inv.Inventory) {
+            list.add(item);
+        }
+        return list;
+    }
+
+    public Item getItem(String name) {
+        int count = 0;
+        for (Item item : inv.Inventory) {
+            if (item.getName().equals(name)) {
+                System.out.println("Found " + item.getName() + " - " + item.getDesc());
+                return inv.Inventory.get(count);
+            } else {
+                count++;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void dropItem(IItem item) {
+        String name = item.getName();
+        System.out.println("Removing " + name);
+        inv.removeFromList(getItem(name));
+        if (!name.equals("Wedding Ring")) {
+            itemlist.addToList(getItem(name));
+        } else {
+        }
+    }
+
+    public String getManagerRoom() {
+        return this.manager.getRoom();
+    }
+
+    @Override
+    public boolean managerPlayerSameRoom() {
+        return this.currentRoom.equals(manager.getRoom()) && !this.currentRoom.equals("LOCKER") && !this.currentRoom.equals("DANCE FLOOR");
+    }
+
+    public String managerTakesCut() {
+        return "Manager noticed you leaving, and took his " + manager.getPercentage()*100 + "% cut. He took $" + player.getMoneySaved() * (manager.getPercentage() / 100.0) + ".";
+    }
+
+    @Override
+    public String processCommand(String command) {
+        switch (command.toUpperCase()) {
+            case "KEYS":
+                if (!this.inv.Inventory.contains(inv.getCarKeys())) {
+                    // No keys yet:
+                    inv.Inventory.add(inv.getCarKeys());
+                    System.out.println("Added car keys");
+                } else {
+                }
+                break;
+
+            case "WORK":
+                if (inv.Inventory.contains(inv.getCarKeys())) {
+                    goRoom(drive);
+                    System.out.println("Went to DRIVE");
+                } else {
+                }
+                break;
+
+            case "CAR":
+                goRoom(back);
+                System.out.println("Went to BACKROOM");
+                break;
+
+            case "HOME":
+                goRoom(home);
+                System.out.println("Went to HOME");
+                break;
+
+            case "LOCKER":
+                goRoom(locker);
+                System.out.println("Went to LOCKER");
+                break;
+
+            case "DANCEFLOOR":
+                goRoom(floor);
+                System.out.println("Went to DANCE FLOOR");
+                break;
+
+            case "STEAL":
+                System.out.println("STOLE");
+                Lockerroom locker = new Lockerroom();
+                return locker.Lockerroom(this.inv, this.itemlist);
+
+            case "BACKROOM":
+                goRoom(back);
+                System.out.println("Went to BACKROOM");
+                break;
+
+            case "OUTSIDE":
+                goRoom(outside);
+                System.out.println("Went to OUTSIDE");
+                break;
+
+            case "DANCE":
+                break;
+
+            default:
+                break;
+        }
+        manager.moveManager();
+        player.removeMoves(1);
+        player.removeHunger(3);
+        return "";
+    }
+
+    public void goRoom(Room room) {
+        this.currentRoom = room;
+    }
+    
+    public String getRoomDescription(){
+        return this.currentRoom.getShortDescription();
+    }
+    
+    public String getRoomHelpText(){
+        String help = "";
+        switch(this.currentRoom.getNameBackend()){
+            case "HOME":
+                help = "";
+                break;
+        }
+        return help;
+    }
 }

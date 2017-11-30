@@ -3,14 +3,16 @@ package acq;
 import logic.Player;
 import java.util.ArrayList;
 import java.util.Collection;
+import javafx.collections.ObservableList;
 import logic.Inventory;
 import logic.Item;
 import logic.ItemList;
 import logic.ListOfRegulars;
 import logic.Regular;
+import logic.Room;
 
 public interface ILogic {
-    
+
     public void injectData(IData data);
 
     public void save();
@@ -38,13 +40,13 @@ public interface ILogic {
     public void setWon(boolean bool);
 
     public void setHighScore();
-    
+
     public void setInventory(Inventory inventory);
-    
+
     public void setItemList(ItemList list);
-    
+
     public void setRegularList(ListOfRegulars list);
-    
+
     public void setPlayer(Player player);
 
     public void addToInventory(Item item);
@@ -58,12 +60,11 @@ public interface ILogic {
     public String info(IRegular regular);
 
     public void resetWon();
-    
-    
+
     public Collection<String> getDataInv();
-    
+
     public Player getPlayer();
-    
+
     public String getName(IRegular regular);
 
     public int getAmount(IPreference preference);
@@ -99,15 +100,39 @@ public interface ILogic {
     public IItem getWeddingRing();
 
     public int getScore();
-    
+
     public void setWinPercent(double d);
-     
+
     public double getWinPercent();
-    
+
     public Regular getRegularInRoom();
-        
+
     public String getCurrentRoom();
-    
-    public void setCurrentRoom(String s);
+
+    public void setCurrentRoom(Room room);
+
+    public String getCapacity();
+
+    public String getShortHunger();
+
+    public void buyFood();
+
+    public void buyEnhancements();
+
+    public ObservableList<IItem> getInventoryList();
+
+    public void dropItem(IItem item);
+
+    public String processCommand(String command);
+
+    public void goRoom(Room room);
+
+    public boolean managerPlayerSameRoom();
+
+    public String managerTakesCut();
+
+    public String getRoomHelpText();
+
+    public String getRoomDescription();
 
 }

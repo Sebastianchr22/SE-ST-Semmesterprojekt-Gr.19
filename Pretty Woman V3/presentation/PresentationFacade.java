@@ -7,10 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import acq.IGUI;
+import acq.IItem;
+import javafx.collections.ObservableList;
 
 public class PresentationFacade implements IGUI {
 
     private ILogic logic;
+    private static IGUI IGUI;
     private Stage mainStage = new Stage();
 
     @Override
@@ -18,8 +21,13 @@ public class PresentationFacade implements IGUI {
         this.logic = logic;
     }
 
+    public static IGUI getInstance() {
+        return IGUI;
+    }
+
     @Override
     public void start(Stage mainStage) throws Exception {
+        IGUI = this;
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
 
         Image icon = new Image(getClass().getResourceAsStream("../FXML/Visuals/Icons/Icon.png"));
@@ -45,14 +53,9 @@ public class PresentationFacade implements IGUI {
             System.out.println(getExp());
             System.out.println(getMoney());
             System.out.println(getDaysLeft());
-            System.out.println("tester start() ");
-            String path = "../FXML/Visuals/Highres/Map/" + getCurrentRoom() + ".png";
-            System.out.println(path);
             start(mainStage);
         } catch (Exception ex) {
-            String path = "../FXML/Visuals/Highres/Map/" + getCurrentRoom() + ".png";
-            System.out.println("path: " + path);
-            System.out.println("Didnt work.. lol");
+            System.out.println("Something went wrong in Initialize");
         }
     }
 
@@ -94,6 +97,67 @@ public class PresentationFacade implements IGUI {
     @Override
     public String getCurrentRoom() {
         return logic.getCurrentRoom();
+    }
+
+    @Override
+    public String getCapacity() {
+        return logic.getCapacity();
+    }
+
+    @Override
+    public int getHunger() {
+        return logic.getCurrentHunger();
+    }
+
+    @Override
+    public String getShortHunger() {
+        return logic.getShortHunger();
+    }
+
+    @Override
+    public void buyFood() {
+        logic.buyFood();
+    }
+
+    @Override
+    public void buyEnh() {
+        logic.buyEnhancements();
+    }
+
+    @Override
+    public ObservableList<IItem> getInventory() {
+        return this.logic.getInventoryList();
+    }
+
+    @Override
+    public void removeItem(IItem item) {
+        logic.dropItem(item);
+    }
+
+    @Override
+    public String processCommand(String command) {
+        return logic.processCommand(command);
+    }
+
+    @Override
+    public String getRegularInRoomInfo() {
+        return logic.getRegularInRoom().info();
+    }
+
+    public boolean managerPlayerSameRoom() {
+        return logic.managerPlayerSameRoom();
+    }
+
+    public String managerTakesCut() {
+        return logic.managerTakesCut();
+    }
+
+    public String getRoomHelpText() {
+        return logic.getRoomHelpText();
+    }
+
+    public String getRoomDescription(){
+        return logic.getRoomDescription();
     }
 
 }

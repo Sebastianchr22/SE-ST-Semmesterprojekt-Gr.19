@@ -13,12 +13,6 @@ public class DanceMech {
     int move2ExpRequired = 25;
     Chance chance = new Chance();
 
-    /**
-     * Prints the money and experience gained by the player:
-     *
-     * @return nothing.
-     */
-
     public void printPrompt() {
         //Main interface printout:
         System.out.println("The crowd looks to have some money to spend on a good show.");

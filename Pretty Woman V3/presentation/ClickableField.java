@@ -22,4 +22,10 @@ public class ClickableField {
     public boolean hit(MouseEvent event) {
         return upperLeft.getX() <= event.getX() && event.getX() <= maxX && upperLeft.getY() <= event.getY() && event.getY() <= maxY;
     }
+    public void destroy(){
+        this.height = 0;
+        this.maxX = 0;
+        this.maxY = 0;
+        this.width = 0;
+    }
 }

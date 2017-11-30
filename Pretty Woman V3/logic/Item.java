@@ -39,4 +39,9 @@ public class Item implements acq.IItem {
         return this.size;
     }
    
+    
+    @Override
+    public String toString(){
+        return this.ID + "." + this.name + " - " + this.description;
+    }
 }

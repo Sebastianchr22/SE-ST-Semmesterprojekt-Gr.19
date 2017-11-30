@@ -54,4 +54,9 @@ public class DataPlayer implements acq.IPlayer {
     public int getMoves() {
         return this.Moves;
     }
+
+    @Override
+    public ArrayList<String> getInv() {
+        return this.inv;
+    }
 }

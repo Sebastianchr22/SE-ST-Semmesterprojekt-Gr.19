@@ -4,13 +4,16 @@ import acq.ILogic;
 import java.util.ArrayList;
 
 public class Player {
-
+    private static ILogic logic;
+    
     private int Experience = 0;
     private int Enhancements = 0;
     private int Moves = 12;
     private double moneySaved = 0;
     private int currentHunger = 100;
     private int daysLeft = 20;
+
+    private final Item weddingring = new Item(0, "Wedding Ring", "Your wedding ring given to you by your ex- boyfriend", "Wedding", 3);
 
     Player() {
         int Experience = 0;
@@ -35,11 +38,13 @@ public class Player {
                 logic.addToInventory(item);
                 logic.removeFromItemList(item);
             } else {
-                logic.addToInventory(item);
+                logic.addToInventory(weddingring);
             }
         }
     }
-
+    Item getWeddingRing(){
+        return this.weddingring;
+    }
     void addEnhancements(int i) {
         this.Enhancements += i;
     }
@@ -114,6 +119,10 @@ public class Player {
 
     int getMoves() {
         return this.Moves;
+    }
+
+    String getShortHunger() {
+        return this.currentHunger + "/100";
     }
 
     void resetMoves() {
