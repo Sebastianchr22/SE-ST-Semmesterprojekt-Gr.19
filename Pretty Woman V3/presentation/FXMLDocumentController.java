@@ -18,11 +18,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
+import logic.Manager;
 
 public class FXMLDocumentController implements Initializable {
 
     private IGUI gui;
-
     private String currentRoom;
     @FXML
     private Label coordinates;
@@ -244,6 +244,7 @@ public class FXMLDocumentController implements Initializable {
             setRoomImage();
             setHitBoxes();
             gui.removeDaysLeft();
+
             return val + " You went home, after a long day at work. Time to take care of you and your daughter.";
         }
     }
@@ -339,8 +340,8 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void ShowInventory(MouseEvent event) {
-        ChangeMapState(0,true);
-        ChangeStatusState(0,true);
+        ChangeMapState(0, true);
+        ChangeStatusState(0, true);
         InventoryListView.setItems(gui.getInventory());
 
         InventoryListView.refresh();
@@ -354,23 +355,26 @@ public class FXMLDocumentController implements Initializable {
             InvGrid.setDisable(true);
         }
     }
-    public void ChangeInventoryState(int i, boolean bool){
+
+    public void ChangeInventoryState(int i, boolean bool) {
         InvGrid.setOpacity(i);
         InvGrid.setDisable(bool);
     }
-    public void ChangeMapState(int i, boolean bool){
+
+    public void ChangeMapState(int i, boolean bool) {
         MapIMG.setOpacity(i);
         MapIMG.setDisable(bool);
     }
-    public void ChangeStatusState(int i, boolean bool){
+
+    public void ChangeStatusState(int i, boolean bool) {
         StatusGrid.setOpacity(i);
         StatusGrid.setDisable(bool);
     }
 
     @FXML
     private void ShowMap(MouseEvent event) {
-        ChangeInventoryState(0,true);
-        ChangeStatusState(0,true);
+        ChangeInventoryState(0, true);
+        ChangeStatusState(0, true);
         String path = "FXML/Visuals/Highres/Map/" + gui.getCurrentRoom() + ".png";
         Image map = new Image(path, true);
         MapIMG.setImage(map);
@@ -385,7 +389,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void ShowSettings(MouseEvent event) {        
+    private void ShowSettings(MouseEvent event) {
         MenuGrid.setDisable(false);
         SettingsGrid.setDisable(false);
         ChangeSaveMenu(1, false);
@@ -461,8 +465,8 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void ShowStats(MouseEvent event) {
-        ChangeMapState(0,true);
-        ChangeInventoryState(0,true);
+        ChangeMapState(0, true);
+        ChangeInventoryState(0, true);
         if (StatusGrid.isDisabled()) {
             //Enable
             StatusGrid.setOpacity(1);

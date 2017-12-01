@@ -17,15 +17,15 @@ public class LogicFacade implements acq.ILogic {
     private IData data;
     private static ILogic logic;
     Room privateRoom = new Room("Private room", "in the private room, where everything can happen", "Click anywhere to perform a dance.");
-    Room office = new Room("Office", "in the managers office","");
-    Room outside = new Room("Outside", "outside of the club","Click the door to go back, or hang out with the bouncer some more.");
-    Room motel = new Room("Motel", "in a grimm looking motel","Click anywhere to go back home.");
-    Room tower = new Room("Tower", "in the home of your new lover","");
-    Room home = new Room("Home", "home sweet home..","You will need your car keys to exit, and go to work");
-    Room drive = new Room("Drive", "The old parkinglot, where your car is, the old tin can..","You should take your car to work, but where did you park it?");
-    Room back = new Room("Backroom", "in the backroom.","You can go to the locker room, and to the main dancefloor from here.");
-    Room locker = new Room("Locker room", "in the locker room. Here you can find all sorts of nice things.","You can always steal from the other strippers. Click on the lockers to attempt to steal. \n Click the bottom of the screen to go back.");
-    Room floor = new Room("Dance floor", "on the floor. Here you can really perform, a good show brings good money, and a regular, can bring you even more..","Click the pole to dance, maybe you will be invitet to the private room by a regular. \n you can also go outside. \n Click the bottom of the screen to go back.");
+    Room office = new Room("Office", "in the managers office", "");
+    Room outside = new Room("Outside", "outside of the club", "Click the door to go back, or hang out with the bouncer some more.");
+    Room motel = new Room("Motel", "in a grimm looking motel", "Click anywhere to go back home.");
+    Room tower = new Room("Tower", "in the home of your new lover", "");
+    Room home = new Room("Home", "home sweet home..", "You will need your car keys to exit, and go to work");
+    Room drive = new Room("Drive", "The old parkinglot, where your car is, the old tin can..", "You should take your car to work, but where did you park it?");
+    Room back = new Room("Backroom", "in the backroom.", "You can go to the locker room, and to the main dancefloor from here.");
+    Room locker = new Room("Locker room", "in the locker room. Here you can find all sorts of nice things.", "You can always steal from the other strippers. Click on the lockers to attempt to steal. \n Click the bottom of the screen to go back.");
+    Room floor = new Room("Dance floor", "on the floor. Here you can really perform, a good show brings good money, and a regular, can bring you even more..", "Click the pole to dance, maybe you will be invitet to the private room by a regular. \n you can also go outside. \n Click the bottom of the screen to go back.");
 
     private Regulars reg = new Regulars();
     private ArrayList<Regular> regularList = new ArrayList<>();
@@ -367,7 +367,7 @@ public class LogicFacade implements acq.ILogic {
 
     @Override
     public double getMoneySave() {
-        return (player.getMoneySaved()*100.0)/100.0;
+        return (player.getMoneySaved() * 100.0) / 100.0;
     }
 
     @Override
@@ -531,8 +531,14 @@ public class LogicFacade implements acq.ILogic {
     }
 
     public String managerTakesCut() {
-        double d = player.getMoneySaved()*manager.getPercentage();
-        return "Manager noticed you leaving, and took his " + manager.getPercentage() * 100 + "% cut. He took $" + d + ".";
+        if (manager.getRoom().equals(this.currentRoom.getNameBackend())) {
+            if (!this.currentRoom.getNameBackend().equals("DANCE FLOOR") || this.currentRoom.getNameBackend().equals("LOCKER ROOM")) {
+                double d = Math.round(player.getMoneySaved() * manager.getPercentage() * 100.0) / 100.0;
+                this.player.removeMoney(d);
+                return "Manager noticed you leaving, and took his " + manager.getPercentage() * 100 + "% cut. He took $" + d + ".";
+            }
+        }
+        return "";
     }
 
     private DanceMech dance;
@@ -541,14 +547,14 @@ public class LogicFacade implements acq.ILogic {
     public String processCommand(String command) {
         if (this.currentRoom.getNameBackend().equals("HOME")) {
             player.setMoves(12);
+            manager.setCurrentRoom(office);
         } else {
             player.removeMoves(1);
             player.removeHunger(3);
         }
-        
         manager.moveManager();
         System.out.println("Manager at: " + manager.getRoom());
-        
+
         switch (command.toUpperCase()) {
             case "KEYS":
                 if (!this.inv.Inventory.contains(inv.getCarKeys())) {
@@ -563,7 +569,7 @@ public class LogicFacade implements acq.ILogic {
                 String val = "";
                 if (inv.Inventory.contains(inv.getCarKeys())) {
                     goRoom(drive);
-                    val+=drive.getShortDescription();
+                    val += drive.getShortDescription();
                     System.out.println("Went to DRIVE");
                 } else {
                     val += "You don't have your keys..";
@@ -646,8 +652,8 @@ public class LogicFacade implements acq.ILogic {
 
             default:
                 break;
-        } 
-        
+        }
+
         return "";
     }
 
@@ -659,17 +665,16 @@ public class LogicFacade implements acq.ILogic {
         return this.currentRoom.getShortDescription();
     }
 
-
     @Override
     public double getWinPercent(IRegular regular) {
         return this.reglist.winDegree(regular);
     }
 
-    public void removeDaysLeft(){
+    public void removeDaysLeft() {
         this.player.removeDaysLeft(1);
     }
-    
-    public String getRoomHelpText(){
+
+    public String getRoomHelpText() {
         return this.currentRoom.getHelpText();
     }
 }
