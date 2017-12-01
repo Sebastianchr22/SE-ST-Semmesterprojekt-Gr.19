@@ -115,6 +115,8 @@ public interface ILogic {
 
     public String getShortHunger();
 
+    public Inventory getInv();
+
     public void buyFood();
 
     public void buyEnhancements();
@@ -155,4 +157,8 @@ public interface ILogic {
 
     public String getPrivateRoomCommand();
 
+    public double getWinPercent(IRegular regular);
+    
+    public void removeDaysLeft();
+    
 }

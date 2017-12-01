@@ -56,8 +56,11 @@ public interface IGUI {
     public String getRoomDescription();
 
     public Scene getScene();
-    
+
     public void setPrivateRoomCommand(String s);
-    
+
     public boolean getPRoomInvite();
+    
+    public void removeDaysLeft();
+    
 }

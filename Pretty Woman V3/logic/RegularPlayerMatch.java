@@ -6,15 +6,13 @@ import acq.IRegular;
 
 public class RegularPlayerMatch {
 
-    private ILogic logic;
+    private ILogic logic = LogicFacade.getInstance();
     private Inventory inv;
 
     Chance chance = new Chance();
 
     public boolean Match(IPreference preference) {
-        
-        inv.Inventory = logic.getInventory();
-        
+
         boolean res = false;
         switch (preference.getName()) {
             case "Gold":
@@ -60,16 +58,25 @@ public class RegularPlayerMatch {
         return res;
     }
 
-    RegularPlayerMatch(IRegular regular) {
+    public String RegularPlayerMatch(IRegular regular) {
+        String val = "";
+        inv = logic.getInv();
         if (Match(regular.getPreference0()) && Match(regular.getPreference1())) {
-            System.out.println("The two of you are a match!");
-            if (chance.ChanceCalc(50, 100)) {
+            val = "The two of you are a match!";
+            if (chance.ChanceCalc(60, 100)) {
                 //Invite to hotel / motel:
-                HotelMotelInvite invite = new HotelMotelInvite(regular);
+                HotelMotelInvite invite = new HotelMotelInvite();
+                return val + "\n" + invite.HotelMotelInvite(regular);
+            }else{
+                return logic.getRegularInRoom().getName() + " did not invite anywhere, and just left.";
             }
         } else {
-            System.out.println("You two are not a match..");
+            val = "You two are not a match..";
+            logic.setRegularInRoom(null);
+            logic.setPrivateRoomCommand(null);
+            logic.setPRoomInvite(false);
         }
+        return val;
 
     }
 }

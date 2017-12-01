@@ -13,6 +13,7 @@ public class Starter extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+        
         IData data = new DataFacade();
         ILogic logic = new LogicFacade();
         IGUI ui = new PresentationFacade();

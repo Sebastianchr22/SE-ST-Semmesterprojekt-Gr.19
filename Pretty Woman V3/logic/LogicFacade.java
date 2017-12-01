@@ -16,16 +16,16 @@ public class LogicFacade implements acq.ILogic {
 
     private IData data;
     private static ILogic logic;
-    Room privateRoom = new Room("Private room", "in the private room, where everything can happen");
-    Room office = new Room("Office", "in the managers office");
-    Room outside = new Room("Outside", "in front of the strip club");
-    Room motel = new Room("Motel", "in a motel");
-    Room tower = new Room("Tower", "in the home of your new lover");
-    Room home = new Room("Home", "home, where your daughter is");
-    Room drive = new Room("Drive", "The old parkinglot, where your old car is");
-    Room back = new Room("Backroom", "in the backroom.");
-    Room locker = new Room("Locker room", "in the locker room. Here you can gather points and money by stealing from other strippers");
-    Room floor = new Room("Dance floor", "on the floor. Here you can earn money by doing various dance moves or by talking to the guests to see if you meet someone interesting");
+    Room privateRoom = new Room("Private room", "in the private room, where everything can happen", "Click anywhere to perform a dance.");
+    Room office = new Room("Office", "in the managers office","");
+    Room outside = new Room("Outside", "outside of the club","Click the door to go back, or hang out with the bouncer some more.");
+    Room motel = new Room("Motel", "in a grimm looking motel","Click anywhere to go back home.");
+    Room tower = new Room("Tower", "in the home of your new lover","");
+    Room home = new Room("Home", "home sweet home..","You will need your car keys to exit, and go to work");
+    Room drive = new Room("Drive", "The old parkinglot, where your car is, the old tin can..","You should take your car to work, but where did you park it?");
+    Room back = new Room("Backroom", "n the backroom.","You can go to the locker room, and to the main dancefloor from here.");
+    Room locker = new Room("Locker room", "in the locker room. Here you can find all sorts of nice things.","You can always steal from the other strippers. Click on the lockers to attempt to steal. \n Click the bottom of the screen to go back.");
+    Room floor = new Room("Dance floor", "on the floor. Here you can really perform, a good show brings good money, and a regular, can bring you even more..","Click the pole to dance, maybe you will be invitet to the private room by a regular. \n you can also go outside. \n Click the bottom of the screen to go back.");
 
     private Regulars reg = new Regulars();
     private ArrayList<Regular> regularList = new ArrayList<>();
@@ -41,6 +41,7 @@ public class LogicFacade implements acq.ILogic {
     private int highscore;
     private boolean pRoomInvite;
     private String privateRoomCommand;
+
     Manager manager = new Manager("Manager", office);
 
     public LogicFacade() {
@@ -310,6 +311,11 @@ public class LogicFacade implements acq.ILogic {
     }
 
     @Override
+    public Inventory getInv() {
+        return this.inv;
+    }
+
+    @Override
     public Player getPlayer() {
         return this.player;
     }
@@ -473,6 +479,7 @@ public class LogicFacade implements acq.ILogic {
     public void buyEnhancements() {
         if (player.getMoneySaved() >= 150) {
             this.player.addEnhancements(1);
+            this.player.addDaysLeft(highscore);
             this.player.removeMoney(150);
         }
     }
@@ -527,45 +534,60 @@ public class LogicFacade implements acq.ILogic {
         return "Manager noticed you leaving, and took his " + manager.getPercentage() * 100 + "% cut. He took $" + player.getMoneySaved() * (manager.getPercentage() / 100.0) + ".";
     }
 
+    private DanceMech dance;
+
     @Override
     public String processCommand(String command) {
+        if (this.currentRoom.getNameBackend().equals("HOME")) {
+            player.setMoves(12);
+        } else {
+            player.removeMoves(1);
+            player.removeHunger(3);
+        }
         switch (command.toUpperCase()) {
             case "KEYS":
                 if (!this.inv.Inventory.contains(inv.getCarKeys())) {
                     // No keys yet:
                     inv.Inventory.add(inv.getCarKeys());
-                    return "Added car keys";
+                    return "You found some keys.";
                 } else {
                 }
                 break;
 
             case "WORK":
+                String val = "";
                 if (inv.Inventory.contains(inv.getCarKeys())) {
                     goRoom(drive);
+                    val+=drive.getShortDescription();
                     System.out.println("Went to DRIVE");
                 } else {
+                    val += "You don't have your keys..";
                 }
-                break;
+                return val;
 
             case "CAR":
                 goRoom(back);
                 System.out.println("Went to BACKROOM");
-                break;
+                return "You are " + back.getShortDescription();
 
             case "HOME":
                 goRoom(home);
+                this.inv.removeFromList(inv.getCarKeys());
                 System.out.println("Went to HOME");
-                break;
+                this.player.resetMoves();
+                this.pRoomInvite = false;
+                this.regularInRoom = null;
+                return "You are " + home.getShortDescription();
 
             case "LOCKER":
                 goRoom(locker);
                 System.out.println("Went to LOCKER");
-                break;
+                return "You are " + locker.getShortDescription();
 
             case "DANCEFLOOR":
                 goRoom(floor);
                 System.out.println("Went to DANCE FLOOR");
-                return "The crowd looks to have some money to spend on a good show.";
+                return "You are at the main dance floor." + "\n" + "The crowd looks to have some money to spend on a good show.";
 
             case "STEAL":
                 System.out.println("STOLE");
@@ -575,28 +597,52 @@ public class LogicFacade implements acq.ILogic {
             case "BACKROOM":
                 goRoom(back);
                 System.out.println("Went to BACKROOM");
-                break;
+                return "You are " + back.getShortDescription();
 
             case "OUTSIDE":
                 goRoom(outside);
                 System.out.println("Went to OUTSIDE");
-                break;
+                return "You are " + outside.getShortDescription() + ", this is where the Bouncer hangs out. He seems to like you..";
 
             case "DANCE":
-                DanceMech dance = new DanceMech();
-                if (this.pRoomInvite) {
-                    System.out.println(this.getPrivateRoomCommand());
+                dance = new DanceMech();
+                if (this.pRoomInvite && this.privateRoomCommand != null) {
+                    if (this.privateRoomCommand.equals("ACCEPT")) {
+                        goRoom(privateRoom);
+                    }
                     return dance.PrivateRoomInvite(this.getPrivateRoomCommand());
-                } else {
-                    return dance.danceMovePrint();
                 }
+                return dance.DanceMech() + "\n" + dance.danceMovePrint();
+
+            case "PRIVATEROOM":
+                dance = new DanceMech();
+                if (this.pRoomInvite && this.privateRoomCommand != null) {
+                    if (this.privateRoomCommand.equals("ACCEPT")) {
+                        goRoom(privateRoom);
+                    }
+                    if (this.privateRoomCommand.equals("DANCE")) {
+                        val = "";
+                        val += dance.PrivateRoomInvite(this.getPrivateRoomCommand());
+                        goRoom(floor);
+
+                        this.pRoomInvite = false;
+                        this.regularInRoom = null;
+                        return val;
+                    }
+                }
+                break;
+
+            case "FLIRT":
+                Preference Gold0 = new Preference("Gold", 0);
+                Regular Bouncer = new Regular("Jack the bouncer", 45, "muscular, he's always smiled at you, and greets you every morning. Maybe he fancies you a bit..?", Gold0, Gold0);
+                Flirt flirt = new Flirt();
+
+                return "You flirted with Jack the Bouncer." + "\n" + flirt.Flirt(Bouncer);
 
             default:
                 break;
         }
         manager.moveManager();
-        player.removeMoves(1);
-        player.removeHunger(3);
         return "";
     }
 
@@ -608,13 +654,17 @@ public class LogicFacade implements acq.ILogic {
         return this.currentRoom.getShortDescription();
     }
 
-    public String getRoomHelpText() {
-        String help = "";
-        switch (this.currentRoom.getNameBackend()) {
-            case "HOME":
-                help = "";
-                break;
-        }
-        return help;
+
+    @Override
+    public double getWinPercent(IRegular regular) {
+        return this.reglist.winDegree(regular);
+    }
+
+    public void removeDaysLeft(){
+        this.player.removeDaysLeft(1);
+    }
+    
+    public String getRoomHelpText(){
+        return this.currentRoom.getHelpText();
     }
 }

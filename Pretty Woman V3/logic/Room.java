@@ -12,12 +12,14 @@ public class Room
 {
     private String name;
     private String description;
+    private String helpText;
     private HashMap<String, Room> exits;
 
-    public Room(String name, String description) 
+    public Room(String name, String description, String helpText) 
     {
         this.name = name;
         this.description = description;
+        this.helpText = helpText;
         exits = new HashMap<String, Room>();
     }
     
@@ -54,6 +56,10 @@ public class Room
     public String getNameBackend()
     {
         return name.toUpperCase();
+    }
+    
+    public String getHelpText(){
+        return this.helpText;
     }
 }
 

@@ -238,8 +238,8 @@
          <children>
             <AnchorPane fx:id="HelpPane" prefHeight="362.0" prefWidth="220.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
                <children>
-                  <Rectangle fx:id="HelpContainer" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="361.0" layoutX="-2.0" layoutY="-1.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="268.0" />
-                  <TextArea fx:id="HelpText" editable="false" layoutX="7.0" layoutY="8.0" prefHeight="344.0" prefWidth="250.0" style="-fx-background-color: white;" wrapText="true" />
+                  <Rectangle fx:id="HelpContainer" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="220.0" layoutX="-2.0" layoutY="-1.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="268.0" AnchorPane.topAnchor="-13.0" />
+                  <TextArea fx:id="HelpText" editable="false" layoutX="7.0" layoutY="8.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white;" wrapText="true" />
                </children>
             </AnchorPane>
          </children>
@@ -414,7 +414,7 @@
                               <Image url="@../FXML/Visuals/Icons/Hunger.png" />
                            </image>
                         </ImageView>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff8c2100" height="40.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="320.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8c480d25" height="40.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="320.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
                         <Rectangle fx:id="HungerMeter" arcHeight="5.0" arcWidth="5.0" fill="#ff8921" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="320.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets left="13.0" />

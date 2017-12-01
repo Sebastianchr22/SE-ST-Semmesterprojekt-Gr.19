@@ -13,14 +13,6 @@ public class DanceMech {
     int move2ExpRequired = 25;
     Chance chance = new Chance();
 
-    public void printPrompt() {
-        //Main interface printout:
-        System.out.println("The crowd looks to have some money to spend on a good show.");
-        System.out.println("You know the following moves:");
-        System.out.println("Basic");
-        System.out.println("Advanced");
-    }
-
     public String infoOnRegular() {
         if (regularInRoom != null) {
             return regularInRoom.info();
@@ -29,31 +21,34 @@ public class DanceMech {
         }
     }
 
-    public void resetRegularInRoom() {
-        System.out.println(regularInRoom.getName() + " left the club.");
+    public String resetRegularInRoom() {
+        String s = logic.getRegularInRoom().getName() + " left the club.";
         regularInRoom = null;
         logic.setRegularInRoom(null);
+        logic.setPRoomInvite(false);
+        logic.setPrivateRoomCommand(null);
+        return s;
     }
 
     public String PrivateRoomInvite(String command) {
         String val = "";
-        if (logic.getInPRoom() != true) {
+        if (command == null) {
             val += "You have been invited to private room by " + regularInRoom.getName();
             val += "Do you accept the invitation?";
-        } else {
-            if (command.equals("ACCEPT")) {
-                PrivateRoom proom = new PrivateRoom(regularInRoom);
-            } else if (command.equals("REJECT")) {
-                val += regularInRoom.getName() + " left the club.";
-                resetRegularInRoom();
-            }
+        }
+        System.out.println("Command: " + command);
+        if (command.equals("DANCE")) {
+            PrivateRoom proom = new PrivateRoom();
+            val += proom.PrivateRoom();
+        } else if (command.equals("REJECT")) {
+            val+=resetRegularInRoom();
         }
         System.out.println(val);
         return val;
     }
 
-    DanceMech() {
-        printPrompt();
+    public String DanceMech() {
+        String val = "";
         logic = LogicFacade.getInstance();
         this.player = logic.getPlayer();
         this.regularInRoom = logic.getRegularInRoom();
@@ -63,7 +58,7 @@ public class DanceMech {
                 regularInRoom = logic.getRandomRegular();
                 logic.setRegularInRoom(regularInRoom);
                 //Prompt accept private room invite:
-                System.out.println(regularInRoom.getName() + " just appeared. Type info to learn more.");
+                val = regularInRoom.getName() + " just appeared. Press info to learn more.";
             }
             if (regularInRoom != null) {
                 //Someone in here:
@@ -73,12 +68,11 @@ public class DanceMech {
                 }
             }
             if (regularInRoom != null && logic.inPRoom() != true) {
-                System.out.println("You recognize a regular in the room");
+                val = "You recognize a regular in the room";
             }
         }
-        logic.removeMoves(1);
         logic.setPlayer(player);
-
+        return val;
     }
 
     public double tipsGained(double bonus) {

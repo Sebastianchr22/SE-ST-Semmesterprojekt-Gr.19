@@ -103,7 +103,7 @@ public class ItemList implements ListBuilder {
     }
 
     public Item get(int i) {
-        return itemList.get(i);
+        return itemList.get(i-1);
     }
 
     public Item containsItem(String name) {

@@ -55,10 +55,6 @@ public class PresentationFacade implements IGUI {
     @Override
     public void start() {
         try {
-            System.out.println(getCurrentRoom());
-            System.out.println(getExp());
-            System.out.println(getMoney());
-            System.out.println(getDaysLeft());
             start(mainStage);
         } catch (Exception ex) {
             System.out.println(ex);
@@ -164,16 +160,19 @@ public class PresentationFacade implements IGUI {
         return logic.managerTakesCut();
     }
 
-    public String getRoomHelpText() {
-        return logic.getRoomHelpText();
-    }
-
     public String getRoomDescription() {
         return logic.getRoomDescription();
     }
 
-    public boolean getPRoomInvite(){
+    public boolean getPRoomInvite() {
         return logic.getPRoomInvite();
     }
 
+    public void removeDaysLeft(){
+        logic.removeDaysLeft();
+    }
+    
+    public String getRoomHelpText(){
+        return logic.getRoomHelpText();
+    }
 }

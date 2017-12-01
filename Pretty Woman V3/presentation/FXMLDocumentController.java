@@ -125,12 +125,14 @@ public class FXMLDocumentController implements Initializable {
         });
         this.currentRoom = gui.getCurrentRoom();
         setRoomImage();
-
+        textOutput.setText("Welcome to Pretty Woman - the Game. This a point and click adventure, so make sure to explore your surroundings, and to always manage your home life, and do your job well. \nA key goal of this game is to collect items, and manage to survive long enough to find your mr. perfect.");
+        coordinates.setOpacity(0);
     }
 
     public void changeInvitationState(int i, boolean bool) {
-        InvitationGrid.setOpacity(i);
-        InvitationGrid.setDisable(bool);
+            InvitationGrid.setOpacity(i);
+            InvitationGrid.setDisable(bool);
+
     }
 
     ClickableField keys;
@@ -143,9 +145,12 @@ public class FXMLDocumentController implements Initializable {
     ClickableField backroom;
     ClickableField danceC;
     ClickableField outside;
+    ClickableField enter;
+    ClickableField flirt;
+    ClickableField privateroomC;
 
     public void setHitBoxes() {
-        String pos = this.currentRoom;
+        String pos = gui.getCurrentRoom();
         switch (pos) {
             case "HOME":
                 Point Door = new Point(640, 10);
@@ -191,23 +196,56 @@ public class FXMLDocumentController implements Initializable {
                 back = new Point(0, 300);
                 backroom = new ClickableField(back, 80, 790);
                 break;
+
+            case "OUTSIDE":
+                danceC.destroy();
+                outside.destroy();
+                backroom.destroy();
+                Point dancefloor = new Point(168, 250);
+                enter = new ClickableField(dancefloor, 120, 180);
+                Point bouncer = new Point(666, 280);
+                flirt = new ClickableField(bouncer, 80, 130);
+                break;
+
+            case "PRIVATE ROOM":
+                danceC.destroy();
+                outside.destroy();
+                backroom.destroy();
+                Point privateroom = new Point(0, 0);
+                privateroomC = new ClickableField(privateroom, 400, 800);
+                break;
         }
     }
 
     public String processCommands(String command) {
-        if (gui.managerPlayerSameRoom()) {
-            textOutput.setText(gui.managerTakesCut());
-        }
-        String val = gui.processCommand(command);
-        InventoryListView.setItems(gui.getInventory());
-        InventoryListView.refresh();
-        if (!this.currentRoom.equals(gui.getCurrentRoom())) {
-            setRoomImage();
-        }
-        this.currentRoom = gui.getCurrentRoom();
+        String val = "";
 
-        setHitBoxes();
-        return val;
+        if (gui.getMoves() > 0) {
+            this.currentRoom = gui.getCurrentRoom();
+
+            if (gui.managerPlayerSameRoom()) {
+                val += gui.managerTakesCut();
+            }
+            val += gui.processCommand(command);
+            InventoryListView.setItems(gui.getInventory());
+            InventoryListView.refresh();
+            if (!this.currentRoom.equals(gui.getCurrentRoom())) {
+                setRoomImage();
+            }
+            if (this.currentRoom.equals("PRIVATEROOM")) {
+                //Did not update image, because you are in the same room twice.
+                setRoomImage();
+            }
+
+            setHitBoxes();
+            return val;
+        } else {
+            gui.processCommand("HOME");
+            setRoomImage();
+            setHitBoxes();
+            gui.removeDaysLeft();
+            return val + " You went home, after a long day at work. Time to take care of you and your daughter.";
+        }
     }
 
     public void setRoomImage() {
@@ -215,73 +253,88 @@ public class FXMLDocumentController implements Initializable {
         String path = "FXML/Visuals/Highres/800x400/" + gui.getCurrentRoom() + ".jpg";
         Image room = new Image(path, true);
         RoomIMGContainer.setImage(room);
-        setHelpText(gui.getCurrentRoom());
     }
 
     public void setTextOutput(String s) {
         textOutput.setText(s);
     }
 
-    public void setHelpText(String string) {
+    public void setHelpText() {
         HelpText.setText(gui.getRoomHelpText());
+        HelpText.setOpacity(1);
     }
 
     @FXML
     private void PaneClicked(MouseEvent event) {
-        if (gui.getPRoomInvite()) {
+        String val = "";
+        if (gui.getPRoomInvite() && !gui.getCurrentRoom().equals("PRIVATE ROOM") && gui.getCurrentRoom().equals("DANCE FLOOR")) {
             changeInvitationState(1, false);
+        } else {
+            changeInvitationState(0, true);
         }
         setHitBoxes();
         if (gui.getCurrentRoom().equals("HOME")) {
             if (keys.hit(event)) {
-                setTextOutput(processCommands("KEYS"));
+                val += processCommands("KEYS");
             }
             if (door.hit(event)) {
-                processCommands("WORK");
+                val += processCommands("WORK");
             }
         } else if (gui.getCurrentRoom().equals("DRIVE")) {
             if (home.hit(event)) {
-                processCommands("HOME");
+                val += processCommands("HOME");
             }
             if (car.hit(event)) {
-                processCommands("CAR");
+                val += processCommands("CAR");
             }
         } else if (gui.getCurrentRoom().equals("BACKROOM")) {
             if (lockerroom.hit(event)) {
-                processCommands("LOCKER");
+                val += processCommands("LOCKER");
             }
             if (dancefloor.hit(event)) {
-                processCommands("DANCEFLOOR");
+                val += processCommands("DANCEFLOOR");
             }
         } else if (gui.getCurrentRoom().equals("LOCKER ROOM")) {
             if (stealC.hit(event)) {
-                textOutput.setText(processCommands("STEAL"));
+                val += processCommands("STEAL");
 
             }
             if (backroom.hit(event)) {
-                processCommands("BACKROOM");
+                val += processCommands("BACKROOM");
 
             }
         } else if (gui.getCurrentRoom().equals("DANCE FLOOR")) {
             if (danceC.hit(event)) {
-                textOutput.setText(processCommands("DANCE"));
+                val += processCommands("DANCE");
 
             }
             if (outside.hit(event)) {
-                processCommands("OUTSIDE");
-
+                val += processCommands("OUTSIDE");
             }
             if (backroom.hit(event)) {
-                processCommands("BACKROOM");
-
+                val += processCommands("BACKROOM");
+            }
+        } else if (gui.getCurrentRoom().equals("OUTSIDE")) {
+            if (flirt.hit(event)) {
+                val += processCommands("FLIRT");
+            }
+            if (enter.hit(event)) {
+                val += processCommands("DANCEFLOOR");
+            }
+        } else if (gui.getCurrentRoom().equals("PRIVATE ROOM")) {
+            if (privateroomC.hit(event)) {
+                gui.setPrivateRoomCommand("DANCE");
+                val += processCommands("PRIVATEROOM");
             }
         }
+
+        setTextOutput(val);
     }
 
     @FXML
     private void MouseMoved(MouseEvent event) {
-        coordinates.setText("(" + event.getX() + "," + event.getY() + ")");
-
+        //coordinates.setText("(" + event.getX() + "," + event.getY() + ")");
+        coordinates.setOpacity(0);
     }
 
     @FXML
@@ -425,14 +478,13 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void HelpExited(MouseEvent event) {
-        System.out.println("Help!");
         ChangeHelpState(0, true);
     }
 
     @FXML
     private void HelpHover(MouseEvent event) {
         ChangeHelpState(1, true);
-        HelpText.setText("HELP!");
+        setHelpText();
     }
 
     @FXML
@@ -490,27 +542,36 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void InspectItem(MouseEvent event) {
         item = InventoryListView.getSelectionModel().getSelectedItem();
-
-        String values = "A(n) " + item.getCat() + " item." + "\n" + item.getName() + " - " + item.getDesc();
-        textOutput.setText(values);
-        InventoryListView.refresh();
+        if (item != null) {
+            String values = "A(n) " + item.getCat() + " item." + "\n" + item.getName() + " - " + item.getDesc();
+            textOutput.setText(values);
+            InventoryListView.refresh();
+        }
     }
 
     @FXML
-    private void AcceptInvitation(MouseEvent event) {
+    private void AcceptInvitation(MouseEvent event
+    ) {
+        textOutput.clear();
         gui.setPrivateRoomCommand("ACCEPT");
+        setTextOutput(gui.processCommand("PRIVATEROOM"));
         changeInvitationState(0, true);
+        setRoomImage();
 
     }
 
     @FXML
-    private void DeclineInvitation(MouseEvent event) {
+    private void DeclineInvitation(MouseEvent event
+    ) {
+        textOutput.clear();
         gui.setPrivateRoomCommand("REJECT");
+        setTextOutput(gui.processCommand("PRIVATEROOM"));
         changeInvitationState(0, true);
     }
 
     @FXML
-    private void InfoOnRegular(MouseEvent event) {
+    private void InfoOnRegular(MouseEvent event
+    ) {
         textOutput.setText(gui.getRegularInRoomInfo());
     }
 

@@ -30,7 +30,8 @@ public class Lockerroom {
             int random = genRandom();
             System.out.println("");
             Item found = itemlist.get(random);
-            if (inv.checkCapacity(found)) {
+            
+            if (inv.checkCapacity(found) && found != null) {
                 inv.addToList(found);
                 itemlist.removeFromList(found);
                 System.out.println("");
