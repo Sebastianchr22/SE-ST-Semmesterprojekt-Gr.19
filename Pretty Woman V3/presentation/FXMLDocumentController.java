@@ -130,8 +130,8 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void changeInvitationState(int i, boolean bool) {
-            InvitationGrid.setOpacity(i);
-            InvitationGrid.setDisable(bool);
+        InvitationGrid.setOpacity(i);
+        InvitationGrid.setDisable(bool);
 
     }
 
@@ -339,6 +339,8 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void ShowInventory(MouseEvent event) {
+        ChangeMapState(0,true);
+        ChangeStatusState(0,true);
         InventoryListView.setItems(gui.getInventory());
 
         InventoryListView.refresh();
@@ -352,9 +354,23 @@ public class FXMLDocumentController implements Initializable {
             InvGrid.setDisable(true);
         }
     }
+    public void ChangeInventoryState(int i, boolean bool){
+        InvGrid.setOpacity(i);
+        InvGrid.setDisable(bool);
+    }
+    public void ChangeMapState(int i, boolean bool){
+        MapIMG.setOpacity(i);
+        MapIMG.setDisable(bool);
+    }
+    public void ChangeStatusState(int i, boolean bool){
+        StatusGrid.setOpacity(i);
+        StatusGrid.setDisable(bool);
+    }
 
     @FXML
     private void ShowMap(MouseEvent event) {
+        ChangeInventoryState(0,true);
+        ChangeStatusState(0,true);
         String path = "FXML/Visuals/Highres/Map/" + gui.getCurrentRoom() + ".png";
         Image map = new Image(path, true);
         MapIMG.setImage(map);
@@ -369,7 +385,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void ShowSettings(MouseEvent event) {
+    private void ShowSettings(MouseEvent event) {        
         MenuGrid.setDisable(false);
         SettingsGrid.setDisable(false);
         ChangeSaveMenu(1, false);
@@ -445,6 +461,8 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void ShowStats(MouseEvent event) {
+        ChangeMapState(0,true);
+        ChangeInventoryState(0,true);
         if (StatusGrid.isDisabled()) {
             //Enable
             StatusGrid.setOpacity(1);
@@ -461,7 +479,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void getStatusInfo() {
-        MoneyAmount.setText("$" + String.valueOf(gui.getMoney()));
+        MoneyAmount.setText("$" + String.valueOf(Math.round(gui.getMoney() * 100.0) / 100.0));
         ExpAmount.setText(String.valueOf(gui.getExp()));
         EnhAmount.setText(String.valueOf(gui.getEnh()));
         MovesAmount.setText(String.valueOf(gui.getMoves()));
@@ -552,27 +570,35 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void AcceptInvitation(MouseEvent event
     ) {
-        textOutput.clear();
-        gui.setPrivateRoomCommand("ACCEPT");
-        setTextOutput(gui.processCommand("PRIVATEROOM"));
-        changeInvitationState(0, true);
-        setRoomImage();
+        if (gui.getPRoomInvite() == true) {
 
+            textOutput.clear();
+            gui.setPrivateRoomCommand("ACCEPT");
+            setTextOutput(gui.processCommand("PRIVATEROOM"));
+            changeInvitationState(0, true);
+            setRoomImage();
+            gui.setPrivateRoomCommand(null);
+        }
     }
 
     @FXML
     private void DeclineInvitation(MouseEvent event
     ) {
-        textOutput.clear();
-        gui.setPrivateRoomCommand("REJECT");
-        setTextOutput(gui.processCommand("PRIVATEROOM"));
-        changeInvitationState(0, true);
+        if (gui.getPRoomInvite() == true) {
+            textOutput.clear();
+            gui.setPrivateRoomCommand("REJECT");
+            setTextOutput(gui.processCommand("PRIVATEROOM"));
+            changeInvitationState(0, true);
+            gui.setPrivateRoomCommand(null);
+        }
     }
 
     @FXML
     private void InfoOnRegular(MouseEvent event
     ) {
-        textOutput.setText(gui.getRegularInRoomInfo());
+        if (gui.getPRoomInvite() == true) {
+            textOutput.setText(gui.getRegularInRoomInfo());
+        }
     }
 
 }

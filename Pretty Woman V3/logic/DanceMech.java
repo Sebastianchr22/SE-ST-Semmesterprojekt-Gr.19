@@ -78,13 +78,13 @@ public class DanceMech {
     public double tipsGained(double bonus) {
         double percentageBonusTip = 1 + logic.getEnhencements() * 0.05;//Calculates a percentage of bonus based on improvements
         double tips = 5.0 + Math.random() * 30.0;//Calculates a random number between 5 to 30
-        return Math.round((percentageBonusTip * tips + bonus) * 100.0) / 100.0; //Returns the random* the percentage, rounded off with two digits after the comma.
+        return Math.round((tips + (percentageBonusTip * tips) * bonus) * 100.0) / 100.0; //Returns the random* the percentage, rounded off with two digits after the comma.
     }
 
     //PrivateRoom proom = new PrivateRoom(driver, driver.reg.Sebastian);
     //System.out.println(driver.reg.Sebastian.info());
     public double exptips(int required) {
-        return (logic.getExperience() / 1000.0) * 3;
+        return (logic.getExperience() / 100.0) * 3;
     }
 
     public String danceMovePrint() {

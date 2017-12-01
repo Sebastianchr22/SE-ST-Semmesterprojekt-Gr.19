@@ -23,7 +23,7 @@ public class LogicFacade implements acq.ILogic {
     Room tower = new Room("Tower", "in the home of your new lover","");
     Room home = new Room("Home", "home sweet home..","You will need your car keys to exit, and go to work");
     Room drive = new Room("Drive", "The old parkinglot, where your car is, the old tin can..","You should take your car to work, but where did you park it?");
-    Room back = new Room("Backroom", "n the backroom.","You can go to the locker room, and to the main dancefloor from here.");
+    Room back = new Room("Backroom", "in the backroom.","You can go to the locker room, and to the main dancefloor from here.");
     Room locker = new Room("Locker room", "in the locker room. Here you can find all sorts of nice things.","You can always steal from the other strippers. Click on the lockers to attempt to steal. \n Click the bottom of the screen to go back.");
     Room floor = new Room("Dance floor", "on the floor. Here you can really perform, a good show brings good money, and a regular, can bring you even more..","Click the pole to dance, maybe you will be invitet to the private room by a regular. \n you can also go outside. \n Click the bottom of the screen to go back.");
 
@@ -367,7 +367,7 @@ public class LogicFacade implements acq.ILogic {
 
     @Override
     public double getMoneySave() {
-        return player.getMoneySaved();
+        return (player.getMoneySaved()*100.0)/100.0;
     }
 
     @Override
@@ -531,7 +531,8 @@ public class LogicFacade implements acq.ILogic {
     }
 
     public String managerTakesCut() {
-        return "Manager noticed you leaving, and took his " + manager.getPercentage() * 100 + "% cut. He took $" + player.getMoneySaved() * (manager.getPercentage() / 100.0) + ".";
+        double d = player.getMoneySaved()*manager.getPercentage();
+        return "Manager noticed you leaving, and took his " + manager.getPercentage() * 100 + "% cut. He took $" + d + ".";
     }
 
     private DanceMech dance;
@@ -544,6 +545,10 @@ public class LogicFacade implements acq.ILogic {
             player.removeMoves(1);
             player.removeHunger(3);
         }
+        
+        manager.moveManager();
+        System.out.println("Manager at: " + manager.getRoom());
+        
         switch (command.toUpperCase()) {
             case "KEYS":
                 if (!this.inv.Inventory.contains(inv.getCarKeys())) {
@@ -641,8 +646,8 @@ public class LogicFacade implements acq.ILogic {
 
             default:
                 break;
-        }
-        manager.moveManager();
+        } 
+        
         return "";
     }
 

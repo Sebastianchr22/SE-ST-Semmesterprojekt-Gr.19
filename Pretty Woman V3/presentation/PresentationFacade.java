@@ -74,7 +74,7 @@ public class PresentationFacade implements IGUI {
 
     @Override
     public double getMoney() {
-        return logic.getMoneySave();
+        return (logic.getMoneySave()*100.0)/100.0;
     }
 
     @Override
