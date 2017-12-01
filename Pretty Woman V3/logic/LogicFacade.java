@@ -610,6 +610,10 @@ public class LogicFacade implements acq.ILogic {
                 System.out.println("Went to BACKROOM");
                 return "You are " + back.getShortDescription();
 
+            case "OFFICE":
+                System.out.println("office clicked");
+                return "That is the managers office, I'm not supposed to go in there.";
+
             case "OUTSIDE":
                 goRoom(outside);
                 System.out.println("Went to OUTSIDE");

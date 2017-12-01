@@ -2,13 +2,10 @@ package presentation;
 
 import acq.IGUI;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -18,7 +15,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
-import logic.Manager;
 
 public class FXMLDocumentController implements Initializable {
 
@@ -125,8 +121,8 @@ public class FXMLDocumentController implements Initializable {
         });
         this.currentRoom = gui.getCurrentRoom();
         setRoomImage();
-        textOutput.setText("Welcome to Pretty Woman - the Game. This a point and click adventure, so make sure to explore your surroundings, and to always manage your home life, and do your job well. \nA key goal of this game is to collect items, and manage to survive long enough to find your mr. perfect.");
-        coordinates.setOpacity(0);
+        textOutput.setText("Welcome to Pretty Woman - the Game. This a point and click adventure, so make sure to explore your surroundings, and to always manage your home life, and do your job well. \nA key goal of this game is to collect items, and manage to survive long enough to find your mr. perfect.\nYou can always hover over the questionmark icon for more help, in case you get lost.");
+        coordinates.setOpacity(1);
     }
 
     public void changeInvitationState(int i, boolean bool) {
@@ -148,6 +144,7 @@ public class FXMLDocumentController implements Initializable {
     ClickableField enter;
     ClickableField flirt;
     ClickableField privateroomC;
+    ClickableField office;
 
     public void setHitBoxes() {
         String pos = gui.getCurrentRoom();
@@ -175,11 +172,14 @@ public class FXMLDocumentController implements Initializable {
                 lockerroom = new ClickableField(locker, 350, 115);
                 Point dance = new Point(350, 90);
                 dancefloor = new ClickableField(dance, 100, 100);
+                Point officedoor = new Point(464, 63);
+                office = new ClickableField(officedoor, 200, 30);
                 break;
 
             case "LOCKER ROOM":
                 lockerroom.destroy();
                 dancefloor.destroy();
+                office.destroy();
                 Point steal = new Point(100, 95);
                 stealC = new ClickableField(steal, 190, 170);
                 Point back = new Point(0, 300);
@@ -189,6 +189,7 @@ public class FXMLDocumentController implements Initializable {
             case "DANCE FLOOR":
                 lockerroom.destroy();
                 dancefloor.destroy();
+                office.destroy();
                 Point dancer = new Point(433, 65);
                 danceC = new ClickableField(dancer, 210, 277);
                 Point out = new Point(251, 81);
@@ -295,6 +296,10 @@ public class FXMLDocumentController implements Initializable {
             if (dancefloor.hit(event)) {
                 val += processCommands("DANCEFLOOR");
             }
+            if (office.hit(event)) {
+                System.out.println("Office hit");
+                val += processCommands("OFFICE");
+            }
         } else if (gui.getCurrentRoom().equals("LOCKER ROOM")) {
             if (stealC.hit(event)) {
                 val += processCommands("STEAL");
@@ -334,8 +339,8 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void MouseMoved(MouseEvent event) {
-        //coordinates.setText("(" + event.getX() + "," + event.getY() + ")");
-        coordinates.setOpacity(0);
+        coordinates.setText("(" + event.getX() + "," + event.getY() + ")");
+        coordinates.setOpacity(1);
     }
 
     @FXML
