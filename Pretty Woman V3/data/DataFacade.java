@@ -3,8 +3,13 @@ package data;
 import acq.IData;
 import acq.ILogic;
 import acq.IPlayer;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import logic.LogicFacade;
 
 public class DataFacade implements IData {
@@ -31,9 +36,14 @@ public class DataFacade implements IData {
     }
 
     @Override
-    public void saveHighScore() {
-        HighScore saver = new HighScore();
-        saver.save(100);
+    public void saveHighScore(int score) {
+        TXTSaver saver = new TXTSaver();
+        try {
+            saver.saveHighScore(score);
+        } catch (IOException ex) {
+            System.out.println("Error saving highscore");
+            Logger.getLogger(DataFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
@@ -48,9 +58,16 @@ public class DataFacade implements IData {
     }
 
     @Override
-    public void loadHighScore() {
-        HighScore saver = new HighScore();
-        saver.load();
+    public ObservableList loadHighScore() {
+        TXTSaver saver = new TXTSaver();
+        try {
+            return saver.loadHighScore();
+        } catch (IOException ex) {
+            System.out.println("Error loading highscores");
+            Logger.getLogger(DataFacade.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
     }
 
     public Collection<String> InventoryString() {

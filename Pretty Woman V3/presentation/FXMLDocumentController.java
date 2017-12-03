@@ -4,6 +4,8 @@ import acq.IGUI;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -14,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class FXMLDocumentController implements Initializable {
@@ -76,6 +79,52 @@ public class FXMLDocumentController implements Initializable {
     private GridPane InvitationGrid;
 
     private acq.IItem item;
+    @FXML
+    private GridPane IMGContainer;
+    @FXML
+    private AnchorPane StatusContainer;
+    @FXML
+    private Circle StatusCircle;
+    @FXML
+    private AnchorPane HelpPane;
+    @FXML
+    private Rectangle HelpContainer;
+    @FXML
+    private Rectangle SettingsContainer;
+    @FXML
+    private Rectangle Quitcontainer;
+    @FXML
+    private Rectangle Loadcontainer;
+    @FXML
+    private Rectangle Savecontainer;
+    @FXML
+    private Label Quittext;
+    @FXML
+    private Label Loadtext;
+    @FXML
+    private Label Savetext;
+    @FXML
+    private ImageView Saveicon;
+    @FXML
+    private ImageView Loadicon;
+    @FXML
+    private ImageView ScoreIcon;
+    @FXML
+    private Rectangle ScoreContainer;
+    @FXML
+    private ListView<?> ScoresListView;
+    @FXML
+    private AnchorPane HelpPane1;
+    @FXML
+    private Rectangle HelpContainer1;
+    @FXML
+    private AnchorPane HelpPane11;
+    @FXML
+    private Rectangle HelpContainer11;
+    @FXML
+    private GridPane GameWonGrid;
+    @FXML
+    private GridPane GameLostGrid;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -112,6 +161,9 @@ public class FXMLDocumentController implements Initializable {
         InvitationGrid.setOpacity(0);
         InvitationGrid.setDisable(true);
 
+        showGameWon(0, true);
+        showGameLost(0, true);
+
         gui = PresentationFacade.getInstance();
 
         //Load items into inventory tab::
@@ -122,7 +174,7 @@ public class FXMLDocumentController implements Initializable {
         this.currentRoom = gui.getCurrentRoom();
         setRoomImage();
         textOutput.setText("Welcome to Pretty Woman - the Game. This a point and click adventure, so make sure to explore your surroundings, and to always manage your home life, and do your job well. \nA key goal of this game is to collect items, and manage to survive long enough to find your mr. perfect.\nYou can always hover over the questionmark icon for more help, in case you get lost.");
-        coordinates.setOpacity(1);
+        coordinates.setOpacity(0);
     }
 
     public void changeInvitationState(int i, boolean bool) {
@@ -220,7 +272,17 @@ public class FXMLDocumentController implements Initializable {
 
     public String processCommands(String command) {
         String val = "";
+        if (gui.getGameWon()) {
+            showGameWon(1, false);
+            setRoomImage();
 
+        }
+        if (gui.getHunger() <= 0 || gui.getDaysLeft() <= 0 || gui.getMoney() < 0) {
+            if (gui.getGameWon() != true) {
+                showGameLost(1, false);
+                setRoomImage();
+            }
+        }
         if (gui.getMoves() > 0) {
             this.currentRoom = gui.getCurrentRoom();
 
@@ -240,6 +302,7 @@ public class FXMLDocumentController implements Initializable {
 
             setHitBoxes();
             return val;
+
         } else {
             gui.processCommand("HOME");
             setRoomImage();
@@ -339,8 +402,8 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void MouseMoved(MouseEvent event) {
-        coordinates.setText("(" + event.getX() + "," + event.getY() + ")");
-        coordinates.setOpacity(1);
+        //coordinates.setText("(" + event.getX() + "," + event.getY() + ")");
+        coordinates.setOpacity(0);
     }
 
     @FXML
@@ -514,16 +577,50 @@ public class FXMLDocumentController implements Initializable {
         setHelpText();
     }
 
+    private void showGameWon(int i, boolean bool) {
+        GameWonGrid.setOpacity(i);
+        GameWonGrid.setDisable(bool);
+
+        StatusGrid.setOpacity(0);
+        StatusGrid.setDisable(true);
+
+        SettingsGrid.setDisable(true);
+        MenuGrid.setDisable(false);
+        ChangeSaveMenu(0, true);
+        ChangeGameState(false);
+    }
+
+    private void showGameLost(int i, boolean bool) {
+        GameLostGrid.setOpacity(i);
+        GameLostGrid.setDisable(bool);
+
+        StatusGrid.setOpacity(0);
+        StatusGrid.setDisable(true);
+
+        SettingsGrid.setDisable(true);
+        MenuGrid.setDisable(false);
+        ChangeSaveMenu(0, true);
+        ChangeGameState(false);
+    }
+
     @FXML
     private void ShowScore(MouseEvent event) {
         SaveGrid.setDisable(true);
         SaveGrid.setOpacity(0);
 
         ScoreGrid.setDisable(false);
+        ScoreGrid.setOpacity(1);
         BackIcon.setDisable(false);
         BackIcon.setOpacity(1);
         SettingsQuit.setOpacity(0);
         SettingsQuit.setDisable(true);
+
+        ScoresListView.setOpacity(1);
+        ScoresListView.setDisable(false);
+
+        System.out.println("Showing scores");
+
+        ScoresListView.setItems(gui.loadHighScores());
 
     }
 
@@ -536,20 +633,23 @@ public class FXMLDocumentController implements Initializable {
         SaveGrid.setOpacity(1);
         BackIcon.setDisable(true);
         BackIcon.setOpacity(0);
+        ScoresListView.setOpacity(0);
+        ScoresListView.setDisable(true);
 
         SettingsQuit.setOpacity(1);
         SettingsQuit.setDisable(false);
+
     }
 
     @FXML
     private void BuyEnhancements(MouseEvent event) {
-        gui.buyEnh();
+        setTextOutput(gui.buyEnh());
         getStatusInfo();
     }
 
     @FXML
     private void BuyFood(MouseEvent event) {
-        gui.buyFood();
+        setTextOutput(gui.buyFood());
         getStatusInfo();
     }
 
@@ -608,6 +708,17 @@ public class FXMLDocumentController implements Initializable {
         if (gui.getPRoomInvite() == true) {
             textOutput.setText(gui.getRegularInRoomInfo());
         }
+    }
+
+    @FXML
+    private void ReplayGame(MouseEvent event) {
+        gui.newGame(event);
+        setRoomImage();
+    }
+
+    @FXML
+    private void QuitToMainMenu(MouseEvent event) {
+        gui.mainMenu(event);
     }
 
 }

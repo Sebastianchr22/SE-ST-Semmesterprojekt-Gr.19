@@ -258,12 +258,12 @@
          <children>
             <Rectangle fx:id="SettingsBackdrop" fill="#00000099" height="600.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="803.0" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
             <Rectangle fx:id="SettingsContainer" fill="WHITE" height="350.0" stroke="WHITE" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" width="267.0" x="250.0" y="125.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowSpan="3" />
-            <ImageView fx:id="SettingsQuit" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#CloseSettings" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ImageView fx:id="SettingsQuit" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#CloseSettings" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../FXML/Visuals/Icons/ic_clear_black_24dp_2x.png" />
                </image>
                <GridPane.margin>
-                  <Insets right="210.0" top="100.0" />
+                  <Insets left="2.0" top="100.0" />
                </GridPane.margin>
             </ImageView>
             <GridPane fx:id="SaveGrid" prefHeight="200.0" prefWidth="230.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -346,6 +346,9 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
+               <children>
+                  <ListView fx:id="ScoresListView" prefHeight="200.0" prefWidth="200.0" GridPane.rowSpan="3" />
+               </children>
             </GridPane>
             <ImageView fx:id="BackIcon" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#CloseScore" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
@@ -567,6 +570,146 @@
             <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="121.80633544921875" minHeight="10.0" prefHeight="116.23876953125" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="97.21621704101562" minHeight="10.0" prefHeight="83.76123046875" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="GameWonGrid" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Rectangle fill="#0000004d" height="600.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowSpan="3" GridPane.valignment="CENTER" />
+            <Rectangle fill="WHITE" height="350.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="400.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Label text="GAME WON!" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="12.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../FXML/Visuals/Icons/icons8-trophy-50%20(1).png" />
+               </image>
+            </ImageView>
+            <Label prefWidth="220.0" text="you now have a sugardaddy, and don't have to dance anymore!" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="35.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Rectangle fill="WHITE" height="50.0" onMouseClicked="#ReplayGame" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+            </Rectangle>
+            <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#ReplayGame" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <image>
+                  <Image url="@../FXML/Visuals/Icons/icons8-refresh-50.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="17.0" left="55.0" />
+               </GridPane.margin>
+            </ImageView>
+            <Label onMouseClicked="#ReplayGame" prefWidth="100.0" text="REPLAY" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets left="35.0" top="130.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+            <Rectangle fill="WHITE" height="50.0" onMouseClicked="#QuitToMainMenu" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            <Label onMouseClicked="#QuitToMainMenu" prefHeight="27.0" prefWidth="177.0" text="QUIT TO MAIN MENU" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane fx:id="GameLostGrid" layoutX="10.0" layoutY="10.0" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Rectangle fill="#0000004d" height="600.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowSpan="3" GridPane.valignment="CENTER" />
+            <Rectangle fill="WHITE" height="350.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="400.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Label text="GAME LOST..." wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font size="26.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <image>
+                  <Image url="@../FXML/Visuals/Icons/icons8-crying-50.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="12.0" />
+               </GridPane.margin>
+            </ImageView>
+            <Label prefWidth="220.0" text="You lost the game, and the chance of finding mr. perfect." textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="35.0" />
+               </GridPane.margin>
+            </Label>
+            <Rectangle fill="WHITE" height="50.0" onMouseClicked="#ReplayGame" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+            </Rectangle>
+            <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#ReplayGame" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <image>
+                  <Image url="@../FXML/Visuals/Icons/icons8-refresh-50.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="17.0" left="55.0" />
+               </GridPane.margin>
+            </ImageView>
+            <Label onMouseClicked="#ReplayGame" prefWidth="100.0" text="REPLAY" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="26.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="35.0" top="130.0" />
+               </GridPane.margin>
+            </Label>
+            <Rectangle fill="WHITE" height="50.0" onMouseClicked="#QuitToMainMenu" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            <Label onMouseClicked="#QuitToMainMenu" prefHeight="27.0" prefWidth="177.0" text="QUIT TO MAIN MENU" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
    </children>

@@ -2,6 +2,7 @@ package acq;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public interface IGUI {
@@ -12,12 +13,22 @@ public interface IGUI {
 
     public void start();
 
+    public void newGame(MouseEvent event);
+
+    public void mainMenu(MouseEvent event);
+
+    public void loadGame(MouseEvent event);
+
     //Access to logic methods:
     void save();
 
     void load();
 
+    public ObservableList loadHighScores();
+
     double getMoney();
+    
+    boolean getGameWon();
 
     int getExp();
 
@@ -35,9 +46,9 @@ public interface IGUI {
 
     public String getShortHunger();
 
-    public void buyFood();
+    public String buyFood();
 
-    public void buyEnh();
+    public String buyEnh();
 
     public ObservableList<IItem> getInventory();
 
@@ -60,7 +71,7 @@ public interface IGUI {
     public void setPrivateRoomCommand(String s);
 
     public boolean getPRoomInvite();
-    
+
     public void removeDaysLeft();
-    
+
 }

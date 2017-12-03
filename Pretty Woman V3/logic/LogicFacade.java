@@ -7,7 +7,6 @@ import acq.IPlayer;
 import acq.IPreference;
 import acq.IRegular;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import javafx.collections.FXCollections;
 import javafx.collections.*;
@@ -85,11 +84,18 @@ public class LogicFacade implements acq.ILogic {
 //    public int getScore(){
 //        return highscore = (playerStats.getMoneySaved() + (playerStats.getMoneySaved()*))
 //    }
+    
+    
     @Override
     public void injectData(IData data) {
         this.data = data;
     }
 
+    @Override
+    public void setRoomHome(){
+        this.currentRoom = home;
+    }
+    
     public static ILogic getInstance() {
         return logic;
     }
@@ -111,6 +117,11 @@ public class LogicFacade implements acq.ILogic {
         }
 
         data.save(stats, inventory);
+    }
+
+    @Override
+    public void saveHighScore(int score) {
+        data.saveHighScore(score);
     }
 
     @Override
@@ -145,6 +156,10 @@ public class LogicFacade implements acq.ILogic {
         itemlist.itemList = newItemList;
     }
 
+    public ObservableList loadHighScore() {
+        return data.loadHighScore();
+    }
+
     public Item containsItem(String name) {
         itemlist = new ItemList();
         for (Item listitem : itemlist.itemList) {
@@ -159,6 +174,19 @@ public class LogicFacade implements acq.ILogic {
     @Override
     public boolean inPRoom() {
         return this.getInPRoom();
+    }
+    
+    @Override
+    public void resetGame(){
+        this.player = new Player();
+        this.currentRoom = home;
+        goRoom(home);
+        processCommand("HOME");
+        this.itemlist = new ItemList();
+        this.inv = new Inventory();
+        this.pRoomInvite = false;
+        this.privateRoomCommand = null;
+        this.winPercent = 0;
     }
 
     //General:
@@ -414,10 +442,6 @@ public class LogicFacade implements acq.ILogic {
         return this.inv.getWeddingRing();
     }
 
-    public void setHighScore() {
-        data.saveHighScore();
-    }
-
     @Override
     public int getScore() {
         return this.highscore;
@@ -468,19 +492,32 @@ public class LogicFacade implements acq.ILogic {
     }
 
     @Override
-    public void buyFood() {
-        if (player.getMoneySaved() > 100 && player.getHunger() <= 90) {
-            this.player.addHunger(10);
-            this.player.removeMoney(100);
+    public String buyFood() {
+        double i = Math.round((this.getEnhencements()+1 * 1.35)/10 * 100.0) / 100.0;
+        if (player.getMoneySaved() > 100 * (1.0+i)) {
+            if (player.getHunger() <= 90) {
+                this.player.addHunger(10);
+                this.player.removeMoney(100 * i);
+                return "You bought some food, costing you $" + 100 * i;
+            } else {
+                return "You can't have more food.";
+            }
+        } else {
+            return "You do not have enough money to buy food, costing $" + 100 * (1.0+i);
         }
     }
 
     @Override
-    public void buyEnhancements() {
-        if (player.getMoneySaved() >= 150) {
+    public String buyEnhancements() {
+            double i = Math.round((this.getExperience()+1 * 1.35)/10 * 100.0) / 100.0;
+
+        if (player.getMoneySaved() >= 150 * (1.0+i)) {
             this.player.addEnhancements(1);
             this.player.addDaysLeft(highscore);
-            this.player.removeMoney(150);
+            this.player.removeMoney(150*i);
+            return "You bought an enhancement costing you $" + 150 * i;
+        } else {
+            return "You do not have enough money to buy enhancments, costing $" + 150 * (1.0+i);
         }
     }
 

@@ -8,7 +8,12 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import acq.IGUI;
 import acq.IItem;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 
 public class PresentationFacade implements IGUI {
 
@@ -30,19 +35,23 @@ public class PresentationFacade implements IGUI {
     public Scene getScene() {
         return scene;
     }
+    
+    @Override
+    public boolean getGameWon(){
+        return logic.getWon();
+    }
 
     @Override
     public void start(Stage mainStage) throws Exception {
         IGUI = this;
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-
-        Image icon = new Image(getClass().getResourceAsStream("../FXML/Visuals/Icons/Icon.png"));
-        mainStage.setTitle("Pretty Woman - The Game");
-
-        mainStage.getIcons().add(icon);
+        Parent root = FXMLLoader.load(getClass().getResource("StartScreenFXML.fxml"));
 
         scene = new Scene(root);
 
+        setStage(mainStage);
+    }
+
+    public void setStage(Stage stage) {
         mainStage.setMinHeight(600);
         mainStage.setMinWidth(800);
         mainStage.setHeight(600);
@@ -50,6 +59,63 @@ public class PresentationFacade implements IGUI {
         mainStage.setResizable(false);
         mainStage.setScene(scene);
         mainStage.show();
+
+        Image icon = new Image(getClass().getResourceAsStream("../FXML/Visuals/Icons/Icon.png"));
+        mainStage.setTitle("Pretty Woman - The Game");
+
+        mainStage.getIcons().add(icon);
+    }
+
+    private Parent root;
+
+    @Override
+    public void newGame(MouseEvent event) {
+        try {
+            /*Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+            scene = new Scene(root);
+            setStage(mainStage);*/
+
+            Parent blah = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+            Scene scene = new Scene(blah);
+            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            appStage.setScene(scene);
+            appStage.close();
+            appStage.show();
+            logic.resetGame();
+        } catch (IOException ex) {
+            System.out.println("Error loading");
+            Logger.getLogger(PresentationFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        logic.setWon(false);
+
+    }
+
+    @Override
+    public void mainMenu(MouseEvent event) {
+        try {
+            /*Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+            scene = new Scene(root);
+            setStage(mainStage);*/
+
+            Parent blah = FXMLLoader.load(getClass().getResource("StartScreenFXML.fxml"));
+            Scene scene = new Scene(blah);
+            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            appStage.setScene(scene);
+            appStage.close();
+            appStage.show();
+            logic.resetGame();
+        } catch (IOException ex) {
+            System.out.println("Error loading");
+            Logger.getLogger(PresentationFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        logic.setWon(false);
+
+    }
+
+    @Override
+    public void loadGame(MouseEvent event) {
+        newGame(event);
+        logic.load();
     }
 
     @Override
@@ -73,8 +139,13 @@ public class PresentationFacade implements IGUI {
     }
 
     @Override
+    public ObservableList loadHighScores() {
+        return logic.loadHighScore();
+    }
+
+    @Override
     public double getMoney() {
-        return (logic.getMoneySave()*100.0)/100.0;
+        return (logic.getMoneySave() * 100.0) / 100.0;
     }
 
     @Override
@@ -118,13 +189,13 @@ public class PresentationFacade implements IGUI {
     }
 
     @Override
-    public void buyFood() {
-        logic.buyFood();
+    public String buyFood() {
+        return logic.buyFood();
     }
 
     @Override
-    public void buyEnh() {
-        logic.buyEnhancements();
+    public String buyEnh() {
+        return logic.buyEnhancements();
     }
 
     @Override
@@ -168,11 +239,11 @@ public class PresentationFacade implements IGUI {
         return logic.getPRoomInvite();
     }
 
-    public void removeDaysLeft(){
+    public void removeDaysLeft() {
         logic.removeDaysLeft();
     }
-    
-    public String getRoomHelpText(){
+
+    public String getRoomHelpText() {
         return logic.getRoomHelpText();
     }
 }

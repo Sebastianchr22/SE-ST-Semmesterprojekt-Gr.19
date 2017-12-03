@@ -16,8 +16,12 @@ public interface ILogic {
     public void injectData(IData data);
 
     public void save();
+    
+    public void saveHighScore(int score);
 
     public void load();
+    
+    public ObservableList loadHighScore();
 
     public boolean inPRoom();
 
@@ -38,8 +42,6 @@ public interface ILogic {
     public void setInPRoom(boolean bool);
 
     public void setWon(boolean bool);
-
-    public void setHighScore();
 
     public void setInventory(Inventory inventory);
 
@@ -117,9 +119,13 @@ public interface ILogic {
 
     public Inventory getInv();
 
-    public void buyFood();
+    public String buyFood();
 
-    public void buyEnhancements();
+    public String buyEnhancements();
+    
+    public void setRoomHome();
+    
+    public void resetGame();
 
     public ObservableList<IItem> getInventoryList();
 

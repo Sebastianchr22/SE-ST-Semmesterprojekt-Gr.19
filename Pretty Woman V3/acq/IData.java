@@ -2,6 +2,7 @@ package acq;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import javafx.collections.ObservableList;
 
 public interface IData {
 
@@ -12,9 +13,9 @@ public interface IData {
     public IPlayer load();
     
 
-    public void saveHighScore();
+    public void saveHighScore(int score);
 
-    public void loadHighScore();
+    public ObservableList loadHighScore();
 
     public int scoreCalc();
 

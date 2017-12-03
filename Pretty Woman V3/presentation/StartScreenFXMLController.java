@@ -1,5 +1,6 @@
 package presentation;
 
+import acq.IGUI;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.image.*;
 import java.util.Random;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 
@@ -18,10 +20,12 @@ public class StartScreenFXMLController implements Initializable {
 
     @FXML
     private ImageView Background;
+    
+    private IGUI gui;
 
     private boolean bool;
-    Image lightsOn = new Image(getClass().getResource("Visuals/Splashscreen 800x600.jpg").toExternalForm());
-    Image lightsOff = new Image(getClass().getResource("Visuals/Splashscreen 800x600 Lightsoff.jpg").toExternalForm());
+    Image lightsOn = new Image(getClass().getResource("../FXML/Visuals/Splashscreen 800x600.jpg").toExternalForm());
+    Image lightsOff = new Image(getClass().getResource("../FXML/Visuals/Splashscreen 800x600 Lightsoff.jpg").toExternalForm());
     @FXML
     private TextArea HelpText;
     @FXML
@@ -44,12 +48,15 @@ public class StartScreenFXMLController implements Initializable {
     private Rectangle HoverDarken;
     @FXML
     private GridPane HelpGrid;
+    @FXML
+    private AnchorPane mainPane;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        gui = PresentationFacade.getInstance();
         // TODO
         ChangeHoverState(0, true);
         HelpText.setWrapText(true);
@@ -99,12 +106,13 @@ public class StartScreenFXMLController implements Initializable {
     @FXML
     private void NewGame(MouseEvent event) {        
         System.out.println("New Game");
-
+        gui.newGame(event);
     }
 
     @FXML
     private void LoadGame(MouseEvent event) {
         System.out.println("Load Game");
+        gui.loadGame(event);
     }
 
     @FXML

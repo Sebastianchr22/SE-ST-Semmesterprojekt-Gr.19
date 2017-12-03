@@ -1,9 +1,14 @@
 package logic;
+
+import acq.ILogic;
+
 public class WinTranslation {
+    private ILogic logic;
     public String Won(){
         return  "you now have a sugardaddy, and you don't have to strip anymore!";
     }
     public String WinTranslation(double percent){
+        logic = LogicFacade.getInstance();
         String val = "";
         if(percent <=20.0){
             val="You did very poorly, but yet you've made it, " + Won();
@@ -16,6 +21,10 @@ public class WinTranslation {
         }if(percent >=81 && percent <= 100){
             val="You did fantastic, "+ Won();
         }
+        int score = (int)(logic.getMoneySave() + (logic.getMoneySave()* (1.0+(percent/100.0))) * (logic.getExperience()*logic.getEnhencements()) * logic.getDaysLeft());
+        System.out.println("Highscore to save: " + score);
+        logic.saveHighScore(score);
+        logic.setWon(true);
         return val;
     }
 }

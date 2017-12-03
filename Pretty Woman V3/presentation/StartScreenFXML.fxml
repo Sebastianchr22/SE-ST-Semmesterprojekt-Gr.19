@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.StartScreenFXMLController">
+<AnchorPane fx:id="mainPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.StartScreenFXMLController">
    <children>
       <GridPane prefHeight="600.0" prefWidth="800.0">
         <columnConstraints>
@@ -23,12 +23,12 @@
         </rowConstraints>
          <children>
             <ImageView fx:id="Background" fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-               <image>
-                  <Image url="@Visuals/Splashscreen%20800x600.jpg" />
-               </image>
                <GridPane.margin>
                   <Insets top="80.0" />
                </GridPane.margin>
+               <image>
+                  <Image url="@../FXML/Visuals/Splashscreen%20800x600.jpg" />
+               </image>
             </ImageView>
             <GridPane prefHeight="200.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
               <columnConstraints>
@@ -43,7 +43,7 @@
                <children>
                   <ImageView fx:id="NewGameImg" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#NewGame" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@Visuals/Icons/icons8-save-white.png" />
+                        <Image url="@../FXML/Visuals/Icons/icons8-save-white.png" />
                      </image>
                      <GridPane.margin>
                         <Insets right="120.0" />
@@ -57,8 +57,8 @@
                         <Insets left="45.0" />
                      </GridPane.margin>
                   </Label>
-                  <Rectangle fx:id="NewGameContainer" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="55.0" onMouseClicked="#NewGame" stroke="#fcfcfc" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="3.0" style="-fx-arc-height: 120; -fx-arc-width: 50;" width="205.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Rectangle fx:id="LoadGameContainer" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="55.0" onMouseClicked="#LoadGame" stroke="#fcfcfc" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="3.0" style="-fx-arc-height: 120; -fx-arc-width: 50;" width="205.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Rectangle fx:id="NewGameContainer" fill="#ffffff00" height="55.0" onMouseClicked="#NewGame" stroke="#fcfcfc" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="3.0" style="-fx-arc-height: 0; -fx-arc-width: 0;" width="205.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Rectangle fx:id="LoadGameContainer" fill="#ffffff00" height="55.0" onMouseClicked="#LoadGame" stroke="#fcfcfc" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="3.0" style="-fx-arc-height: 0; -fx-arc-width: 0;" width="205.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <Label fx:id="LoadGameText" onMouseClicked="#LoadGame" text="LOAD GAME" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="18.0" />
@@ -69,15 +69,15 @@
                   </Label>
                   <ImageView fx:id="LoadGameImg" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#LoadGame" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@Visuals/Icons/icons8-download-white.png" />
+                        <Image url="@../FXML/Visuals/Icons/icons8-download-white.png" />
                      </image>
                      <GridPane.margin>
                         <Insets right="120.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <Rectangle fx:id="QuitGameContainer" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="55.0" onMouseClicked="#QuitGame" stroke="#fcfcfc" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="3.0" style="-fx-arc-height: 120; -fx-arc-width: 50;" width="96.0" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <Rectangle fx:id="QuitGameContainer" fill="#ffffff00" height="55.0" onMouseClicked="#QuitGame" stroke="#fcfcfc" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="3.0" style="-fx-arc-height: 0; -fx-arc-width: 0;" width="96.0" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <GridPane.margin>
-                        <Insets left="135.0" />
+                        <Insets left="131.0" />
                      </GridPane.margin>
                   </Rectangle>
                   <Label fx:id="QuitGameText" onMouseClicked="#QuitGame" text="QUIT" textFill="WHITE" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -90,7 +90,7 @@
                   </Label>
                   <ImageView fitHeight="45.0" fitWidth="44.0" onMouseEntered="#HelpHover" onMouseExited="#HelpExited" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@Visuals/Icons/icons8-help-white.png" />
+                        <Image url="@../FXML/Visuals/Icons/icons8-help-white.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="110.0" />

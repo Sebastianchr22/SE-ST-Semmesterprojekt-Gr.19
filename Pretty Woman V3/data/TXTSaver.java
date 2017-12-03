@@ -4,13 +4,13 @@ import acq.IData;
 import acq.IPlayer;
 import java.io.*;
 import java.util.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class TXTSaver {
 
     private IData data = DataFacade.getInstance();
 
-    ;
-    
     public void save(Collection<Integer> stats, Collection<String> inventory) {
         File save = new File("savefolder", "savefile.txt");
         save.getParentFile().mkdirs();
@@ -30,6 +30,65 @@ public class TXTSaver {
             // insert code to run when exception occurs
             System.out.println("Error occured during save process");
         }
+    }
+
+    public void saveHighScore(int score) throws FileNotFoundException, IOException {
+        //Reads all existing lines in the file:
+        ArrayList<Integer> scores = new ArrayList();
+        
+        BufferedReader reader = new BufferedReader(new FileReader("savefolder" + "/" + "highscore.txt"));
+        StringBuilder builder = new StringBuilder();
+        String line = reader.readLine();
+        while (line != null) {
+            System.out.println("Highscore read: " + line);
+            scores.add(Integer.parseInt(line));
+            builder.append(line);
+            builder.append(System.lineSeparator());
+            line = reader.readLine();
+        }
+        scores.add(score);
+
+        //Adds all scores to the list, plus the new score:
+        File save = new File("savefolder", "highscore.txt");
+        save.getParentFile().mkdirs();
+        PrintWriter saveWriter = new PrintWriter(save);
+
+        for (int i : scores) {
+            System.out.println("Score inserted: " + i);
+            saveWriter.println(i);
+        }
+        saveWriter.close();
+    }
+
+    public ObservableList loadHighScore() throws FileNotFoundException, IOException {
+        ObservableList<Integer> scores = FXCollections.observableArrayList();
+        ObservableList<Integer> scoresSorted = FXCollections.observableArrayList();
+
+        BufferedReader reader = new BufferedReader(new FileReader("savefolder" + "/" + "highscore.txt"));
+        StringBuilder builder = new StringBuilder();
+        String line = reader.readLine();
+        while (line != null) {
+            scores.add(Integer.parseInt(line));
+
+            builder.append(line);
+            builder.append(System.lineSeparator());
+            line = reader.readLine();
+        }
+        scores = scores.sorted(); //Sorts list, low to high
+        System.out.println(scores.toString());
+
+        //Counts items:
+        int counter = 0;
+        for (int i : scores) {
+            counter++;
+        }
+        //Goes through the amount of items, in inverted order (last first)
+        //Last will be larges, adds that, repeats for the rest.
+        for (int j = counter; j > 0; j--) {
+            scoresSorted.add(scores.get(j - 1));
+        }
+
+        return scoresSorted;
     }
 
     private IPlayer newPlayer;
