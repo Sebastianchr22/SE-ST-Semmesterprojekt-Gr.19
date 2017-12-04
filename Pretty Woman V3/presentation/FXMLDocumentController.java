@@ -228,7 +228,8 @@ public class FXMLDocumentController implements Initializable {
      * According to the name of the currentroom of the player, a set of
      * clickable fields are created, and the previous room's ones are destroyed.
      *
-     * <p>specific hitboxes are created for each individual room, this is done by
+     * <p>
+     * specific hitboxes are created for each individual room, this is done by
      * pixel count. A point is created, as it is to be used as a measurement of
      * the x-axis offset, and the y-axis offset. Then a width and a height is
      * set for the clickable field. When any room other than home has it's
@@ -409,41 +410,57 @@ public class FXMLDocumentController implements Initializable {
 
     /**
      * This method sets the textoutput text field, to a specific String value.
-     * @param s a specified string, can be set when calling processcommand(), this also returns a string, which is the feedback to the player.
+     *
+     * @param s a specified string, can be set when calling processcommand(),
+     * this also returns a string, which is the feedback to the player.
      */
     public void setTextOutput(String s) {
         textOutput.setText(s);
     }
 
     /**
-     * This method is important for better player interaction with the game, by providing the player with useful information about the given room, what
-     * the player can do in the given room, and maybe how to get out of it. This information is stored in a textField called HelpText, which is accessed
+     * This method is important for better player interaction with the game, by
+     * providing the player with useful information about the given room, what
+     * the player can do in the given room, and maybe how to get out of it. This
+     * information is stored in a textField called HelpText, which is accessed
      * by hovering the questionmark in the upper right corner.
-     * 
-     * <p>setText is called on the textfield, and a call to fetch a String from the business layer is made, the String is set in the Room class's constructor
-     * as it takes a room name, description, and help text.
-     * The String is set in the TextField, and its opacity set to 1.
+     *
+     * <p>
+     * setText is called on the textfield, and a call to fetch a String from the
+     * business layer is made, the String is set in the Room class's constructor
+     * as it takes a room name, description, and help text. The String is set in
+     * the TextField, and its opacity set to 1.
      */
     public void setHelpText() {
         HelpText.setText(gui.getRoomHelpText());
         HelpText.setOpacity(1);
     }
 
-    
     /**
-     * When the background image is clicked, and event is parsed through this method, the event contains amoung others, the x and y-axis coordinates.
-     * this is used to check wether a specific clickable field is clicked, if the event coordinates was withing the clickablefields hitbox.
-     * 
-     * <p>At first, if a player has a pending invitation, this will be displayed for every click the player makes, until the player accepts or rejects the
-     * invitation. When displayed to buttons can be pressed, accept, and reject. These will call process command, for the given action to be taken.
-     * 
-     * <p>After this, the hitboxes are set (refreshed), by calling setHitBoxes(), and the currentroom is checked to make sure that only the current room's
-     * clickable fields are checked if clicked. This is also being done, when setting the hitboxes as that method, destroys prior rooms hitboxes.
-     * It then checks if each hitbox in the room is hit, by calling the hitbox's .hit(event). If true, the methid calls the processcommand with the 
-     * clickable fields purpose as a parameter (String type).
-     * These processcommand calls all return a String value, whitch is to be dusplayed in the textOutput textField.
-     * 
-     * @param event, the point where the player clicked, x-and-y-coordinates can be derived from this event.
+     * When the background image is clicked, and event is parsed through this
+     * method, the event contains amoung others, the x and y-axis coordinates.
+     * this is used to check wether a specific clickable field is clicked, if
+     * the event coordinates was withing the clickablefields hitbox.
+     *
+     * <p>
+     * At first, if a player has a pending invitation, this will be displayed
+     * for every click the player makes, until the player accepts or rejects the
+     * invitation. When displayed to buttons can be pressed, accept, and reject.
+     * These will call process command, for the given action to be taken.
+     *
+     * <p>
+     * After this, the hitboxes are set (refreshed), by calling setHitBoxes(),
+     * and the currentroom is checked to make sure that only the current room's
+     * clickable fields are checked if clicked. This is also being done, when
+     * setting the hitboxes as that method, destroys prior rooms hitboxes. It
+     * then checks if each hitbox in the room is hit, by calling the hitbox's
+     * .hit(event). If true, the methid calls the processcommand with the
+     * clickable fields purpose as a parameter (String type). These
+     * processcommand calls all return a String value, whitch is to be dusplayed
+     * in the textOutput textField.
+     *
+     * @param event, the point where the player clicked, x-and-y-coordinates can
+     * be derived from this event.
      */
     @FXML
     private void PaneClicked(MouseEvent event) {
@@ -517,9 +534,12 @@ public class FXMLDocumentController implements Initializable {
     }
 
     /**
-     * This method was used for testing the clickable fields, and to find their pixel values for the offset, height, and width.
-     * Now this is no longer in use, but can be activated to display the pixel possition of the mouse cursor.
-     * @param event 
+     * This method was used for testing the clickable fields, and to find their
+     * pixel values for the offset, height, and width. Now this is no longer in
+     * use, but can be activated to display the pixel possition of the mouse
+     * cursor.
+     *
+     * @param event
      */
     @FXML
     private void MouseMoved(MouseEvent event) {
@@ -527,10 +547,16 @@ public class FXMLDocumentController implements Initializable {
         coordinates.setOpacity(0);
     }
 
-    
     /**
-     * This method is to be called on button click, to show the player inventory as a listview.
-     * This method, along with, showMap and showStats.
+     * This method is to be called on button click, to show the player inventory
+     * as a listview. This method, along with, showMap and showStats, also
+     * refreshes the listview.
+     *
+     * <p>
+     * when the InvGrid is disabled the method will call for it to be enabled
+     * and visible, and when it is enabled the method will call for the grid to
+     * be disabled and invisible. This creates the illusion of opening and
+     * closing the menu tab.
      */
     @FXML
     private void ShowInventory() {
@@ -550,21 +576,51 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    /**
+     * This method is used in initialize to set the default opacity and to
+     * disable the grid from use. This method can also be called, when needed to
+     * display the grid.
+     *
+     * @param i and Integer representing the opacity from 0 - 1.
+     * @param bool a boolean dictating wether or not the grid is disabled.
+     */
     public void ChangeInventoryState(int i, boolean bool) {
         InvGrid.setOpacity(i);
         InvGrid.setDisable(bool);
     }
 
+    /**
+     * This method is used in initialize to set the default opacity and to
+     * disable the grid from use. This method can also be called, when needed to
+     * display the grid.
+     *
+     * @param i and Integer representing the opacity from 0 - 1.
+     * @param bool a boolean dictating wether or not the grid is disabled.
+     */
     public void ChangeMapState(int i, boolean bool) {
         MapIMG.setOpacity(i);
         MapIMG.setDisable(bool);
     }
 
+    /**
+     * This method is used in initialize to set the default opacity and to
+     * disable the grid from use. This method can also be called, when needed to
+     * display the grid.
+     *
+     * @param i and Integer representing the opacity from 0 - 1.
+     * @param bool a boolean dictating wether or not the grid is disabled.
+     */
     public void ChangeStatusState(int i, boolean bool) {
         StatusGrid.setOpacity(i);
         StatusGrid.setDisable(bool);
     }
 
+    /**
+     * This method will 'close' all other tabs (Inventory, stats) and display
+     * the map, if the mapIMG isn't already enabled. If it already is enabled,
+     * this method will disable it and set the opacity to 0, otherwise it will
+     * display the mapIMG. This method is called when the map tab is clicked.
+     */
     @FXML
     private void ShowMap() {
         ChangeInventoryState(0, true);
@@ -582,6 +638,13 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    /**
+     * his method is called when the settings icon is clicked, it will disable
+     * everygrid behind it, so that settings will be on top, and nothing else
+     * can be clicked. This is done by calling ChangeGameState and parsing
+     * false. also this method will also call the ChangeSaveMenu, parsing 1 and
+     * false.
+     */
     @FXML
     private void ShowSettings() {
         MenuGrid.setDisable(false);
@@ -590,6 +653,13 @@ public class FXMLDocumentController implements Initializable {
         ChangeGameState(true);
     }
 
+    /**
+     * This method will disable and make invisible, the invGrid, the StatusGrid,
+     * and the Map image.
+     *
+     * @param bool to disable the clickerpane and textContainer. This will
+     * disable the main game.
+     */
     private void ChangeGameState(boolean bool) {
         ClickerPane.setDisable(bool);
         textContainer.setDisable(bool);
@@ -603,12 +673,24 @@ public class FXMLDocumentController implements Initializable {
         MapIMG.setOpacity(0);
     }
 
+    /**
+     * This method will enable or disable the HelpGrid, and make it visible or
+     * invisible.
+     *
+     * @param value corresponding to the wished opacity from 0 - 1.0.
+     * @param bool to disable the grid.
+     */
     private void ChangeHelpState(int value, boolean bool) {
         HelpGrid.setOpacity(value);
         HelpGrid.setDisable(bool);
     }
 
-    //Show save load quit menu:
+    /**
+     * This method will show or hide the save / load menu.
+     *
+     * @param value opacity value
+     * @param bool disable value
+     */
     private void ChangeSaveMenu(int value, boolean bool) {
         SettingsBackdrop.setOpacity(value);
         SettingsGrid.setDisable(bool);
@@ -616,6 +698,9 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
+    /**
+     * This method will disable the SettingsGrid, and re-enable the MenuGrid. Also this method will hide and disable the savemenu, and enable the main game.
+     */
     @FXML
     private void CloseSettings() {
         SettingsGrid.setDisable(true);
@@ -624,11 +709,15 @@ public class FXMLDocumentController implements Initializable {
         ChangeGameState(false);
     }
 
+    /**
+     * calls for the platform to quit.
+     */
     @FXML
     private void QuitGame() {
         Platform.exit();
     }
 
+    
     @FXML
     private void LoadGame() {
         gui.load();

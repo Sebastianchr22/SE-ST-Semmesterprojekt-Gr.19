@@ -11,18 +11,6 @@ public class TXTSaver {
 
     private IData data = DataFacade.getInstance();
 
-    public void newFiles() throws UnsupportedEncodingException {
-        try (Writer save = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("savefolder/savefile.txt"), "utf-8"))) {
-        } catch (IOException ex) {
-            System.out.println("Error creating savefile..");
-        }
-        
-        try (Writer score = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("savefolder/highscore.txt"), "utf-8"))) {
-        }catch (IOException ex) {
-            System.out.println("Error creating scorefile..");
-        }
-    }
-
     public void save(Collection<Integer> stats, Collection<String> inventory) {
         File save = new File("savefolder", "savefile.txt");
         save.getParentFile().mkdirs();
@@ -51,28 +39,35 @@ public class TXTSaver {
 
         //Reads all existing lines in the file:
         ArrayList<Integer> scores = new ArrayList();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("savefolder" + "/" + "highscore.txt"));
+           
+            StringBuilder builder = new StringBuilder();
+            String line = reader.readLine();
+            while (line != null) {
+                System.out.println("Highscore read: " + line);
+                scores.add(Integer.parseInt(line));
+                builder.append(line);
+                builder.append(System.lineSeparator());
+                line = reader.readLine();
+            }
+            scores.add(score);
 
-        BufferedReader reader = new BufferedReader(new FileReader("savefolder" + "/" + "highscore.txt"));
+            //Adds all scores to the list, plus the new score:
+            PrintWriter saveWriter = new PrintWriter(save);
 
-        StringBuilder builder = new StringBuilder();
-        String line = reader.readLine();
-        while (line != null) {
-            System.out.println("Highscore read: " + line);
-            scores.add(Integer.parseInt(line));
-            builder.append(line);
-            builder.append(System.lineSeparator());
-            line = reader.readLine();
+            for (int i : scores) {
+                System.out.println("Score inserted: " + i);
+                saveWriter.println(String.valueOf(i));
+            }
+            saveWriter.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex);
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream("savefolder/highscore.txt")));
+            writer.println(score);
+            writer.close();
         }
-        scores.add(score);
 
-        //Adds all scores to the list, plus the new score:
-        PrintWriter saveWriter = new PrintWriter(save);
-
-        for (int i : scores) {
-            System.out.println("Score inserted: " + i);
-            saveWriter.println(i);
-        }
-        saveWriter.close();
     }
 
     public ObservableList loadHighScore() throws FileNotFoundException, IOException {

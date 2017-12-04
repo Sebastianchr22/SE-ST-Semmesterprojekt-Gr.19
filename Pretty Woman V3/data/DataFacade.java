@@ -28,16 +28,6 @@ public class DataFacade implements IData {
     public static IData getInstance(){
         return data;
     }
-    
-    @Override
-    public void newFiles(){
-        TXTSaver saver = new TXTSaver();
-        try {
-            saver.newFiles();
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(DataFacade.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     @Override
     public void save(Collection<Integer> stats, Collection<String> inventory) {
