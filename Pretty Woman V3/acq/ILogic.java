@@ -16,14 +16,16 @@ public interface ILogic {
     public void injectData(IData data);
 
     public void save();
-    
+
     public void saveHighScore(int score);
 
     public void load();
-    
+
     public ObservableList loadHighScore();
 
     public boolean inPRoom();
+
+    public void setHotelMotel(String s);
 
     public IRegular regularInRoom();
 
@@ -122,9 +124,9 @@ public interface ILogic {
     public String buyFood();
 
     public String buyEnhancements();
-    
+
     public void setRoomHome();
-    
+
     public void resetGame();
 
     public ObservableList<IItem> getInventoryList();
@@ -164,7 +166,7 @@ public interface ILogic {
     public String getPrivateRoomCommand();
 
     public double getWinPercent(IRegular regular);
-    
+
     public void removeDaysLeft();
-    
+
 }

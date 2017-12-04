@@ -19,7 +19,7 @@ public class LogicFacade implements acq.ILogic {
     Room office = new Room("Office", "in the managers office", "");
     Room outside = new Room("Outside", "outside of the club", "Click the door to go back, or hang out with the bouncer some more.");
     Room motel = new Room("Motel", "in a grimm looking motel", "Click anywhere to go back home.");
-    Room tower = new Room("Tower", "in the home of your new lover", "");
+    Room hotel = new Room("Hotel", "in the home of your new lover", "");
     Room home = new Room("Home", "home sweet home..", "You will need your car keys to exit, and go to work");
     Room drive = new Room("Drive", "The old parkinglot, where your car is, the old tin can..", "You should take your car to work, but where did you park it?");
     Room back = new Room("Backroom", "in the backroom.", "You can go to the locker room, and to the main dancefloor from here.");
@@ -40,6 +40,7 @@ public class LogicFacade implements acq.ILogic {
     private int highscore;
     private boolean pRoomInvite;
     private String privateRoomCommand;
+    private String hotelMotel = "";
 
     Manager manager = new Manager("Manager", office);
 
@@ -78,7 +79,7 @@ public class LogicFacade implements acq.ILogic {
 
         motel.setExit("home", home);
 
-        tower.setExit("home", home);
+        hotel.setExit("home", home);
 
 
     }
@@ -187,6 +188,7 @@ public class LogicFacade implements acq.ILogic {
         this.pRoomInvite = false;
         this.privateRoomCommand = null;
         this.winPercent = 0;
+        this.hotelMotel = "";
     }
 
     //General:
@@ -578,10 +580,24 @@ public class LogicFacade implements acq.ILogic {
         return "";
     }
 
+    @Override
+    public void setHotelMotel(String s){
+        this.hotelMotel = s;
+    }
     private DanceMech dance;
 
     @Override
     public String processCommand(String command) {
+        if (!this.hotelMotel.equals("")){
+            switch(this.hotelMotel){
+                case "HOTEL":
+                    goRoom(hotel);
+                    break;
+                case "MOTEL":
+                    goRoom(motel);
+                    break;
+            }
+        }
         if (this.currentRoom.getNameBackend().equals("HOME")) {
             player.setMoves(12);
             manager.setCurrentRoom(office);
@@ -675,6 +691,7 @@ public class LogicFacade implements acq.ILogic {
                     if (this.privateRoomCommand.equals("DANCE")) {
                         val = "";
                         val += dance.PrivateRoomInvite(this.getPrivateRoomCommand());
+                        
                         goRoom(floor);
 
                         this.pRoomInvite = false;

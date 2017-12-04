@@ -30,13 +30,18 @@ public class HotelMotelInvite {
         if (!regular.getName().toUpperCase().equals("JACK THE BOUNCER") && !regular.getName().toUpperCase().equals("EX-BOYFRIEND DANIEL")) {
             if (regular.getWealth() >= 1500000) {
                 //If regular is worth more than or equals to 1.5M invite to hotel:
+                logic.setHotelMotel("HOTEL");
                 return Hotel(regular);
             } else {
                 //Invite to motel:
+                logic.setHotelMotel("MOTEL");
                 return Motel(regular);
+
             }
         } else {
+            logic.setHotelMotel("HOTEL");
             return Hotel(regular);
+
         }
 
     }

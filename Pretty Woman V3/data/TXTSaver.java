@@ -62,7 +62,7 @@ public class TXTSaver {
             }
             saveWriter.close();
         } catch (FileNotFoundException ex) {
-            System.out.println(ex);
+            System.out.println("No highscore file found, will create a new one.");
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream("savefolder/highscore.txt")));
             writer.println(score);
             writer.close();

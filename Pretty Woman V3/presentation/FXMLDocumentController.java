@@ -493,7 +493,6 @@ public class FXMLDocumentController implements Initializable {
                 val += processCommands("DANCEFLOOR");
             }
             if (office.hit(event)) {
-                System.out.println("Office hit");
                 val += processCommands("OFFICE");
             }
         } else if (gui.getCurrentRoom().equals("LOCKER ROOM")) {
@@ -699,7 +698,9 @@ public class FXMLDocumentController implements Initializable {
     }
 
     /**
-     * This method will disable the SettingsGrid, and re-enable the MenuGrid. Also this method will hide and disable the savemenu, and enable the main game.
+     * This method will disable the SettingsGrid, and re-enable the MenuGrid.
+     * Also this method will hide and disable the savemenu, and enable the main
+     * game.
      */
     @FXML
     private void CloseSettings() {
@@ -717,7 +718,11 @@ public class FXMLDocumentController implements Initializable {
         Platform.exit();
     }
 
-    
+    /**
+     * calls the load method on the presentation facade. Also closes the
+     * save/load menu, and enables the main game, clears and updates the
+     * inventory listview
+     */
     @FXML
     private void LoadGame() {
         gui.load();
@@ -733,6 +738,10 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
+    /**
+     * calls the save method on the presentation facade, disables the save/load
+     * menu, and enables the main game.
+     */
     @FXML
     private void SaveGame() {
         gui.save();
@@ -742,10 +751,31 @@ public class FXMLDocumentController implements Initializable {
         ChangeGameState(false);
     }
 
+    /**
+     * This method is used to display the current hunger of the players daughter
+     * in real time. for each move the player makes, the daughter will grow more
+     * hungry by 3/100 hunger each move.
+     *
+     * <p>
+     * it is known that the hunger bar is 320 pixels wide, and so the current
+     * hunger is divided by 100.0, to return the percentage of fullness this is
+     * timed with the 360 pixels to find how wide the bar has to be, to
+     * represent the current hunger.
+     *
+     * <p>
+     * this is then returned to be set, and to set the width of the actual bar.
+     *
+     * @return
+     */
     private double calcHunger() {
         return 320.0 * (gui.getHunger() / 100.0);
     }
 
+    /**
+     * This method will hide and disable the map and inventory, then see if the
+     * status grid already is enabled, if it is, it will hide the grid,
+     * otherwise the grid will be shown on click.
+     */
     @FXML
     private void ShowStats() {
         ChangeMapState(0, true);
@@ -765,6 +795,17 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
+    /**
+     * This method will fetch all the player's stats from the logicfacade which
+     * holds it.
+     *
+     * <p>
+     * the values fetched are, money,exp,enhancements, moves, days left,
+     * capacity, hunger /100, and then it calls the calcHunger method, to find
+     * the hungetmeters width.
+     * <p>
+     * these values are fetched and then displayed in the status grid.
+     */
     public void getStatusInfo() {
         MoneyAmount.setText("$" + String.valueOf(Math.round(gui.getMoney() * 100.0) / 100.0));
         ExpAmount.setText(String.valueOf(gui.getExp()));
@@ -776,22 +817,46 @@ public class FXMLDocumentController implements Initializable {
         HungerMeter.setWidth(calcHunger());
     }
 
+    //This method is not really used..
     @FXML
     private void HelpClicked() {
         System.out.println("Help clicked");
     }
 
+    /**
+     * When this method is called, the player no longer hovers the mouse cursor over the help icon.
+     * This means that the help grid has to be hidden and disabled.
+     * 
+     * <p>this is done by calling the ChangeHelpState parsing 0, and true.
+     * @param event 
+     */
     @FXML
     private void HelpExited(MouseEvent event) {
         ChangeHelpState(0, true);
     }
 
+    /**
+     * When the help icon is hovered, this method is called.
+     * <p>it will call the ChangeHelpState to make the help grid visible, and
+     * enabled.
+     * 
+     * <p>this method also calls the setHelpText method to fetch the rooms help text, and set it in the helptext textfield.
+     *
+     * @param event
+     */
     @FXML
     private void HelpHover(MouseEvent event) {
         ChangeHelpState(1, true);
         setHelpText();
     }
 
+    /**
+     * This method is called when the game is won, and when the message that the player was successful is to be shown.
+     * 
+     * <p>This method will enable and make visible, the grid containing the message. While disabling the main game, and the menu options.
+     * @param i
+     * @param bool 
+     */
     private void showGameWon(int i, boolean bool) {
         GameWonGrid.setOpacity(i);
         GameWonGrid.setDisable(bool);
@@ -805,6 +870,11 @@ public class FXMLDocumentController implements Initializable {
         ChangeGameState(false);
     }
 
+    /**
+     * Same as showGameWon, but this method will show the game lost message.
+     * @param i opacity 0 - 1.0
+     * @param bool disabled true / false
+     */
     private void showGameLost(int i, boolean bool) {
         GameLostGrid.setOpacity(i);
         GameLostGrid.setDisable(bool);
@@ -818,6 +888,12 @@ public class FXMLDocumentController implements Initializable {
         ChangeGameState(false);
     }
 
+    /**
+     * This method is called to display the listview of the highscores.
+     * <p> to show that, the method will have to disable and make the save menu invisible, so that the highscore menu can be visible and enabled
+     * This method also replaces the close icon with a back icon, to go back to the save menu, from the highscore menu. The listview is the updated 
+     * with a new fetch call for the highscores to be read and returned.
+     */
     @FXML
     private void ShowScore() {
         SaveGrid.setDisable(true);
@@ -832,13 +908,15 @@ public class FXMLDocumentController implements Initializable {
 
         ScoresListView.setOpacity(1);
         ScoresListView.setDisable(false);
-
-        System.out.println("Showing scores");
-
+        
         ScoresListView.setItems(gui.loadHighScores());
 
     }
 
+    /**
+     * This method will disable and hide the highscore grid. and enable and make visible the save / load menu, and also replace the back icon with a 
+     * clos icon.
+     */
     @FXML
     private void CloseScore() {
         ScoreGrid.setDisable(true);
@@ -856,18 +934,37 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
+    /**
+     * This method will call the buyEnh method on the logic facade, to pay for enhancements.
+     * 
+     * <p> that call returns a string telling the player, how much the purchase cost, or that they did not have enough money to buy more enhancements.
+     * this is then set as the text in the textoutput textfield. Finally the method calls the getStatusInfo method to update the player stats, after each
+     * purchase.
+     */
     @FXML
     private void BuyEnhancements() {
         setTextOutput(gui.buyEnh());
         getStatusInfo();
     }
 
+    /**
+     * This method calls the buyFood method on the logicFacade, this method will return a String value representing what happened when the method was 
+     * called.
+     * <p> this return value is set as the textoutput textfield's text, finally the player stats are updated
+     */
     @FXML
     private void BuyFood() {
         setTextOutput(gui.buyFood());
         getStatusInfo();
     }
 
+    /**
+     * This method is called when the player has the inventory tab open, and click the drop option.
+     * 
+     * <p> an item is gotten from that call, by finding which item on the listView was selected. If an item was selected, the method calls item to be 
+     * removed from the inventory through the LogicFacade, then a message is printed in the console saying which item was dropped. The inventory ListView
+     * items are the reset and refreshed.
+     */
     @FXML
     private void DropItem() {
         item = InventoryListView.getSelectionModel().getSelectedItem();
@@ -881,6 +978,14 @@ public class FXMLDocumentController implements Initializable {
         InventoryListView.refresh();
     }
 
+    /**
+     * This method is called when the player presses the inspect button in the inventory tab.
+     * 
+     * <p>An item is gotten by finding which item in the listview is selected.
+     * If no item is selected, the method will not call for the item to be dropped. If an item is selected, a string value is found, which is the .toString
+     * of the item. The textOutput is then sat to the toString value of the item.
+     * The listView is then refreshed.
+     */
     @FXML
     private void InspectItem() {
         item = InventoryListView.getSelectionModel().getSelectedItem();
@@ -891,6 +996,12 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    /**
+     * This method is called when the accept button is pressed, and can only be pressed when an invitation is pending. 
+     * <p> when an invitation is pending the methods purpose is available. The method will clear the textOutput, and set the Privat room Command to 
+     * 'ACCEPT' and process the command 'PRIVATEROOM', then hide and disable the invitationgrid.
+     * <p>the room image will then be updated, and lastly reset the privateroom command as being null.
+     */
     @FXML
     private void AcceptInvitation() {
         if (gui.getPRoomInvite() == true) {
@@ -904,6 +1015,10 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    /**
+     * if an invitation is pending, this method will call to set the privateroom command to REJECT, and call to have the command PRIVATEROOM processed
+     * also this method will close the invitation grid. Finally it will reset the privateroom command so it is ready for the next use case.
+     */
     @FXML
     private void DeclineInvitation() {
         if (gui.getPRoomInvite() == true) {
@@ -915,23 +1030,39 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    /**
+     * This method when called will fetch the toString on the regular in the room, if an invitation is pending.
+     * <p> this is done by setting the textOutput to the return value of the toString on the regular.
+     */
     @FXML
     private void InfoOnRegular() {
-        if (gui.getPRoomInvite() == true) {
+        if (gui.getPRoomInvite()) {
             textOutput.setText(gui.getRegularInRoomInfo());
         }
     }
 
+    /**
+     * this method calls the newGame method on the presentationFacade, which will replace the current FXML document with the same document, and calls the
+     * resetGame method.
+     * @param event this method is called on mouse click, and so, parses an event
+     */
     @FXML
     private void ReplayGame(MouseEvent event) {
         gui.newGame(event);
     }
-
+    /**
+     * calls the mainMenu method og the presentationFacade
+     * <p> this loads another FXML document which shows the main menu, and replaces the old document.
+     * @param event this method is called on mouse click, and so parses event.
+     */
     @FXML
     private void QuitToMainMenu(MouseEvent event) {
         gui.mainMenu(event);
     }
 
+    /**
+     * This method disables and makes the WelcomeGrid invisible
+     */
     @FXML
     private void CloseWelcome() {
         WelcomeGrid.setOpacity(0);
