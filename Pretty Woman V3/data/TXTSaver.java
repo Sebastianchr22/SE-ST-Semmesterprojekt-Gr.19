@@ -11,6 +11,18 @@ public class TXTSaver {
 
     private IData data = DataFacade.getInstance();
 
+    public void newFiles() throws UnsupportedEncodingException {
+        try (Writer save = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("savefolder/savefile.txt"), "utf-8"))) {
+        } catch (IOException ex) {
+            System.out.println("Error creating savefile..");
+        }
+        
+        try (Writer score = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("savefolder/highscore.txt"), "utf-8"))) {
+        }catch (IOException ex) {
+            System.out.println("Error creating scorefile..");
+        }
+    }
+
     public void save(Collection<Integer> stats, Collection<String> inventory) {
         File save = new File("savefolder", "savefile.txt");
         save.getParentFile().mkdirs();
@@ -33,10 +45,15 @@ public class TXTSaver {
     }
 
     public void saveHighScore(int score) throws FileNotFoundException, IOException {
+
+        File save = new File("savefolder", "highscore.txt");
+        save.getParentFile().mkdirs();
+
         //Reads all existing lines in the file:
         ArrayList<Integer> scores = new ArrayList();
-        
+
         BufferedReader reader = new BufferedReader(new FileReader("savefolder" + "/" + "highscore.txt"));
+
         StringBuilder builder = new StringBuilder();
         String line = reader.readLine();
         while (line != null) {
@@ -49,8 +66,6 @@ public class TXTSaver {
         scores.add(score);
 
         //Adds all scores to the list, plus the new score:
-        File save = new File("savefolder", "highscore.txt");
-        save.getParentFile().mkdirs();
         PrintWriter saveWriter = new PrintWriter(save);
 
         for (int i : scores) {
@@ -61,6 +76,7 @@ public class TXTSaver {
     }
 
     public ObservableList loadHighScore() throws FileNotFoundException, IOException {
+
         ObservableList<Integer> scores = FXCollections.observableArrayList();
         ObservableList<Integer> scoresSorted = FXCollections.observableArrayList();
 

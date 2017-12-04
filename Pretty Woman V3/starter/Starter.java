@@ -15,6 +15,7 @@ public class Starter extends Application {
     public void start(Stage primaryStage) {
         
         IData data = new DataFacade();
+        data.newFiles();
         ILogic logic = new LogicFacade();
         IGUI ui = new PresentationFacade();
         

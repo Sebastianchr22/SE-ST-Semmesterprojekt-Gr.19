@@ -12,6 +12,7 @@ public interface IData {
 
     public IPlayer load();
     
+    public void newFiles();
 
     public void saveHighScore(int score);
 

@@ -79,23 +79,23 @@ public class LogicFacade implements acq.ILogic {
         motel.setExit("home", home);
 
         tower.setExit("home", home);
+
+
     }
 
 //    public int getScore(){
 //        return highscore = (playerStats.getMoneySaved() + (playerStats.getMoneySaved()*))
 //    }
-    
-    
     @Override
     public void injectData(IData data) {
         this.data = data;
     }
 
     @Override
-    public void setRoomHome(){
+    public void setRoomHome() {
         this.currentRoom = home;
     }
-    
+
     public static ILogic getInstance() {
         return logic;
     }
@@ -175,9 +175,9 @@ public class LogicFacade implements acq.ILogic {
     public boolean inPRoom() {
         return this.getInPRoom();
     }
-    
+
     @Override
-    public void resetGame(){
+    public void resetGame() {
         this.player = new Player();
         this.currentRoom = home;
         goRoom(home);
@@ -493,8 +493,8 @@ public class LogicFacade implements acq.ILogic {
 
     @Override
     public String buyFood() {
-        double i = Math.round((this.getEnhencements()+1 * 1.35)/10 * 100.0) / 100.0;
-        if (player.getMoneySaved() > 100 * (1.0+i)) {
+        double i = Math.round((this.getEnhencements() + 1 * 1.35) / 10 * 100.0) / 100.0;
+        if (player.getMoneySaved() > 100 * (1.0 + i)) {
             if (player.getHunger() <= 90) {
                 this.player.addHunger(10);
                 this.player.removeMoney(100 * i);
@@ -503,21 +503,21 @@ public class LogicFacade implements acq.ILogic {
                 return "You can't have more food.";
             }
         } else {
-            return "You do not have enough money to buy food, costing $" + 100 * (1.0+i);
+            return "You do not have enough money to buy food, costing $" + 100 * (1.0 + i);
         }
     }
 
     @Override
     public String buyEnhancements() {
-            double i = Math.round((this.getExperience()+1 * 1.35)/10 * 100.0) / 100.0;
+        double i = Math.round((this.getExperience() + 1 * 1.35) / 10 * 100.0) / 100.0;
 
-        if (player.getMoneySaved() >= 150 * (1.0+i)) {
+        if (player.getMoneySaved() >= 150 * (1.0 + i)) {
             this.player.addEnhancements(1);
             this.player.addDaysLeft(highscore);
-            this.player.removeMoney(150*i);
+            this.player.removeMoney(150 * i);
             return "You bought an enhancement costing you $" + 150 * i;
         } else {
-            return "You do not have enough money to buy enhancments, costing $" + 150 * (1.0+i);
+            return "You do not have enough money to buy enhancments, costing $" + 150 * (1.0 + i);
         }
     }
 

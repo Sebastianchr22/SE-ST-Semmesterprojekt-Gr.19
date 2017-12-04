@@ -27,6 +27,12 @@ public class DataFacade implements IData {
     public static IData getInstance(){
         return data;
     }
+    
+    @Override
+    public void newFiles(){
+        TXTSaver saver = new TXTSaver();
+        saver.newFiles();
+    }
 
     @Override
     public void save(Collection<Integer> stats, Collection<String> inventory) {
@@ -45,7 +51,6 @@ public class DataFacade implements IData {
             Logger.getLogger(DataFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
     
     
     private IPlayer player;
