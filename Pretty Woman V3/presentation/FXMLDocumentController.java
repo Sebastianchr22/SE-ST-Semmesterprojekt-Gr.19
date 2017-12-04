@@ -530,11 +530,10 @@ public class FXMLDocumentController implements Initializable {
     
     /**
      * This method is to be called on button click, to show the player inventory as a listview.
-     * This method, along with, showMap and showStats
-     * @param event 
+     * This method, along with, showMap and showStats.
      */
     @FXML
-    private void ShowInventory(MouseEvent event) {
+    private void ShowInventory() {
         ChangeMapState(0, true);
         ChangeStatusState(0, true);
         InventoryListView.setItems(gui.getInventory());
@@ -567,7 +566,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void ShowMap(MouseEvent event) {
+    private void ShowMap() {
         ChangeInventoryState(0, true);
         ChangeStatusState(0, true);
         String path = "FXML/Visuals/Highres/Map/" + gui.getCurrentRoom() + ".png";
@@ -584,7 +583,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void ShowSettings(MouseEvent event) {
+    private void ShowSettings() {
         MenuGrid.setDisable(false);
         SettingsGrid.setDisable(false);
         ChangeSaveMenu(1, false);
@@ -618,7 +617,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void CloseSettings(MouseEvent event) {
+    private void CloseSettings() {
         SettingsGrid.setDisable(true);
         MenuGrid.setDisable(false);
         ChangeSaveMenu(0, true);
@@ -626,12 +625,12 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void QuitGame(MouseEvent event) {
+    private void QuitGame() {
         Platform.exit();
     }
 
     @FXML
-    private void LoadGame(MouseEvent event) {
+    private void LoadGame() {
         gui.load();
 
         SettingsGrid.setDisable(true);
@@ -646,7 +645,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void SaveGame(MouseEvent event) {
+    private void SaveGame() {
         gui.save();
         SettingsGrid.setDisable(true);
         MenuGrid.setDisable(false);
@@ -659,7 +658,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void ShowStats(MouseEvent event) {
+    private void ShowStats() {
         ChangeMapState(0, true);
         ChangeInventoryState(0, true);
         if (StatusGrid.isDisabled()) {
@@ -689,7 +688,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void HelpClicked(MouseEvent event) {
+    private void HelpClicked() {
         System.out.println("Help clicked");
     }
 
@@ -731,7 +730,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void ShowScore(MouseEvent event) {
+    private void ShowScore() {
         SaveGrid.setDisable(true);
         SaveGrid.setOpacity(0);
 
@@ -752,7 +751,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void CloseScore(MouseEvent event) {
+    private void CloseScore() {
         ScoreGrid.setDisable(true);
         ScoreGrid.setOpacity(0);
 
@@ -769,19 +768,19 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void BuyEnhancements(MouseEvent event) {
+    private void BuyEnhancements() {
         setTextOutput(gui.buyEnh());
         getStatusInfo();
     }
 
     @FXML
-    private void BuyFood(MouseEvent event) {
+    private void BuyFood() {
         setTextOutput(gui.buyFood());
         getStatusInfo();
     }
 
     @FXML
-    private void DropItem(MouseEvent event) {
+    private void DropItem() {
         item = InventoryListView.getSelectionModel().getSelectedItem();
 
         if (item != null) {
@@ -794,7 +793,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void InspectItem(MouseEvent event) {
+    private void InspectItem() {
         item = InventoryListView.getSelectionModel().getSelectedItem();
         if (item != null) {
             String values = "A(n) " + item.getCat() + " item." + "\n" + item.getName() + " - " + item.getDesc();
@@ -804,8 +803,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void AcceptInvitation(MouseEvent event
-    ) {
+    private void AcceptInvitation() {
         if (gui.getPRoomInvite() == true) {
 
             textOutput.clear();
@@ -818,8 +816,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void DeclineInvitation(MouseEvent event
-    ) {
+    private void DeclineInvitation() {
         if (gui.getPRoomInvite() == true) {
             textOutput.clear();
             gui.setPrivateRoomCommand("REJECT");
@@ -830,8 +827,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void InfoOnRegular(MouseEvent event
-    ) {
+    private void InfoOnRegular() {
         if (gui.getPRoomInvite() == true) {
             textOutput.setText(gui.getRegularInRoomInfo());
         }
@@ -848,7 +844,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void CloseWelcome(MouseEvent event) {
+    private void CloseWelcome() {
         WelcomeGrid.setOpacity(0);
         WelcomeGrid.setDisable(true);
     }

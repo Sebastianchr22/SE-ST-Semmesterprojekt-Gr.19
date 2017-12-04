@@ -420,7 +420,7 @@
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8c480d25" height="40.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="320.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
                         <Rectangle fx:id="HungerMeter" arcHeight="5.0" arcWidth="5.0" fill="#ff8921" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="320.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                            <GridPane.margin>
-                              <Insets left="13.0" />
+                              <Insets left="14.0" />
                            </GridPane.margin></Rectangle>
                         <Label fx:id="MoneyAmount" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                         <Label fx:id="ExpAmount" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
