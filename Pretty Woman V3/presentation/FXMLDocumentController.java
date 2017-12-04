@@ -22,6 +22,8 @@ import javafx.scene.shape.Rectangle;
 public class FXMLDocumentController implements Initializable {
 
     private IGUI gui;
+    private acq.IItem item;
+
     private String currentRoom;
     @FXML
     private Label coordinates;
@@ -77,8 +79,12 @@ public class FXMLDocumentController implements Initializable {
     private Label HungerString;
     @FXML
     private GridPane InvitationGrid;
-
-    private acq.IItem item;
+    @FXML
+    private ListView<?> ScoresListView;
+    @FXML
+    private GridPane GameWonGrid;
+    @FXML
+    private GridPane GameLostGrid;
     @FXML
     private GridPane IMGContainer;
     @FXML
@@ -112,8 +118,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Rectangle ScoreContainer;
     @FXML
-    private ListView<?> ScoresListView;
-    @FXML
     private AnchorPane HelpPane1;
     @FXML
     private Rectangle HelpContainer1;
@@ -122,10 +126,19 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Rectangle HelpContainer11;
     @FXML
-    private GridPane GameWonGrid;
-    @FXML
-    private GridPane GameLostGrid;
+    private GridPane WelcomeGrid;
 
+    /**
+     * Sets all default values of the FXML document. This includes disabling the
+     * layered FXML grids, grids include, Status grid, Score grid, inventory
+     * grid inv grid, and more. Also the showGameLost, and showGameWon are also
+     * disabled, and instance of the IGUI is fetched. The inventory listview is
+     * set and refreshed. The introduction text is displayed, and the background
+     * image is set to the image of HOME.
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -175,29 +188,55 @@ public class FXMLDocumentController implements Initializable {
         setRoomImage();
         textOutput.setText("Welcome to Pretty Woman - the Game. This a point and click adventure, so make sure to explore your surroundings, and to always manage your home life, and do your job well. \nA key goal of this game is to collect items, and manage to survive long enough to find your mr. perfect.\nYou can always hover over the questionmark icon for more help, in case you get lost.");
         coordinates.setOpacity(0);
+
+        //Fixed issue of replay option using the previous bacground image, and not displaying home on reload.
+        String path = "FXML/Visuals/Highres/800x400/HOME.jpg";
+        Image room = new Image(path, true);
+        RoomIMGContainer.setImage(room);
     }
 
+    /**
+     * Disbables or enables the inventory grid, also sets the opacity
+     *
+     * @param i : Integer
+     * @param bool : Boolean
+     */
     public void changeInvitationState(int i, boolean bool) {
         InvitationGrid.setOpacity(i);
         InvitationGrid.setDisable(bool);
 
     }
 
-    ClickableField keys;
-    ClickableField door;
-    ClickableField car;
-    ClickableField home;
-    ClickableField lockerroom;
-    ClickableField dancefloor;
-    ClickableField stealC;
-    ClickableField backroom;
-    ClickableField danceC;
-    ClickableField outside;
-    ClickableField enter;
-    ClickableField flirt;
-    ClickableField privateroomC;
-    ClickableField office;
+    //sets all clickable fields as privates:
+    private ClickableField keys;
+    private ClickableField door;
+    private ClickableField car;
+    private ClickableField home;
+    private ClickableField lockerroom;
+    private ClickableField dancefloor;
+    private ClickableField stealC;
+    private ClickableField backroom;
+    private ClickableField danceC;
+    private ClickableField outside;
+    private ClickableField enter;
+    private ClickableField flirt;
+    private ClickableField privateroomC;
+    private ClickableField office;
 
+    /**
+     * Uses the name of the currentroom, (String) as a switch case parameter.
+     * According to the name of the currentroom of the player, a set of
+     * clickable fields are created, and the previous room's ones are destroyed.
+     *
+     * <p>
+     * specific hitboxes are created for each individual room, this is done by
+     * pixel count. A point is created, as it is to be used as a measurement of
+     * the x-axis offset, and the y-axis offset. Then a width and a height is
+     * set for the clickable field. When any room other than home has it's
+     * hitboxes set, the prior rooms hitboxes are destroyed, this means that the
+     * prior rooms hitboxses's offesets, width, and height are set to 0. making
+     * them unclickable.<p>
+     */
     public void setHitBoxes() {
         String pos = gui.getCurrentRoom();
         switch (pos) {
@@ -270,6 +309,46 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    /**
+     * This method is used with the Presentation layer facade, to process a
+     * command given by a simple data type (String, Integer, such.), the
+     * processing will happen at the business layer. Checks are being run along
+     * the way, to make sure that the game is not yet won, and that the game is
+     * not yet lost. A check is also run to see if the player has any more moves
+     * left. This method will return a String, to be displayed as it contains an
+     * explanation of what happened, as feedback to the player.
+     *
+     * <p>
+     * Takes a String command parameter. Will check if game is won already, if
+     * the player has lost (no money, hunger empty, or money), or if the player
+     * has any more moves left. if the game is won, call showGameWon(). if game
+     * is lost, call showGameLost(). if more moves are left, checks if manager
+     * and player are in the same room (Boolean), calls gui.managerTakesCut().
+     * Will then process command<p>
+     *
+     * <p>
+     * When the prior if's have been run through, this method will process the
+     * given String command, by parsing it to the presentation facade. this
+     * returns a string, which is added to the String val, which is returned.
+     * The inventory listview is updated, and refreshed. If the player has
+     * entered a new room since last time this method was run, the background
+     * image is updated.<p>
+     *
+     * <p>
+     * new hitboxes are set, and val is returned after all this.<p>
+     *
+     * <p>
+     * If the player has no more moves left, this method will process the
+     * command 'HOME', which places the player at home, updates the image, and
+     * sets the hitboxes for the room. This also counts down on the players days
+     * left to play the game. Feedback to the player is returned.<p>
+     *
+     *
+     * @param command, a simple type, given by which room the player is in, and
+     * which field the player clicked on.
+     * @return String as feedback to the player, of what happened when the
+     * command was processed.
+     */
     public String processCommands(String command) {
         String val = "";
         if (gui.getGameWon()) {
@@ -283,6 +362,7 @@ public class FXMLDocumentController implements Initializable {
                 setRoomImage();
             }
         }
+
         if (gui.getMoves() > 0) {
             this.currentRoom = gui.getCurrentRoom();
 
@@ -313,6 +393,14 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    /**
+     * <p>
+     * prints in the console, the player location, finds the 'path' to the
+     * background image. Done by fetching the currentRoom String from business.
+     * <p>
+     * <p>
+     * the image is then set with the found image path, and displayed.<p>
+     */
     public void setRoomImage() {
         System.out.println("you are at: " + gui.getCurrentRoom());
         String path = "FXML/Visuals/Highres/800x400/" + gui.getCurrentRoom() + ".jpg";
@@ -320,15 +408,44 @@ public class FXMLDocumentController implements Initializable {
         RoomIMGContainer.setImage(room);
     }
 
+    /**
+     * This method sets the textoutput text field, to a specific String value.
+     * @param s a specified string, can be set when calling processcommand(), this also returns a string, which is the feedback to the player.
+     */
     public void setTextOutput(String s) {
         textOutput.setText(s);
     }
 
+    /**
+     * This method is important for better player interaction with the game, by providing the player with useful information about the given room, what
+     * the player can do in the given room, and maybe how to get out of it. This information is stored in a textField called HelpText, which is accessed
+     * by hovering the questionmark in the upper right corner.
+     * 
+     * <p>setText is called on the textfield, and a call to fetch a String from the business layer is made, the String is set in the Room class's constructor
+     * as it takes a room name, description, and help text.
+     * The String is set in the TextField, and its opacity set to 1.
+     */
     public void setHelpText() {
         HelpText.setText(gui.getRoomHelpText());
         HelpText.setOpacity(1);
     }
 
+    
+    /**
+     * When the background image is clicked, and event is parsed through this method, the event contains amoung others, the x and y-axis coordinates.
+     * this is used to check wether a specific clickable field is clicked, if the event coordinates was withing the clickablefields hitbox.
+     * 
+     * <p>At first, if a player has a pending invitation, this will be displayed for every click the player makes, until the player accepts or rejects the
+     * invitation. When displayed to buttons can be pressed, accept, and reject. These will call process command, for the given action to be taken.
+     * 
+     * <p>After this, the hitboxes are set (refreshed), by calling setHitBoxes(), and the currentroom is checked to make sure that only the current room's
+     * clickable fields are checked if clicked. This is also being done, when setting the hitboxes as that method, destroys prior rooms hitboxes.
+     * It then checks if each hitbox in the room is hit, by calling the hitbox's .hit(event). If true, the methid calls the processcommand with the 
+     * clickable fields purpose as a parameter (String type).
+     * These processcommand calls all return a String value, whitch is to be dusplayed in the textOutput textField.
+     * 
+     * @param event, the point where the player clicked, x-and-y-coordinates can be derived from this event.
+     */
     @FXML
     private void PaneClicked(MouseEvent event) {
         String val = "";
@@ -400,12 +517,23 @@ public class FXMLDocumentController implements Initializable {
         setTextOutput(val);
     }
 
+    /**
+     * This method was used for testing the clickable fields, and to find their pixel values for the offset, height, and width.
+     * Now this is no longer in use, but can be activated to display the pixel possition of the mouse cursor.
+     * @param event 
+     */
     @FXML
     private void MouseMoved(MouseEvent event) {
         //coordinates.setText("(" + event.getX() + "," + event.getY() + ")");
         coordinates.setOpacity(0);
     }
 
+    
+    /**
+     * This method is to be called on button click, to show the player inventory as a listview.
+     * This method, along with, showMap and showStats
+     * @param event 
+     */
     @FXML
     private void ShowInventory(MouseEvent event) {
         ChangeMapState(0, true);
@@ -713,12 +841,17 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void ReplayGame(MouseEvent event) {
         gui.newGame(event);
-        setRoomImage();
     }
 
     @FXML
     private void QuitToMainMenu(MouseEvent event) {
         gui.mainMenu(event);
+    }
+
+    @FXML
+    private void CloseWelcome(MouseEvent event) {
+        WelcomeGrid.setOpacity(0);
+        WelcomeGrid.setDisable(true);
     }
 
 }

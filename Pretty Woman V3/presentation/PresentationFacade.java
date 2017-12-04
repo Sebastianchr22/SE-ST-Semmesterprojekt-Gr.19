@@ -71,10 +71,6 @@ public class PresentationFacade implements IGUI {
     @Override
     public void newGame(MouseEvent event) {
         try {
-            /*Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-            scene = new Scene(root);
-            setStage(mainStage);*/
-
             Parent blah = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
             Scene scene = new Scene(blah);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

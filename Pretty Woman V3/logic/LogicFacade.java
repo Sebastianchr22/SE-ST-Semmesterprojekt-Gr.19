@@ -569,7 +569,7 @@ public class LogicFacade implements acq.ILogic {
 
     public String managerTakesCut() {
         if (manager.getRoom().equals(this.currentRoom.getNameBackend())) {
-            if (!this.currentRoom.getNameBackend().equals("DANCE FLOOR") || this.currentRoom.getNameBackend().equals("LOCKER ROOM")) {
+            if (!this.currentRoom.getNameBackend().equals("DANCE FLOOR") && !this.currentRoom.getNameBackend().equals("LOCKER ROOM")) {
                 double d = Math.round(player.getMoneySaved() * manager.getPercentage() * 100.0) / 100.0;
                 this.player.removeMoney(d);
                 return "Manager noticed you leaving, and took his " + manager.getPercentage() * 100 + "% cut. He took $" + d + ".";
