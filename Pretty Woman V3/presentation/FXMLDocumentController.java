@@ -228,14 +228,13 @@ public class FXMLDocumentController implements Initializable {
      * According to the name of the currentroom of the player, a set of
      * clickable fields are created, and the previous room's ones are destroyed.
      *
-     * <p>
-     * specific hitboxes are created for each individual room, this is done by
+     * <p>specific hitboxes are created for each individual room, this is done by
      * pixel count. A point is created, as it is to be used as a measurement of
      * the x-axis offset, and the y-axis offset. Then a width and a height is
      * set for the clickable field. When any room other than home has it's
      * hitboxes set, the prior rooms hitboxes are destroyed, this means that the
      * prior rooms hitboxses's offesets, width, and height are set to 0. making
-     * them unclickable.<p>
+     * them unclickable.
      */
     public void setHitBoxes() {
         String pos = gui.getCurrentRoom();

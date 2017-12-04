@@ -4,6 +4,7 @@ import acq.IData;
 import acq.ILogic;
 import acq.IPlayer;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
@@ -31,7 +32,11 @@ public class DataFacade implements IData {
     @Override
     public void newFiles(){
         TXTSaver saver = new TXTSaver();
-        saver.newFiles();
+        try {
+            saver.newFiles();
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(DataFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
