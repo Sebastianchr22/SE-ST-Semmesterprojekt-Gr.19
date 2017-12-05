@@ -89,7 +89,9 @@ public class ListOfRegulars {
     }
 
     /**
-     * 
+     * This method will generate a random number, and find the corresponding Regular at that index.
+     * <p> this is done by first finding the lenght of the regularlist, then finding a random number between 0 and the lenght.
+     * lastly it will return a call to getRegularAtIndex(random), using the found random number.
      * @return 
      */
     public Regular getRandomRegular() {
@@ -99,9 +101,17 @@ public class ListOfRegulars {
 
     }
 
+    /**
+     * This method is used to calculate the percentage of success the player had in the mission to find the richest regular.
+     * <p> this is done by first, sorting the list according to wealth, then finding the index of the regularlist on which the given Regular appears,
+     * then using that it will calculate a percentage of success; by first taking the total regulars minus the index of the given regular, then divide that
+     * by the total, and finally times 100.0. This is the overall success percentage the player earned.
+     * in case the Regular was not one of the two (Ex-boyfriend, or the bouncer), the percentage will be returned, if the regular was one of those, 100.0
+     * will be returned, as they are special characters in the game, and a complete success if the player matches with them.
+     * @param regular using a given Regular to find out how rich he was compared to all other regulars.
+     * @return winPercent or 100.0.
+     */
     public double winDegree(IRegular regular) {
-        //Returns the index of the regular, on sorted/ un-sorted list:
-        //List is sorted by most wealthy at index 0:
         sortByWealth();
         double Index = regularList.indexOf(regular);
         double WinPercent = ((countRegulars() - Index++) / countRegulars()) * 100.0;
@@ -109,12 +119,6 @@ public class ListOfRegulars {
             return 100.0;
         } else {
             return WinPercent;
-        }
-    }
-
-    public void showList() {
-        for (Regular regular : regularList) {
-            System.out.println(regular.info());
         }
     }
 
