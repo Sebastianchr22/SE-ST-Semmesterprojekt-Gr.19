@@ -98,7 +98,7 @@ public class Player {
     }
 
     double getMoneySaved() {
-        return this.moneySaved;
+        return Math.round(this.moneySaved*100.0)/100.0;
     }
 
     int getEnhancements() {

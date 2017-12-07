@@ -11,7 +11,7 @@ public class TXTSaver {
 
     private IData data = DataFacade.getInstance();
 
-    public void save(Collection<Integer> stats, Collection<String> inventory) {
+    public void save(Collection<Integer> stats, Collection<String> inventory)   {
         File save = new File("savefolder", "savefile.txt");
         save.getParentFile().mkdirs();
 
@@ -41,7 +41,7 @@ public class TXTSaver {
         ArrayList<Integer> scores = new ArrayList();
         try {
             BufferedReader reader = new BufferedReader(new FileReader("savefolder" + "/" + "highscore.txt"));
-           
+
             StringBuilder builder = new StringBuilder();
             String line = reader.readLine();
             while (line != null) {
@@ -71,43 +71,44 @@ public class TXTSaver {
     }
 
     public ObservableList loadHighScore() throws FileNotFoundException, IOException {
-
         ObservableList<Integer> scores = FXCollections.observableArrayList();
         ObservableList<Integer> scoresSorted = FXCollections.observableArrayList();
+        try {
 
-        BufferedReader reader = new BufferedReader(new FileReader("savefolder" + "/" + "highscore.txt"));
-        StringBuilder builder = new StringBuilder();
-        String line = reader.readLine();
-        while (line != null) {
-            scores.add(Integer.parseInt(line));
+            BufferedReader reader = new BufferedReader(new FileReader("savefolder" + "/" + "highscore.txt"));
+            StringBuilder builder = new StringBuilder();
+            String line = reader.readLine();
+            while (line != null) {
+                scores.add(Integer.parseInt(line));
 
-            builder.append(line);
-            builder.append(System.lineSeparator());
-            line = reader.readLine();
+                builder.append(line);
+                builder.append(System.lineSeparator());
+                line = reader.readLine();
+            }
+            scores = scores.sorted(); //Sorts list, low to high
+            System.out.println(scores.toString());
+            
+            //Goes through the amount of items, in inverted order (last first)
+            //Last will be largest, adds that, repeats for the rest.
+            for (int j = scores.size(); j > 0; j--) {
+                scoresSorted.add(scores.get(j - 1));
+            }
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("No highscore file found, will create a new one.");
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream("savefolder/highscore.txt")));
+            writer.close();
         }
-        scores = scores.sorted(); //Sorts list, low to high
-        System.out.println(scores.toString());
-
-        //Counts items:
-        int counter = 0;
-        for (int i : scores) {
-            counter++;
-        }
-        //Goes through the amount of items, in inverted order (last first)
-        //Last will be larges, adds that, repeats for the rest.
-        for (int j = counter; j > 0; j--) {
-            scoresSorted.add(scores.get(j - 1));
-        }
-
         return scoresSorted;
+
     }
 
     private IPlayer newPlayer;
 
-    public IPlayer load() {
+    public IPlayer load() throws FileNotFoundException {
+        BufferedReader reader = new BufferedReader(new FileReader("savefolder" + "/" + "savefile.txt"));
+        StringBuilder builder = new StringBuilder();
         try { //try finding the file:
-            BufferedReader reader = new BufferedReader(new FileReader("savefolder" + "/" + "savefile.txt"));
-            StringBuilder builder = new StringBuilder();
             String line = reader.readLine();
             int counter = 0;
             while (line != null) {
@@ -119,7 +120,9 @@ public class TXTSaver {
                 counter++;
             }
         } catch (FileNotFoundException ex) { //Code if error finding file:
-            System.out.println("Error finding file");
+            System.out.println("No savefile file found, will create a new one.");
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream("savefolder/savefile.txt")));
+            writer.close();
         } catch (IOException ex) { //Code if error reader:
             System.out.println("Error reading file");
         }

@@ -44,7 +44,7 @@ public class PresentationFacade implements IGUI {
     @Override
     public void start(Stage mainStage) throws Exception {
         IGUI = this;
-        Parent root = FXMLLoader.load(getClass().getResource("StartScreenFXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
 
         scene = new Scene(root);
 
@@ -71,7 +71,7 @@ public class PresentationFacade implements IGUI {
     @Override
     public void newGame(MouseEvent event) {
         try {
-            Parent blah = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+            Parent blah = FXMLLoader.load(getClass().getResource("Game.fxml"));
             Scene scene = new Scene(blah);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);
@@ -93,7 +93,7 @@ public class PresentationFacade implements IGUI {
             scene = new Scene(root);
             setStage(mainStage);*/
 
-            Parent blah = FXMLLoader.load(getClass().getResource("StartScreenFXML.fxml"));
+            Parent blah = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
             Scene scene = new Scene(blah);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);

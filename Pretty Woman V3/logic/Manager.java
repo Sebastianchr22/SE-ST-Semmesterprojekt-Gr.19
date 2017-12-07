@@ -56,10 +56,6 @@ public class Manager {
             }
             setCurrentRoom(nextRoom);
         }
-
-        //Generate random, corresponding to a room.
-        //Find out it currentroom leads to the random room, else generate a new random
-        //minus the non-functional random.
     }
 
     public String getRoom() {
@@ -68,9 +64,5 @@ public class Manager {
 
     public void setCurrentRoom(Room room) {
         this.currentRoom = room;
-    }
-
-    public String getName() {
-        return this.name;
     }
 }
