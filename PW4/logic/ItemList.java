@@ -1,5 +1,6 @@
 package logic;
 
+import acq.ListBuilder;
 import java.util.ArrayList;
 
 public class ItemList implements ListBuilder {

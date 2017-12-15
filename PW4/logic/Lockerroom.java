@@ -10,6 +10,11 @@ public class Lockerroom {
     private ItemList itemlist;
     private Player player;
 
+    /**
+     * Returns a random number between 1, and the lenght of the list (itemList).
+     * This means that we will get the item at the specific index.
+     * @return int : random
+     */
     public int genRandom() {
         if (length > 1) {
             return (int) Math.round(1 + Math.random() * length);
@@ -18,6 +23,15 @@ public class Lockerroom {
         }
     }
 
+    /**
+     * The method will find an item, at a random index in the itemlist.
+     * And return feedback to the player, about which item the player found.
+     * No moves are removed from the player, when this is called.
+     * Also it is checked if the player can carry the given item, according to the capacity of the inventory.
+     * @param inventory : gotten from logic facade
+     * @param itemlists : gotten from logic facade
+     * @return feedback : String
+     */
     public String Lockerroom(Inventory inventory, ItemList itemlists) {
         logic = LogicFacade.getInstance();
         inv = inventory;
